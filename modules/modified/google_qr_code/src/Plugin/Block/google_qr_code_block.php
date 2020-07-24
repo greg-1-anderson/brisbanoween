@@ -77,10 +77,7 @@ class google_qr_code_block extends BlockBase{
 
       $build['url'] = [
         '#type' => 'item',
-        '#class' => 'google-qr-code-url',
-        '#prefix' => '<p><a href="' . $google_qr_current_url . '">',
-        '#markup' => $google_qr_current_url,
-        '#suffix' => '</a></p>',
+        '#markup' => '<p><a href="' . $google_qr_current_url . '">' . $google_qr_current_url . '</a></p>',
       ];
 
       return $build;
