@@ -63,7 +63,7 @@ class google_qr_code_block extends BlockBase{
       $google_qr_alt = $this->t('QR Code for @url', array('@url' => $google_qr_current_url));
 
       // Return markup, and return the block as being cached per URL path.
-      return array(
+      $build['qr'] = [
         '#theme' => 'image',
         '#uri' => $google_qr_image_url,
         '#width' => $qr_code_width,
@@ -73,7 +73,17 @@ class google_qr_code_block extends BlockBase{
         '#cache' => array(
           'contexts' => array('url.path'),
         ),
-      );
+      ];
+
+      $build['url'] = [
+        '#type' => 'link',
+        '#class' => 'google-qr-code-url',
+        '#prefix' => '<p>',
+        '#url' => $google_qr_current_url,
+        '#suffix' => '</p>',
+      ];
+
+      return $build;
     }
 
 
