@@ -1,0 +1,4 @@
+administer multiplex configuration:
+  title: 'Administer multiplex configuration'
+  description: 'Optional description.'
+  restrict access: true

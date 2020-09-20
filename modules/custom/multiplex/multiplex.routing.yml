@@ -1,0 +1,15 @@
+multiplex.example:
+  path: '/multiplex/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\multiplex\Controller\MultiplexController::build'
+  requirements:
+    _permission: 'access content'
+
+multiplex.settings_form:
+  path: '/admin/config/system/multiplex'
+  defaults:
+    _title: 'Multiplex settings'
+    _form: 'Drupal\multiplex\Form\SettingsForm'
+  requirements:
+    _permission: 'administer multiplex configuration'
