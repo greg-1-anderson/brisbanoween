@@ -61,9 +61,8 @@ function multiplex_schema() {
     ],
     'primary key' => ['id'],
     'indexes' => [
-      'type' => ['type'],
       'uid' => ['uid'],
-      'status' => ['status'],
+      'who' => ['who'],
     ],
   ];
 

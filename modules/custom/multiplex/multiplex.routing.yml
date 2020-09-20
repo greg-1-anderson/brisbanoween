@@ -1,10 +1,14 @@
-multiplex.example:
-  path: '/multiplex/example'
+multiplex.to:
+  path: '/to/{target}'
   defaults:
-    _title: 'Example'
+    _title: 'Redirect To'
     _controller: '\Drupal\multiplex\Controller\MultiplexController::build'
   requirements:
     _permission: 'access content'
+  options:
+    parameters:
+      target:
+        type: string
 
 multiplex.settings_form:
   path: '/admin/config/system/multiplex'
