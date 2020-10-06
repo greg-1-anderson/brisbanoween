@@ -4,3 +4,9 @@ services:
     arguments: ['@messenger']
     tags:
       - { name: event_subscriber }
+  multiplex.visitation:
+    class: Drupal\multiplex\Service\VisitationService
+    arguments: ['@database']
+  multiplex.multiplex:
+    class: Drupal\multiplex\Service\MultiplexService
+    arguments: ['@multiplex.visitation']

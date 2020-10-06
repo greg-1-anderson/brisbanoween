@@ -1,5 +1,5 @@
 multiplex.to:
-  path: '/to/{target}'
+  path: '/to/{path}'
   defaults:
     _title: 'Redirect To'
     _controller: '\Drupal\multiplex\Controller\MultiplexController::build'
@@ -7,7 +7,7 @@ multiplex.to:
     _permission: 'access content'
   options:
     parameters:
-      target:
+      path:
         type: string
 
 multiplex.settings_form:

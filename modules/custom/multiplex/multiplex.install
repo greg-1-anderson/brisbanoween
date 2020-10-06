@@ -36,7 +36,7 @@ function multiplex_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
         'default' => 0,
-        'description' => 'The {users}.uid of the user who created the record.',
+        'description' => 'The {users}.uid of the user who created the record. Informative only.',
       ],
       'who' => [
         'type' => 'varchar_ascii',
@@ -45,18 +45,31 @@ function multiplex_schema() {
         'default' => '',
         'description' => 'Cookie data identifying anonymous users.',
       ],
-      'where' => [
+      'path' => [
         'type' => 'varchar_ascii',
         'length' => 64,
         'not null' => TRUE,
         'default' => '',
         'description' => 'Path that was visited.',
       ],
+      'target' => [
+        'type' => 'varchar_ascii',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'If the multiplex target is random per-visitor, then we save the target so that the same user will get consistent results.',
+      ],
       'created' => [
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
         'description' => 'Timestamp when the record was created.',
+      ],
+      'visited' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp when the record was most recently visited.',
       ],
     ],
     'primary key' => ['id'],
