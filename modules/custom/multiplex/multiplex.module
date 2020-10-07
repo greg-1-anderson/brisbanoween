@@ -25,6 +25,7 @@ function multiplex_theme($existing, $type, $theme, $path) {
     ];
     return $theme;
 }
+
 /**
  * Implements hook_help().
  */

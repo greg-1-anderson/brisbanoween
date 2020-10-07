@@ -76,14 +76,6 @@ class MultiplexController extends ControllerBase {
     // If there are any that match, then redirect to the multiplexed location.
     $target = $this->multiplexService->findMultiplexLocation($who, $path);
 
-    if ($target != $path) {
-      $build['content'] = [
-        '#type' => 'item',
-        '#markup' => 'Result: ' . var_export($target, true),
-      ];
-      return $build;
-    }
-
     // It is also an error if the target does not exist; we return page not found.
     $url_object = $this->pathValidator->getUrlIfValid("$target");
     if (!$url_object) {

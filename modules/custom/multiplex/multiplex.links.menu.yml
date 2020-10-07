@@ -1,0 +1,6 @@
+multiplex.settings_form:
+  title: 'Multiplex Settings'
+  description: 'Configure Multiplex settings'
+  route_name: multiplex.settings_form
+  parent: system.admin_config_ui
+  weight: 10
