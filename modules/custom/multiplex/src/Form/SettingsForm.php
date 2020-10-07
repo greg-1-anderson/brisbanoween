@@ -30,7 +30,7 @@ class SettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['cookie'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Cookie identifier for anonymous users'),
+      '#title' => $this->t('Multiplex Cookie id'),
       '#default_value' => $this->config('multiplex.settings')->get('cookie'),
     ];
     return parent::buildForm($form, $form_state);
