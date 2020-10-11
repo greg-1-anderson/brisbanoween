@@ -10,11 +10,24 @@ class MultiplexService {
   /** \Drupal\multiplex\Service\VisitationService */
   protected $visitationService;
 
-  public function __construct(VisitationService $visitationService) {
+  /** \Drupal\Core\Config\ConfigFactoryInterface */
+  protected $config;
+
+  public function __construct(VisitationService $visitationService, \Drupal\Core\Config\ConfigFactoryInterface $config) {
     $this->visitationService = $visitationService;
+    $this->config = $config;
   }
 
   public function findMultiplexLocation($who, $path) {
+    // We can perform no service unless we have a visitor identifier.
+    if (empty($who)) {
+      $unidentified_user_path = $this->config->get('multiplex.settings')->get('unidentified_user_path');
+      if (!empty($unidentified_user_path)) {
+        return $unidentified_user_path;
+      }
+      return $path;
+    }
+
     // Record that "$target" was visited.
     $visit_data = $this->visitationService->recordVisit($who, $path);
 

@@ -9,4 +9,4 @@ services:
     arguments: ['@database']
   multiplex.multiplex:
     class: Drupal\multiplex\Service\MultiplexService
-    arguments: ['@multiplex.visitation']
+    arguments: ['@multiplex.visitation', '@config.factory']

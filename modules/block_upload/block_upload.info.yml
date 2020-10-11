@@ -1,0 +1,14 @@
+name: 'Block Upload'
+type: module
+description: 'Upload new files/images to node through the block.'
+package: Other
+# version: VERSION
+core: 8.x
+core_version_requirement: ^8 || ^9
+configure: block_upload.admin
+
+
+# Information added by Drupal.org packaging script on 2020-09-02
+version: '8.x-1.x-dev'
+project: 'block_upload'
+datestamp: 1599033250

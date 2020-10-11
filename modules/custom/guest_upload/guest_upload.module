@@ -1,0 +1,116 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Guest Upload module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
+use Drupal\path_alias\Entity\PathAlias;
+
+/**
+ * Customize behavior of block_upload module.
+ */
+function guest_upload_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Do post-processing on uploaded images (add metadata etc.)
+  if ($form_id == 'block_upload_form') {
+    $form['#submit'][] = '_guest_upload_post_submit';
+  }
+}
+
+/**
+ * When an image is uploaded, write its info to the 'guest_upload_images' table.
+ */
+function _guest_upload_post_submit($form, FormStateInterface $form_state) {
+  // Look up the node id that the image was submitted on
+  $nid = $form_state->getValue('block_upload_nid');
+
+  // Get a reference to the visitor
+  $cookie = $this->config->get('guest_upload.settings')->get('cookie');
+  $who = $_COOKIE[$cookie] ?? '';
+  $account = \Drupal::currentUser();
+
+  if (empty($who)) {
+    return;
+  }
+
+  // Check to see if a file was uploaded on this form submit
+  $values = $form_state->getValues();
+  if (!empty($values['block_upload_file']['fids']) || !empty($values['block_upload_file'])) {
+    $buid = $form['buid']['#value'];
+    $field_name = explode('.', \Drupal::state()->get('block_upload_' . $buid . '_field') ?: '')[1];
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+    // $node = Node::load($nid);
+    $field = $node->get($field_name);
+    $count = $field->count();
+
+    if ($count > 0) {
+      $field_number = $count - 1;
+      $item = $field->get($field_number);
+      $fid = $item->target_id;
+
+      // Find or create the guest page, then
+      // attach $fid to the guest page
+      $guest_page_image_field = $this->config->get('guest_upload.settings')->get('guest_image_field');
+      $guest_page_node = _guest_upload_get_or_create_guest_page($who);
+      if ($guest_page_node && !empty($guest_page_image_field)) {
+        $guest_page_node->get($guest_page_image_field)->appendItem([
+          'target_id' => $fid,
+        ]);
+      }
+
+      // $item->getUploadLocation() gives directory image written into
+
+      // So we realy just need to write:
+      //   user cookie, nid, fid
+      // We can look up and render later.
+      $connection = \Drupal::database();
+      $last_insert_id = $connection->insert('guest_upload_images')
+        ->fields([
+          'uid' => $account->id(),
+          'nid' => $nid,
+          'fid' => $fid,
+          'who' => $who,
+        ])
+        ->execute();
+    }
+  }
+}
+
+function _guest_upload_get_or_create_guest_page($who) {
+  // The guest page node path is always at "/u/$who"
+  $path = "/u/$who";
+
+  // Look up and return an existing node at $path
+  $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
+  if (isset($params['node'])) {
+    return \Drupal::entityTypeManager()->getStorage('node')->load($params['node']);
+  }
+
+  // Create a new guest node and set its path alias to $path
+  $guest_page_type = $this->config->get('guest_upload.settings')->get('guest_page_type');
+  if (empty($guest_page_type)) {
+    return null;
+  }
+
+  $node = Node::create([
+    'type'        => $guest_page_type,
+    'title'       => 'Guest ' . $who,
+  ]);
+  $node->save();
+
+  $path_alias = PathAlias::create([
+    'path' => '/node/' . $node->id(),
+    'alias' => $path,
+  ]);
+
+  $path_alias->save();
+
+  return $node;
+}
+

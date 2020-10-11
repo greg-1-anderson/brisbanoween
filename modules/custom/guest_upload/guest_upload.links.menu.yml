@@ -1,0 +1,6 @@
+guest_upload.settings_form:
+  title: 'Guest Upload Settings'
+  description: 'Configure Guest Upload settings'
+  route_name: guest_upload.settings_form
+  parent: system.admin_config_ui
+  weight: 10

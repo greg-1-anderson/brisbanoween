@@ -1,0 +1,6 @@
+services:
+  guest_upload.event_subscriber:
+    class: Drupal\guest_upload\EventSubscriber\GuestUploadSubscriber
+    arguments: ['@messenger']
+    tags:
+      - { name: event_subscriber }

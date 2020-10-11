@@ -1,0 +1,15 @@
+guest_upload.example:
+  path: '/guest-upload/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\guest_upload\Controller\GuestUploadController::build'
+  requirements:
+    _permission: 'access content'
+
+guest_upload.settings_form:
+  path: '/admin/config/system/guest-upload'
+  defaults:
+    _title: 'Guest Upload settings'
+    _form: 'Drupal\guest_upload\Form\SettingsForm'
+  requirements:
+    _permission: 'administer guest_upload configuration'

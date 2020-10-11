@@ -1,0 +1,4 @@
+administer guest_upload configuration:
+  title: 'Administer guest_upload configuration'
+  description: 'Optional description.'
+  restrict access: true
