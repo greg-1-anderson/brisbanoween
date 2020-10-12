@@ -31,11 +31,30 @@ class SettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
+    // TODO: Inject service into form
+    $moduleHandler = \Drupal::service('module_handler');
+    $has_eu_compliance_module = $moduleHandler->moduleExists('eu_cookie_compliance');
+
     $form['cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Cookie'),
       '#description' => $this->t("ID of cookie that identifies guest's identity."),
       '#default_value' => $this->config('guest_upload.settings')->get('cookie'),
+    ];
+
+    $form['automatic_visitor_id'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Automatically set visitor id'),
+      '#description' => $this->t("Set a random cookie value for each guest."),
+      '#default_value' => $this->config('guest_upload.settings')->get('automatic_visitor_id'),
+    ];
+
+    $form['use_eu_cookie_compliance_module'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Do not set visitor cookie until policy accepted'),
+      '#description' => $this->t("Requires the <a href='https://drupal.org/project/eu_cookie_compliance'>EU Cookie Compliance</a> module."),
+      '#default_value' => $this->config('guest_upload.settings')->get('use_eu_cookie_compliance_module'),
+      '#disabled' => !$has_eu_compliance_module,
     ];
 
     // Get a list of all available image reference fields
@@ -86,6 +105,14 @@ class SettingsForm extends ConfigFormBase {
 
     $this->config('guest_upload.settings')
       ->set('guest_page_type', $form_state->getValue('guest_page_type'))
+      ->save();
+
+    $this->config('guest_upload.settings')
+      ->set('automatic_visitor_id', $form_state->getValue('automatic_visitor_id'))
+      ->save();
+
+    $this->config('guest_upload.settings')
+      ->set('use_eu_cookie_compliance_module', $form_state->getValue('use_eu_cookie_compliance_module'))
       ->save();
 
     parent::submitForm($form, $form_state);

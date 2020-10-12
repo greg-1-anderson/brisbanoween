@@ -14,6 +14,29 @@ use Drupal\node\Entity\Node;
 use Drupal\path_alias\Entity\PathAlias;
 
 /**
+ * Attach our Javascript
+ */
+function guest_upload_page_attachments(array &$page) {
+  //if (!\Drupal::currentUser()->hasPermission('some permission not yet defined')) {
+  //  return;
+  //}
+
+  $config = \Drupal::config('guest_upload.settings');
+
+  if (!$config->get('automatic_visitor_id')) {
+    return;
+  }
+
+  $computed_settings = [
+    'cookie_name' => $config->get('cookie'),
+    'use_eu_cookie_compliance_module' => $config->get('use_eu_cookie_compliance_module'),
+  ];
+
+  $page['#attached']['library'][] = 'guest_upload/visitor_cookie';
+  $page['#attached']['drupalSettings']['guest_upload'] = $computed_settings;
+}
+
+/**
  * Customize behavior of block_upload module.
  */
 function guest_upload_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -31,7 +54,7 @@ function _guest_upload_post_submit($form, FormStateInterface $form_state) {
   $nid = $form_state->getValue('block_upload_nid');
 
   // Get a reference to the visitor
-  $cookie = $this->config->get('guest_upload.settings')->get('cookie');
+  $cookie = \Drupal::config('guest_upload.settings')->get('cookie');
   $who = $_COOKIE[$cookie] ?? '';
   $account = \Drupal::currentUser();
 
@@ -56,7 +79,7 @@ function _guest_upload_post_submit($form, FormStateInterface $form_state) {
 
       // Find or create the guest page, then
       // attach $fid to the guest page
-      $guest_page_image_field = $this->config->get('guest_upload.settings')->get('guest_image_field');
+      $guest_page_image_field = \Drupal::config('guest_upload.settings')->get('guest_image_field');
       $guest_page_node = _guest_upload_get_or_create_guest_page($who);
       if ($guest_page_node && !empty($guest_page_image_field)) {
         $guest_page_node->get($guest_page_image_field)->appendItem([
@@ -93,7 +116,7 @@ function _guest_upload_get_or_create_guest_page($who) {
   }
 
   // Create a new guest node and set its path alias to $path
-  $guest_page_type = $this->config->get('guest_upload.settings')->get('guest_page_type');
+  $guest_page_type = \Drupal::config('guest_upload.settings')->get('guest_page_type');
   if (empty($guest_page_type)) {
     return null;
   }
