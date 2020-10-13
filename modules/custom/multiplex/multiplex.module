@@ -13,21 +13,6 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Implements hook_theme().
- */
-function multiplex_theme($existing, $type, $theme, $path) {
-    $theme = [
-        'multiplex_visited_rule_widget' => [
-            'variables' => [
-                'visited' => NULL,
-                'target' => NULL,
-            ],
-        ],
-    ];
-    return $theme;
-}
-
-/**
  * Implements hook_help().
  */
 function multiplex_help($route_name, RouteMatchInterface $route_match) {
