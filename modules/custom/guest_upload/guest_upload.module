@@ -82,9 +82,11 @@ function _guest_upload_post_submit($form, FormStateInterface $form_state) {
       $guest_page_image_field = \Drupal::config('guest_upload.settings')->get('guest_image_field');
       $guest_page_node = _guest_upload_get_or_create_guest_page($who);
       if ($guest_page_node && !empty($guest_page_image_field)) {
+        $guest_page_image_field = explode('.', $guest_page_image_field)[1];
         $guest_page_node->get($guest_page_image_field)->appendItem([
           'target_id' => $fid,
         ]);
+        $guest_page_node->save();
       }
 
       // $item->getUploadLocation() gives directory image written into
@@ -110,9 +112,12 @@ function _guest_upload_get_or_create_guest_page($who) {
   $path = "/u/$who";
 
   // Look up and return an existing node at $path
-  $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
-  if (isset($params['node'])) {
-    return \Drupal::entityTypeManager()->getStorage('node')->load($params['node']);
+  $url = \Drupal\Core\Url::fromUserInput($path);
+  if ($url->isRouted()) {
+    $params = $url->getRouteParameters();
+    if (isset($params['node'])) {
+      return \Drupal::entityTypeManager()->getStorage('node')->load($params['node']);
+    }
   }
 
   // Create a new guest node and set its path alias to $path
