@@ -32,7 +32,7 @@ class AverageRoll extends TypedData {
     }
 
     $item = $this->getParent();
-
+/*
     // The minimum roll is the same as the number of dice, which will occur if
     // all dice come up as a 1. Then apply the modifier.
     $minimum = $item->number + $item->modifier;
@@ -44,6 +44,9 @@ class AverageRoll extends TypedData {
     // Add together the minimum and maximum and divide by two. In cases where we
     // get a fraction, take the lower boundary.
     $this->processed = ($minimum + $maximum) / 2;
+*/
+    $this->processed = 'Average roll no longer available';
+
     return $this->processed;
   }
 

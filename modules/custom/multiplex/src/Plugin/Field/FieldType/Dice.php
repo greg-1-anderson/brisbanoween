@@ -30,9 +30,8 @@ class Dice extends FieldItemBase {
     return array(
       'columns' => array(
         'number' => array(
-          'type' => 'int',
-          'unsigned' => TRUE,
-          'not null' => FALSE,
+          'type' => 'varchar',
+          'length' => 32,
         ),
         'sides' => array(
           'type' => 'int',
@@ -63,9 +62,9 @@ class Dice extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     // Add our properties.
-    $properties['number'] = DataDefinition::create('integer')
-      ->setLabel(t('Number'))
-      ->setDescription(t('The number of dice'));
+    $properties['number'] = DataDefinition::create('string')
+      ->setLabel(t('Rule Type'))
+      ->setDescription(t('The type of rule'));
 
     $properties['sides'] = DataDefinition::create('integer')
       ->setLabel(t('Sides'))

@@ -28,6 +28,7 @@ class DiceFormatter extends FormatterBase {
     $elements = array();
 
     foreach ($items as $delta => $item) {
+      /*
       if ($item->sides == 1) {
         // If we are using a 1-sided die (occasionally sees use), just write "1"
         // instead of "1d1" which looks silly.
@@ -42,10 +43,11 @@ class DiceFormatter extends FormatterBase {
         $sign = $item->modifier > 0 ? '+' : '-';
         $markup .= $sign . $item->modifier;
       }
+      */
 
       $elements[$delta] = array(
         '#type' => 'markup',
-        '#markup' => $markup,
+        '#markup' => $item->number,
       );
     }
 

@@ -33,10 +33,16 @@ class DiceWidget extends WidgetBase {
     FormStateInterface $form_state
   ) {
     $element['number'] = array(
-      '#type' => 'number',
-      '#title' => t('# of dice'),
+      '#type' => 'select',
+      '#title' => t('Rule Type'),
       '#default_value' => isset($items[$delta]->number) ? $items[$delta]->number : 1,
-      '#size' => 3,
+      '#options' => [
+        '' => t("---"),
+        'visited' => t("Visited"),
+        'not-visited' => t("Not Visited"),
+        'random' => t("Random Multiplex"),
+        'ordered' => t("Ordered Multiplex"),
+      ],
     );
     $element['sides'] = array(
       '#type' => 'number',
