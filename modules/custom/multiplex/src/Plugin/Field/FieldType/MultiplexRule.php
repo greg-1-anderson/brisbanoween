@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\multiplex\Plugin\Field\FieldType\Dice.
+ * Contains \Drupal\multiplex\Plugin\Field\FieldType\MultiplexRule.
  */
 
 namespace Drupal\multiplex\Plugin\Field\FieldType;
@@ -12,17 +12,17 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Plugin implementation of the 'dice' field type.
+ * Plugin implementation of the 'multiplex rule' field type.
  *
  * @FieldType (
- *   id = "dice",
- *   label = @Translation("Dice"),
- *   description = @Translation("Stores a dice roll such as 1d6 or 2d8+3."),
- *   default_widget = "dice",
- *   default_formatter = "dice"
+ *   id = "multiplexrule",
+ *   label = @Translation("Multiplex Rule"),
+ *   description = @Translation("Stores redirection rules for multiplex module."),
+ *   default_widget = "multiplexrule",
+ *   default_formatter = "multiplexrule"
  * )
  */
-class Dice extends FieldItemBase {
+class MultiplexRule extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
@@ -76,7 +76,7 @@ class Dice extends FieldItemBase {
 
     $properties['average'] = DataDefinition::create('float')
       ->setLabel(t('Average'))
-      ->setDescription(t('The average roll produced by this dice setup'))
+      ->setDescription(t('Unused computed field'))
       ->setComputed(TRUE)
       ->setClass('\Drupal\multiplex\AverageRoll');
 

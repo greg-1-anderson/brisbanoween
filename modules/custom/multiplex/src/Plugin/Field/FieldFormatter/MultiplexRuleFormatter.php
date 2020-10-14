@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\multiplex\Plugin\Field\FieldFormatter\DiceFormatter.
+ * Contains \Drupal\multiplex\Plugin\Field\FieldFormatter\MultiplexRuleFormatter.
  */
 
 namespace Drupal\multiplex\Plugin\Field\FieldFormatter;
@@ -10,17 +10,17 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
 /**
- * Plugin implementation of the 'dice' formatter.
+ * Plugin implementation of the 'multiplex rule' formatter.
  *
  * @FieldFormatter (
- *   id = "dice",
- *   label = @Translation("Dice"),
+ *   id = "multiplexrule",
+ *   label = @Translation("Multiplex Rule"),
  *   field_types = {
- *     "dice"
+ *     "multiplexrule"
  *   }
  * )
  */
-class DiceFormatter extends FormatterBase {
+class MultiplexRuleFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */

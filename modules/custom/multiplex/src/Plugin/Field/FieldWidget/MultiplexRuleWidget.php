@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\multiplex\Plugin\Field\FieldWidget\DiceWidget.
+ * Contains \Drupal\multiplex\Plugin\Field\FieldWidget\MultiplexRuleWidget.
  */
 
 namespace Drupal\multiplex\Plugin\Field\FieldWidget;
@@ -11,17 +11,17 @@ use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Plugin implementation of the 'dice' widget.
+ * Plugin implementation of the 'multiplex rule' widget.
  *
  * @FieldWidget (
- *   id = "dice",
- *   label = @Translation("Dice widget"),
+ *   id = "multiplexrule",
+ *   label = @Translation("Multiplex Rule widget"),
  *   field_types = {
- *     "dice"
+ *     "multiplexrule"
  *   }
  * )
  */
-class DiceWidget extends WidgetBase {
+class MultiplexRuleWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
