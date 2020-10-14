@@ -47,7 +47,7 @@ class MultiplexRuleFormatter extends FormatterBase {
 
       $elements[$delta] = array(
         '#type' => 'markup',
-        '#markup' => $item->number,
+        '#markup' => $item->rule_type,
       );
     }
 

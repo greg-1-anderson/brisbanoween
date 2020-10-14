@@ -32,10 +32,10 @@ class MultiplexRuleWidget extends WidgetBase {
     array &$form,
     FormStateInterface $form_state
   ) {
-    $element['number'] = array(
+    $element['rule_type'] = array(
       '#type' => 'select',
       '#title' => t('Rule Type'),
-      '#default_value' => isset($items[$delta]->number) ? $items[$delta]->number : 1,
+      '#default_value' => isset($items[$delta]->rule_type) ? $items[$delta]->rule_type : '',
       '#options' => [
         '' => t("---"),
         'visited' => t("Visited"),
@@ -44,17 +44,17 @@ class MultiplexRuleWidget extends WidgetBase {
         'ordered' => t("Ordered Multiplex"),
       ],
     );
-    $element['sides'] = array(
+    $element['parameter_node'] = array(
       '#type' => 'number',
-      '#title' => t('Sides'),
+      '#title' => t('Parameter'),
       '#field_prefix' => 'd',
-      '#default_value' => isset($items[$delta]->sides) ? $items[$delta]->sides : 6,
+      '#default_value' => isset($items[$delta]->parameter_node) ? $items[$delta]->parameter_node : 6,
       '#size' => 3,
     );
-    $element['modifier'] = array(
+    $element['target_node'] = array(
       '#type' => 'number',
-      '#title' => t('Modifier'),
-      '#default_value' => isset($items[$delta]->modifier) ? $items[$delta]->modifier : 0,
+      '#title' => t('Target'),
+      '#default_value' => isset($items[$delta]->target_node) ? $items[$delta]->target_node : 0,
       '#size' => 3,
     );
 

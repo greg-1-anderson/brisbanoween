@@ -29,16 +29,16 @@ class MultiplexRule extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     return array(
       'columns' => array(
-        'number' => array(
+        'rule_type' => array(
           'type' => 'varchar',
           'length' => 32,
         ),
-        'sides' => array(
+        'parameter_node' => array(
           'type' => 'int',
           'unsigned' => TRUE,
           'not null' => TRUE,
         ),
-        'modifier' => array(
+        'target_node' => array(
           'type' => 'int',
           'not null' => TRUE,
           'default' => 0,
@@ -51,9 +51,9 @@ class MultiplexRule extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    $value1 = $this->get('number')->getValue();
-    $value2 = $this->get('sides')->getValue();
-    $value3 = $this->get('modifier')->getValue();
+    $value1 = $this->get('rule_type')->getValue();
+    $value2 = $this->get('parameter_node')->getValue();
+    $value3 = $this->get('target_node')->getValue();
     return empty($value1) && empty($value2) && empty($value3);
   }
 
@@ -62,17 +62,17 @@ class MultiplexRule extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     // Add our properties.
-    $properties['number'] = DataDefinition::create('string')
+    $properties['rule_type'] = DataDefinition::create('string')
       ->setLabel(t('Rule Type'))
       ->setDescription(t('The type of rule'));
 
-    $properties['sides'] = DataDefinition::create('integer')
-      ->setLabel(t('Sides'))
-      ->setDescription(t('The number of sides on each die'));
+    $properties['parameter_node'] = DataDefinition::create('integer')
+      ->setLabel(t('Parameter'))
+      ->setDescription(t('The parameter for the rule'));
 
-    $properties['modifier'] = DataDefinition::create('integer')
-      ->setLabel(t('Modifier'))
-      ->setDescription(t('The modifier to be applied after the roll'));
+    $properties['target_node'] = DataDefinition::create('integer')
+      ->setLabel(t('Target'))
+      ->setDescription(t('The target (or default target) for the rule'));
 
     $properties['average'] = DataDefinition::create('float')
       ->setLabel(t('Average'))
