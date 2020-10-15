@@ -45,17 +45,16 @@ class MultiplexRuleWidget extends WidgetBase {
       ],
     );
     $element['parameter_node'] = array(
-      '#type' => 'number',
+      '#type' => 'entity_autocomplete',
+      '#target_type' => 'node',
       '#title' => t('Parameter'),
-      '#field_prefix' => 'd',
-      '#default_value' => isset($items[$delta]->parameter_node) ? $items[$delta]->parameter_node : 6,
-      '#size' => 3,
+      '#default_value' => NULL,
     );
     $element['target_node'] = array(
-      '#type' => 'number',
+      '#type' => 'entity_autocomplete',
+      '#target_type' => 'node',
       '#title' => t('Target'),
-      '#default_value' => isset($items[$delta]->target_node) ? $items[$delta]->target_node : 0,
-      '#size' => 3,
+      '#default_value' => NULL,
     );
 
     // If cardinality is 1, ensure a label is output for the field by wrapping
