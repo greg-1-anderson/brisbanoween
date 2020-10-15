@@ -53,8 +53,8 @@ class MultiplexRule extends FieldItemBase {
   public function isEmpty() {
     $value1 = $this->get('rule_type')->getValue();
     $value2 = $this->get('parameter_node')->getValue();
-    $value3 = $this->get('target_node')->getValue();
-    return empty($value1) && empty($value2) && empty($value3);
+    //$value3 = $this->get('target_node')->getValue();
+    return empty($value1) || empty($value2);
   }
 
   /**

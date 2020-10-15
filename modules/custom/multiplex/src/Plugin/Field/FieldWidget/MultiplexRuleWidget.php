@@ -48,13 +48,13 @@ class MultiplexRuleWidget extends WidgetBase {
       '#type' => 'entity_autocomplete',
       '#target_type' => 'node',
       '#title' => t('Parameter'),
-      '#default_value' => NULL,
+      '#default_value' => isset($items[$delta]->parameter_node) ? \Drupal\node\Entity\Node::load($items[$delta]->parameter_node) : NULL,
     );
     $element['target_node'] = array(
       '#type' => 'entity_autocomplete',
       '#target_type' => 'node',
       '#title' => t('Target'),
-      '#default_value' => NULL,
+      '#default_value' => isset($items[$delta]->target_node) ? \Drupal\node\Entity\Node::load($items[$delta]->target_node) : NULL,
     );
 
     // If cardinality is 1, ensure a label is output for the field by wrapping
