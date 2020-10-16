@@ -48,7 +48,7 @@ class VisitationService {
           ])
           ->condition('id', $row['id'], '=')
           ->execute();
-        return new VisitData($row['id'], $row['target']);
+        return new VisitData($who, $row['id'], $row['target']);
       }
     }
 
@@ -64,7 +64,7 @@ class VisitationService {
       ])
       ->execute();
 
-    return new VisitData($last_insert_id, '');
+    return new VisitData($who, $last_insert_id, '');
   }
 
   /**
@@ -81,6 +81,9 @@ class VisitationService {
       ])
       ->condition('id', $visit_data->id(), '=')
       ->execute();
+
+    // Also record that the target was visited
+    $this->recordVisit($visit_data->who(), $target);
   }
 
   /**
@@ -92,12 +95,23 @@ class VisitationService {
    * @return array
    */
   public function findVisitedTargets($who, array $targets) {
-    $result = $this->connection->query("SELECT target FROM {multiplex_visitors} WHERE who = :who AND target IN (:targets[])", [':who' => $who, ':targets[]' => $targets]);
+    return $this->findVisited($who, $targets, 'target');
+  }
+
+  public function findVisitedPaths($who, array $paths) {
+    return $this->findVisited($who, $paths, 'path');
+  }
+
+  protected function findVisited($who, array $args, $field) {
+    if (empty($args)) {
+      return [];
+    }
+    $result = $this->connection->query("SELECT $field FROM {multiplex_visitors} WHERE who = :who AND $field IN (:args[])", [':who' => $who, ':args[]' => $args]);
 
     $visited = [];
     if ($result) {
       while ($row = $result->fetchAssoc()) {
-        $visited[] = $row['target'];
+        $visited[] = $row[$field];
       }
     }
     return $visited;

@@ -2,7 +2,7 @@
 
 namespace Drupal\multiplex\Service;
 
-use Drupal\Core\Database\Connection;
+use Drupal\multiplex\RuleEvaluator\RuleEvaluator;
 
 // The multiplex service determines the target locations for redirects
 class MultiplexService {
@@ -28,24 +28,18 @@ class MultiplexService {
       return $path;
     }
 
-    // Record that "$target" was visited.
+    // Record that "$path" was visited, regardless of where it resolves to.
     $visit_data = $this->visitationService->recordVisit($who, $path);
-
-    // If the path has been visited before, and if a specific target
-    // was recorded, then be consistent and return the same target every time.
-    if ($visit_data->visited()) {
-      return $visit_data->target();
-    }
 
     $node = $this->getNodeFromPath($path);
     if (!$node) {
       return $path;
     }
 
-    $random_multiplex_result = $this->randomMultiplex($who, $node);
-    if ($random_multiplex_result) {
-      $this->visitationService->recordTarget($visit_data, $random_multiplex_result);
-      return $random_multiplex_result;
+    $multiplex_result = $this->resolveMultiplexRules($visit_data, $node);
+    if ($multiplex_result) {
+      $this->visitationService->recordTarget($visit_data, $multiplex_result);
+      return $multiplex_result;
     }
 
     return $path;
@@ -63,35 +57,33 @@ class MultiplexService {
     return \Drupal\node\Entity\Node::load($params['node']);
   }
 
-  protected function randomMultiplex($who, $node) {
-    if (!$node->hasField('field_random_multiplex')) {
-      return false;
-    }
-    $field_data = $node->get('field_random_multiplex')->getValue();
-    if (empty($field_data)) {
-      return false;
-    }
-    $random_selections_path = $field_data[0]['value'];
-    $random_selection_node = $this->getNodeFromPath($random_selections_path);
-    if (!$random_selection_node) {
-      return false;
+  protected function resolveMultiplexRules(VisitData $visit_data, $node) {
+
+    // If the path has been visited before, and if a specific target
+    // was recorded, then be consistent and return the same target every time.
+    if ($visit_data->visited()) {
+      return $visit_data->target();
     }
 
-    $field_data = $random_selection_node->get('field_multiplex_targets')->getValue();
+    // TODO: Find the first multiplex rule field of any name.
+    // For now, assume it is named "field_rules".
+    if (!$node->hasField('field_rules')) {
+      return null;
+    }
+    $rule_data = $node->get('field_rules')->getValue();
+    if (empty($rule_data)) {
+      return null;
+    }
 
-    $targets = array_map(
-      function ($item) {
-        return $item['value'];
-      }, $field_data);
+    foreach ($rule_data as $rule) {
+      $evaluator = RuleEvaluator::create($rule['rule_type'], $this->visitationService, $visit_data->who());
+      $result = $evaluator->evaluate($rule['parameter_node'], $rule['target_node']);
+      if ($result) {
+        return $result;
+      }
+    }
 
-    // Remove from consideration any target that already appears as a
-    // recorded visited location for the specified user.
-    $visited = $this->visitationService->findVisitedTargets($who, $targets);
-    $targets = array_diff($targets, $visited);
-
-    shuffle($targets);
-
-    return array_pop($targets);
+    return null;
   }
 
 }
