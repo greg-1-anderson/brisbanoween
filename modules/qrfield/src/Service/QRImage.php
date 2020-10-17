@@ -68,6 +68,7 @@ class QRImage implements QRImageInterface {
       ]);
       $build['#theme'] = 'image';
       $build['#uri'] = $pluginInstance->getUrl()->toString();
+      $build['#alt'] = $text;
     }
     else {
       $build['#markup'] = $this->t('Failed to render QR image using plugin: @plugin.', [

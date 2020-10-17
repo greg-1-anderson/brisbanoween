@@ -186,15 +186,16 @@ class QRFieldFormatter extends FormatterBase {
 
     /** @var \Drupal\Core\Field\FieldItemInterface $item */
     foreach ($items as $delta => $item) {
-      $elements[$delta]['image'] = $this->qrImage->setPlugin($qrImageActivePlugin)
+      $image = $this->qrImage->setPlugin($qrImageActivePlugin)
         ->build(
-          ['text' => $item->get('text')->getValue(), [$targetEntityType => $targetEntity]],
+          ['text' => $item->get('text')->getValue(), 'objects' => [$targetEntityType => $targetEntity]],
           $imageWidth,
           $imageHeight
         );
+      $elements[$delta]['image'] = $image;
       if ($this->getSetting('display_text')) {
         $elements[$delta]['text'] = [
-          '#markup' => $item->get('text')->getValue(),
+          '#markup' => $image['#alt'] ?? $item->get('text')->getValue(),
         ];
       }
     }
