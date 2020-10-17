@@ -18,7 +18,9 @@ class MultiplexService {
     $this->config = $config;
   }
 
-  public function findMultiplexLocation($who, $path) {
+  public function findMultiplexLocation($who, $node) {
+    $path = $node->Url();
+
     // We can perform no service unless we have a visitor identifier.
     if (empty($who)) {
       $unidentified_user_path = $this->config->get('multiplex.settings')->get('unidentified_user_path');
@@ -31,11 +33,6 @@ class MultiplexService {
     // Record that "$path" was visited, regardless of where it resolves to.
     $visit_data = $this->visitationService->recordVisit($who, $path);
 
-    $node = $this->getNodeFromPath($path);
-    if (!$node) {
-      return $path;
-    }
-
     $multiplex_result = $this->resolveMultiplexRules($visit_data, $node);
     if ($multiplex_result) {
       $this->visitationService->recordTarget($visit_data, $multiplex_result);
@@ -43,18 +40,6 @@ class MultiplexService {
     }
 
     return $path;
-  }
-
-  protected function getNodeFromPath($path) {
-    if (empty($path)) {
-      return null;
-    }
-    $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
-    if (!isset($params['node'])) {
-      return null;
-    }
-
-    return \Drupal\node\Entity\Node::load($params['node']);
   }
 
   protected function resolveMultiplexRules(VisitData $visit_data, $node) {
@@ -77,9 +62,9 @@ class MultiplexService {
 
     foreach ($rule_data as $rule) {
       $evaluator = RuleEvaluator::create($rule['rule_type'], $this->visitationService, $visit_data->who());
-      $result = $evaluator->evaluate($rule['parameter_node'], $rule['target_node']);
-      if ($result) {
-        return $result;
+      $target_node = $evaluator->evaluate($rule['parameter_node'], $rule['target_node']);
+      if ($target_node) {
+        return $target_node->Url();
       }
     }
 

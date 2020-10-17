@@ -23,3 +23,8 @@ function randomId(length) {
 }
 
 visitorCookieCheckAndSet();
+
+// window.alert('object: ' + visitorCookieGetValue('STXKEY_objects'))
+
+var target = document.querySelector("body");
+target.innerHTML += '<div style="background-color: orange; position: fixed; bottom: 0px;"><h1>Items: ' + visitorCookieGetValue('STXKEY_objects') + '</h1></div>';

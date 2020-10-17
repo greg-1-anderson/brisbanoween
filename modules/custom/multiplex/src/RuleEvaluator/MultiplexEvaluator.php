@@ -30,16 +30,28 @@ class MultiplexEvaluator extends EvaluatorBase {
     $targets = array_filter(
       array_map(
         function ($item) {
-          return $this->getMultiplexTargetPath($item['target_id']);
+          return \Drupal\node\Entity\Node::load($item['target_id']);
         },
         $field_data
       )
     );
 
+    $target_paths = array_map(
+      function ($node) {
+        return $node->Url();
+      },
+      $targets
+    );
+
     // Remove from consideration any target that already appears as a
     // recorded visited location for the specified user.
-    $visited = $this->visitationService->findVisitedTargets($this->who, $targets);
-    $targets = array_diff($targets, $visited);
+    $visited = $this->visitationService->findVisitedTargets($this->who, $target_paths);
+    $targets = array_filter(
+      $targets,
+      function ($node) use($visited) {
+        return !in_array($node->Url(), $visited);
+      }
+    );
 
     if ($this->isRandom($multiplex_data_node)) {
       shuffle($targets);
@@ -56,16 +68,4 @@ class MultiplexEvaluator extends EvaluatorBase {
     return $field_data[0]['value'];
   }
 
-  protected function getMultiplexTargetPath($value) {
-    // If it's not a nid, assume it's a path
-    if (!is_numeric($value)) {
-      return $value;
-    }
-    $target_node = \Drupal\node\Entity\Node::load($value);
-    if (!$target_node) {
-      return null;
-    }
-
-    return $target_node->Url();
-  }
 }

@@ -9,6 +9,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\multiplex\Service\VisitData;
 use Drupal\multiplex\Service\MultiplexService;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * Returns responses for Multiplex routes.
@@ -71,8 +73,11 @@ class MultiplexController extends ControllerBase {
     // Prevent the redirect from being stored in the page cache.
     $this->pageCacheKillSwitch->trigger();
 
-    // Be consistent: paths should start with "/"
-    $target = "/$path";
+    // Paths must start with "/", but $path from the route does not.
+    $node = $this->getNodeFromPath("/$path");
+    if (!$node) {
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
 
     // Get identifier for visiting user.
     $cookie = $this->config->get('multiplex.settings')->get('cookie');
@@ -81,22 +86,49 @@ class MultiplexController extends ControllerBase {
     }
     $who = $_COOKIE[$cookie] ?? '';
 
-    // Look for redirection rules attached to the entity at "$target".
+    // Look for redirection rules attached to the entity at "$node".
     // If there are any that match, then redirect to the multiplexed location.
-    $target = $this->multiplexService->findMultiplexLocation($who, $target);
+    $target = $this->multiplexService->findMultiplexLocation($who, $node);
 
     // It is also an error if the target does not exist; we return page not found.
-    $url_object = $this->pathValidator->getUrlIfValid("$target");
-    if (!$url_object) {
+    $target_node = $this->getNodeFromPath($target);
+    if (!$target_node) {
       throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
 
-    // Redirect to the target.
-    $route_name = $url_object->getRouteName();
-    $route_parameters = $url_object->getrouteParameters();
+    $object = $this->checkObject($target_node);
 
-    // This sets the 'no-cache' header by default
-    return $this->redirect($route_name, $route_parameters);
+    // Redirect to the target.
+    $response = new RedirectResponse($target_node->Url(), 302);
+
+    $cookie = new Cookie('STXKEY_objects', $object, 0, '/', null, false, false);
+    $response->headers->setCookie($cookie);
+
+    return $response;
+  }
+
+  protected function getNodeFromPath($path) {
+    if (empty($path)) {
+      return null;
+    }
+    $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
+    if (!isset($params['node'])) {
+      return null;
+    }
+
+    return \Drupal\node\Entity\Node::load($params['node']);
+  }
+
+  protected function checkObject($node) {
+    if (!$node->hasField('field_object')) {
+      return '';
+    }
+    $object_data = $node->get('field_object')->getValue();
+    if (!empty($object_data)) {
+      $object_name = $object_data[0]['value'];
+      return $object_name;
+    }
+    return '';
   }
 
 }
