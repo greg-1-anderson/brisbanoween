@@ -7,11 +7,8 @@ use Drupal\multiplex\Service\VisitationService;
 // The multiplex service determines the target locations for redirects
 class MultiplexEvaluator extends EvaluatorBase {
 
-  protected $randomize;
-
-  public function __construct(VisitationService $visitation_service, $who, $randomize) {
+  public function __construct(VisitationService $visitation_service, $who) {
     parent::__construct($visitation_service, $who);
-    $this->randomize = $randomize;
   }
 
   public function evaluate($parameter_nid, $target_nid) {
@@ -44,11 +41,19 @@ class MultiplexEvaluator extends EvaluatorBase {
     $visited = $this->visitationService->findVisitedTargets($this->who, $targets);
     $targets = array_diff($targets, $visited);
 
-    if ($this->randomize) {
+    if ($this->isRandom($multiplex_data_node)) {
       shuffle($targets);
     }
 
     return array_pop($targets);
+  }
+
+  protected function isRandom($multiplex_data_node) {
+    if (!$multiplex_data_node->hasField('field_random')) {
+      return false;
+    }
+    $field_data = $multiplex_data_node->get('field_random')->getValue();
+    return $field_data[0]['value'];
   }
 
   protected function getMultiplexTargetPath($value) {

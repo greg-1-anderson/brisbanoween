@@ -28,11 +28,22 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+
+    // TODO: Inject service into form
+    $moduleHandler = \Drupal::service('module_handler');
+    $has_guest_upload_module = $moduleHandler->moduleExists('guest_upload');
+
+    $cookie_value = $this->config('multiplex.settings')->get('cookie');
+    if ($has_guest_upload_module) {
+      $cookie_value = $this->config('guest_upload.settings')->get('cookie');
+    }
+
     $form['cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Cookie'),
-      '#description' => $this->t("ID of cookie that identifies visitor's identity."),
-      '#default_value' => $this->config('multiplex.settings')->get('cookie'),
+      '#description' => $this->t("ID of cookie that identifies visitor's identity. If guest_upload module is enabled, its cookie will always be used."),
+      '#default_value' => $cookie_value,
+      '#disabled' => $has_guest_upload_module,
     ];
     $form['unidentified_user_path'] = [
       '#type' => 'textfield',

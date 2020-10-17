@@ -13,10 +13,8 @@ class RuleEvaluator {
         return new VisitedEvaluator($visitation_service, $who, true);
       case 'not-visited':
         return new VisitedEvaluator($visitation_service, $who, false);
-      case 'random':
-        return new MultiplexEvaluator($visitation_service, $who, true);
-      case 'ordered':
-        return new MultiplexEvaluator($visitation_service, $who, false);
+      case 'multiplex':
+        return new MultiplexEvaluator($visitation_service, $who);
     }
     throw new \Exception('Invalid rule type');
 	}

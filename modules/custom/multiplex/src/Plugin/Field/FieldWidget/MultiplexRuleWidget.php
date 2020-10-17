@@ -40,8 +40,7 @@ class MultiplexRuleWidget extends WidgetBase {
         '' => t("---"),
         'visited' => t("Visited"),
         'not-visited' => t("Not Visited"),
-        'random' => t("Random Multiplex"),
-        'ordered' => t("Ordered Multiplex"),
+        'multiplex' => t("Multiplex Select"),
       ],
     );
     $element['parameter_node'] = array(

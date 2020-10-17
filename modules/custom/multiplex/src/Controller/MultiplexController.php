@@ -76,6 +76,9 @@ class MultiplexController extends ControllerBase {
 
     // Get identifier for visiting user.
     $cookie = $this->config->get('multiplex.settings')->get('cookie');
+    if (\Drupal::moduleHandler()->moduleExists('guest_upload')) {
+      $cookie = $this->config->get('guest_upload.settings')->get('cookie');
+    }
     $who = $_COOKIE[$cookie] ?? '';
 
     // Look for redirection rules attached to the entity at "$target".
