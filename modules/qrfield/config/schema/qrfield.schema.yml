@@ -1,0 +1,35 @@
+field.field_settings.qrfield:
+  type: mapping
+  label: 'Settings qrfield'
+  mapping:
+    qrcode_plugin:
+      type: string
+      label: 'QR code plugin'
+field.widget.settings.qrfield_widget:
+  type: mapping
+  label: 'Widget qrfield'
+  mapping:
+    text:
+      type: string
+      label: 'QR code text'
+    image:
+      width:
+        type: number
+        label: 'Image width'
+      height:
+        type: number
+        label: 'Image height'
+field.formatter.settings.qrfield_formatter:
+  type: mapping
+  label: 'Formatter qrfield'
+  mapping:
+    display_text:
+      type: boolean
+      label: 'Display text'
+    image:
+      width:
+        type: number
+        label: 'Image width'
+      height:
+        type: number
+        label: 'Image height'
