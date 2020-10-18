@@ -1,0 +1,17 @@
+langcode: en
+dependencies:
+  enforced:
+    module:
+    - multiplex
+  module:
+    - entity_reference
+    - node
+id: node.field_multiplex_dest_targets
+field_name: field_multiplex_dest_targets
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1

@@ -1,0 +1,15 @@
+langcode: en
+dependencies:
+  config:
+  - field.storage.node.field_multiplex_dest_targets
+  - node.type.multiplex_dest
+id: node.multiplex_dest.field_multiplex_dest_targets
+field_name: field_multiplex_dest_targets
+entity_type: node
+bundle: multiplex_dest
+label: 'Targets'
+description: 'List the destinations to use as targets for multiplex rules'
+required: false
+default_value: null
+settings: { }
+field_type: entity_reference

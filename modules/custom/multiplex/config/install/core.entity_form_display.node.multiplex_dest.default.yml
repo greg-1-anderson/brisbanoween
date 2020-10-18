@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.multiplex_dest.field_multiplex_dest_targets
+  - field.field.node.multiplex_dest.field_multiplex_dest_random
+  - node.type.multiplex_dest
+id: node.multiplex_dest.default
+targetEntityType: node
+bundle: multiplex_dest
+mode: default
+content:
+  field_multiplex_dest_targets:
+    type: entity_reference_autocomplete
+    weight: 10
+    settings: {}
+    third_party_settings: {  }
+  field_multiplex_dest_random:
+    type: string_textfield
+    weight: 20
+    settings: {}
+    third_party_settings: {  }
+hidden: { }

@@ -1,0 +1,15 @@
+langcode: en
+dependencies:
+  config:
+  - field.storage.node.field_multiplex_dest_random
+  - node.type.multiplex_dest
+id: node.multiplex_dest.field_multiplex_dest_random
+field_name: field_multiplex_dest_random
+entity_type: node
+bundle: multiplex_dest
+label: 'Random'
+description: 'Enable to return destinations in a random order'
+required: false
+default_value: false
+settings: { }
+field_type: boolean

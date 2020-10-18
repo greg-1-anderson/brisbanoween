@@ -1,0 +1,11 @@
+langcode: en
+dependencies:
+  enforced:
+    module:
+    - multiplex
+name: 'Multiplex Destinations'
+type: multiplex_dest
+description: 'Use <i>Multiplex Destinations</i> to keep track of locations used in multiplex rules.'
+help: 'Add list of destination nodes for multiplex rules.'
+new_revision: false
+preview_mode: 0

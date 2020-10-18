@@ -17,12 +17,13 @@ class MultiplexEvaluator extends EvaluatorBase {
       return null;
     }
 
-    // TODO: Look for any entity reference field
-    if (!$multiplex_data_node->hasField('field_targets')) {
+    // Sanity check. In the future perhaps we limit our content type to
+    // multiplex_dest so that we can be assured that the fields we need exist.
+    if (!$multiplex_data_node->hasField('field_multiplex_dest_targets')) {
       return null;
     }
 
-    $field_data = $multiplex_data_node->get('field_targets')->getValue();
+    $field_data = $multiplex_data_node->get('field_multiplex_dest_targets')->getValue();
     if (empty($field_data)) {
       return null;
     }
@@ -61,10 +62,10 @@ class MultiplexEvaluator extends EvaluatorBase {
   }
 
   protected function isRandom($multiplex_data_node) {
-    if (!$multiplex_data_node->hasField('field_random')) {
+    if (!$multiplex_data_node->hasField('field_multiplex_dest_random')) {
       return false;
     }
-    $field_data = $multiplex_data_node->get('field_random')->getValue();
+    $field_data = $multiplex_data_node->get('field_multiplex_dest_random')->getValue();
     return $field_data[0]['value'];
   }
 
