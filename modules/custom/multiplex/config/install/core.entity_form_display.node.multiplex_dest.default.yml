@@ -20,4 +20,9 @@ content:
     weight: 20
     settings: {}
     third_party_settings: {  }
+  field_multiplex_dest_fallback:
+    type: entity_reference_autocomplete
+    weight: 30
+    settings: {}
+    third_party_settings: {  }
 hidden: { }

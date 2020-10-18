@@ -22,3 +22,9 @@ content:
     weight: 20
     settings: {  }
     third_party_settings: {  }
+  field_multiplex_dest_fallback:
+    label: Default
+    type: entity_reference_label
+    weight: 30
+    settings: {  }
+    third_party_settings: {  }

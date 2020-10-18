@@ -23,9 +23,42 @@ class MultiplexEvaluator extends EvaluatorBase {
       return null;
     }
 
-    $field_data = $multiplex_data_node->get('field_multiplex_dest_targets')->getValue();
+    $targets = $this->loadTargetNodes($multiplex_data_node, 'field_multiplex_dest_targets');
+
+    if (!empty($targets)) {
+      $target_paths = array_map(
+        function ($node) {
+          return $node->Url();
+        },
+        $targets
+      );
+
+      // Remove from consideration any target that already appears as a
+      // recorded visited location for the specified user.
+      $visited = $this->visitationService->findVisitedTargets($this->who, $target_paths);
+      $targets = array_filter(
+        $targets,
+        function ($node) use($visited) {
+          return !in_array($node->Url(), $visited);
+        }
+      );
+
+      if ($this->isRandom($multiplex_data_node)) {
+        shuffle($targets);
+      }
+    }
+
+    if (empty($targets)) {
+      $targets = $this->fallbackLocation($multiplex_data_node);
+    }
+
+    return array_pop($targets);
+  }
+
+  protected function loadTargetNodes($multiplex_data_node, $field) {
+    $field_data = $multiplex_data_node->get($field)->getValue();
     if (empty($field_data)) {
-      return null;
+      return [];
     }
 
     $targets = array_filter(
@@ -37,28 +70,11 @@ class MultiplexEvaluator extends EvaluatorBase {
       )
     );
 
-    $target_paths = array_map(
-      function ($node) {
-        return $node->Url();
-      },
-      $targets
-    );
+    return $targets;
+  }
 
-    // Remove from consideration any target that already appears as a
-    // recorded visited location for the specified user.
-    $visited = $this->visitationService->findVisitedTargets($this->who, $target_paths);
-    $targets = array_filter(
-      $targets,
-      function ($node) use($visited) {
-        return !in_array($node->Url(), $visited);
-      }
-    );
-
-    if ($this->isRandom($multiplex_data_node)) {
-      shuffle($targets);
-    }
-
-    return array_pop($targets);
+  protected function fallbackLocation($multiplex_data_node) {
+    return $this->loadTargetNodes($multiplex_data_node, 'field_multiplex_dest_fallback');
   }
 
   protected function isRandom($multiplex_data_node) {

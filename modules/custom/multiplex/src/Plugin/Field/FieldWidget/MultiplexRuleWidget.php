@@ -32,6 +32,8 @@ class MultiplexRuleWidget extends WidgetBase {
     array &$form,
     FormStateInterface $form_state
   ) {
+    // $content_types = config setting for allowed content types for place nodes
+
     $element['rule_type'] = array(
       '#type' => 'select',
       '#title' => t('Rule Type'),
@@ -46,12 +48,21 @@ class MultiplexRuleWidget extends WidgetBase {
     $element['parameter_node'] = array(
       '#type' => 'entity_autocomplete',
       '#target_type' => 'node',
+      '#selection_settings' => ['target_bundles' => ['multiplex_dest']], // https://www.drupal.org/node/2418529
       '#title' => t('Parameter'),
       '#default_value' => isset($items[$delta]->parameter_node) ? \Drupal\node\Entity\Node::load($items[$delta]->parameter_node) : NULL,
+    );
+    $element['visited_node'] = array(
+      '#type' => 'entity_autocomplete',
+      '#target_type' => 'node',
+      // '#selection_settings' => ['target_bundles' => $content_types],
+      '#title' => t('Visited Location'),
+      '#default_value' => isset($items[$delta]->visited_node) ? \Drupal\node\Entity\Node::load($items[$delta]->visited_node) : NULL,
     );
     $element['target_node'] = array(
       '#type' => 'entity_autocomplete',
       '#target_type' => 'node',
+      // '#selection_settings' => ['target_bundles' => $content_types],
       '#title' => t('Target'),
       '#default_value' => isset($items[$delta]->target_node) ? \Drupal\node\Entity\Node::load($items[$delta]->target_node) : NULL,
     );

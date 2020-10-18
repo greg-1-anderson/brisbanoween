@@ -38,6 +38,11 @@ class MultiplexRule extends FieldItemBase {
           'unsigned' => TRUE,
           'not null' => TRUE,
         ),
+        'visited_node' => array(
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
         'target_node' => array(
           'type' => 'int',
           'not null' => TRUE,
@@ -53,8 +58,12 @@ class MultiplexRule extends FieldItemBase {
   public function isEmpty() {
     $value1 = $this->get('rule_type')->getValue();
     $value2 = $this->get('parameter_node')->getValue();
-    //$value3 = $this->get('target_node')->getValue();
-    return empty($value1) || empty($value2);
+    $value3 = $this->get('visited_node')->getValue();
+    $value4 = $this->get('target_node')->getValue();
+    // TODO: always empty if value1 is empty
+    // Also empty if value1 is multiplex and value2 is empty
+    // Also empty if value1 is not multiplex and value3 or value4 is empty
+    return empty($value1) || (empty($value2) && empty($value3));
   }
 
   /**
@@ -70,9 +79,13 @@ class MultiplexRule extends FieldItemBase {
       ->setLabel(t('Parameter'))
       ->setDescription(t('The parameter for the rule'));
 
+    $properties['visited_node'] = DataDefinition::create('integer')
+      ->setLabel(t('Visited Location'))
+      ->setDescription(t('The test location for the visited rule'));
+
     $properties['target_node'] = DataDefinition::create('integer')
       ->setLabel(t('Target'))
-      ->setDescription(t('The target (or default target) for the rule'));
+      ->setDescription(t('The target for the visited rule'));
 
     $properties['average'] = DataDefinition::create('float')
       ->setLabel(t('Average'))

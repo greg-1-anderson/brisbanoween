@@ -1,0 +1,15 @@
+langcode: en
+dependencies:
+  config:
+  - field.storage.node.field_multiplex_dest_fallback
+  - node.type.multiplex_dest
+id: node.multiplex_dest.field_multiplex_dest_fallback
+field_name: field_multiplex_dest_fallback
+entity_type: node
+bundle: multiplex_dest
+label: 'Default'
+description: 'A default fallback destination to use if all of the targets are used'
+required: false
+default_value: null
+settings: { }
+field_type: entity_reference
