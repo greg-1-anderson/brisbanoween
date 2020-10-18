@@ -73,18 +73,27 @@ class MultiplexController extends ControllerBase {
     // Prevent the redirect from being stored in the page cache.
     $this->pageCacheKillSwitch->trigger();
 
-    // Paths must start with "/", but $path from the route does not.
-    $node = $this->getNodeFromPath("/$path");
-    if (!$node) {
-      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
-    }
-
     // Get identifier for visiting user.
     $cookie = $this->config->get('multiplex.settings')->get('cookie');
     if (\Drupal::moduleHandler()->moduleExists('guest_upload')) {
       $cookie = $this->config->get('guest_upload.settings')->get('cookie');
     }
     $who = $_COOKIE[$cookie] ?? '';
+
+    // Debug code for inspection
+    if ($path == "debug") {
+       $build['content'] = [
+         '#type' => 'item',
+         '#markup' => 'Cookie: ' . $cookie . ' Who: ' . $who,
+       ];
+       return $build;
+    }
+
+    // Paths must start with "/", but $path from the route does not.
+    $node = $this->getNodeFromPath("/$path");
+    if (!$node) {
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
 
     // Look for redirection rules attached to the entity at "$node".
     // If there are any that match, then redirect to the multiplexed location.
@@ -108,15 +117,15 @@ class MultiplexController extends ControllerBase {
   }
 
   protected function getNodeFromPath($path) {
-    if (empty($path)) {
-      return null;
-    }
-    $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
-    if (!isset($params['node'])) {
-      return null;
-    }
+    try {
+      $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
+      if (isset($params['node'])) {
+        return \Drupal\node\Entity\Node::load($params['node']);
+      }
 
-    return \Drupal\node\Entity\Node::load($params['node']);
+    } catch(\Exception $e) {}
+
+    return null;
   }
 
   protected function checkObject($node) {
