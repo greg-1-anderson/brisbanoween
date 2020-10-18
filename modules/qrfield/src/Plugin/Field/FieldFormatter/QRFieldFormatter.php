@@ -195,7 +195,9 @@ class QRFieldFormatter extends FormatterBase {
       $elements[$delta]['image'] = $image;
       if ($this->getSetting('display_text')) {
         $elements[$delta]['text'] = [
+          '#prefix' => '<div class="qr-image-text">',
           '#markup' => $image['#alt'] ?? $item->get('text')->getValue(),
+          '#suffix' => '</div>',
         ];
       }
     }
