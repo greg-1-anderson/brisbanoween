@@ -1,0 +1,10 @@
+# Custom module library for general purposes.
+brisbanoween:
+  js:
+    js/brisbanoween.js: {}
+  css:
+    component:
+      css/brisbanoween.css: {}
+  dependencies:
+    - core/drupalSettings
+    - brisbanoween/jquery-labelauty

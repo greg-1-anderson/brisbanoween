@@ -1,0 +1,15 @@
+brisbanoween.example:
+  path: '/brisbanoween/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\brisbanoween\Controller\BrisbanoweenController::build'
+  requirements:
+    _permission: 'access content'
+
+brisbanoween.settings_form:
+  path: '/admin/config/system/brisbanoween'
+  defaults:
+    _title: 'Brisbanoween settings'
+    _form: 'Drupal\brisbanoween\Form\SettingsForm'
+  requirements:
+    _permission: 'administer brisbanoween configuration'

@@ -1,0 +1,221 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Brisbanoween module.
+ */
+
+use Drupal\node\Entity\Node;
+use Drupal\path_alias\Entity\PathAlias;
+
+/**
+ * Implements hook_install().
+ */
+function brisbanoween_install() {
+  // \Drupal::messenger()->addStatus(__FUNCTION__);
+  _brisbanoween_install_initial_qr_codes();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function brisbanoween_uninstall() {
+  // \Drupal::messenger()->addStatus(__FUNCTION__);
+}
+
+function _brisbanoween_install_initial_qr_codes() {
+  foreach (_brisbanoween_initial_code_list() as $name) {
+    _brisbanoween_create_qr_code($name);
+  }
+}
+
+function _brisbanoween_initial_code_list() {
+  return [
+    "agony",
+    "bat",
+    "beast",
+    "black",
+    "blind",
+    "bog",
+    "bones",
+    "boo",
+    "bugs",
+    "cat",
+    "chasm",
+    "claws",
+    "cloak",
+    "clown",
+    "coven",
+    "crazy",
+    "crow",
+    "crown",
+    "crypt",
+    "dead",
+    "death",
+    "decay",
+    "demon",
+    "devil",
+    "dread",
+    "dusty",
+    "eerie",
+    "evil",
+    "fall",
+    "fangs",
+    "fear",
+    "femur",
+    "fog",
+    "foul",
+    "gash",
+    "gauze",
+    "genie",
+    "ghost",
+    "ghoul",
+    "goon",
+    "gory",
+    "grave",
+    "grim",
+    "heart",
+    "howl",
+    "imp",
+    "lost",
+    "magic",
+    "mask",
+    "mist",
+    "moon",
+    "mummy",
+    "nail",
+    "numb",
+    "ogre",
+    "ouija",
+    "owl",
+    "raven",
+    "robe",
+    "scare",
+    "scary",
+    "sharp",
+    "shock",
+    "skull",
+    "slime",
+    "spell",
+    "spine",
+    "swamp",
+    "tomb",
+    "tower",
+    "treat",
+    "troll",
+    "wail",
+    "wand",
+    "web",
+    "weird",
+    "widow",
+    "witch",
+  ];
+}
+
+function _brisbanoween_create_qr_code($name) {
+  $path = "/$name";
+
+  // Short-circuit if there is already a node at this path
+  $url = \Drupal\Core\Url::fromUserInput($path);
+  if ($url->isRouted()) {
+    return;
+// We could load the node and emit a warning if it is the wrong content type
+//    $params = $url->getRouteParameters();
+//    if (isset($params['node'])) {
+//      return \Drupal::entityTypeManager()->getStorage('node')->load($params['node']);
+//    }
+  }
+
+  // Create a new qr code and set its path alias to $path
+  $node = Node::create([
+    'type'        => 'qr_code',
+    'title'       => $name,
+  ]);
+  $node->save();
+
+  $path_alias = PathAlias::create([
+    'path' => '/node/' . $node->id(),
+    'alias' => $path,
+  ]);
+
+  $path_alias->save();
+
+  return $node;
+}
+
+/**
+ * Implements hook_schema().
+ *
+function brisbanoween_schema() {
+  $schema['brisbanoween_example'] = [
+    'description' => 'Table description.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique record ID.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The {users}.uid of the user who created the record.',
+      ],
+      'status' => [
+        'description' => 'Boolean indicating whether this record is active.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'tiny',
+      ],
+      'type' => [
+        'type' => 'varchar_ascii',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Type of the record.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp when the record was created.',
+      ],
+      'data' => [
+        'type' => 'blob',
+        'not null' => TRUE,
+        'size' => 'big',
+        'description' => 'The arbitrary data for the item.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'type' => ['type'],
+      'uid' => ['uid'],
+      'status' => ['status'],
+    ],
+  ];
+
+  return $schema;
+}
+*/
+
+/**
+ * Implements hook_requirements().
+ */
+function brisbanoween_requirements($phase) {
+  $requirements = [];
+/*
+  if ($phase == 'runtime') {
+    $value = mt_rand(0, 100);
+    $requirements['brisbanoween_status'] = [
+      'title' => t('Brisbanoween status'),
+      'value' => t('Brisbanoween value: @value', ['@value' => $value]),
+      'severity' => $value > 50 ? REQUIREMENT_INFO : REQUIREMENT_WARNING,
+    ];
+  }
+*/
+  return $requirements;
+}

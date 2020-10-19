@@ -1,0 +1,4 @@
+administer brisbanoween configuration:
+  title: 'Administer brisbanoween configuration'
+  description: 'Permission for possible furture use.'
+  restrict access: true
