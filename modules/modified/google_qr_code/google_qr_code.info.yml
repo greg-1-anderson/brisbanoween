@@ -1,9 +1,0 @@
-name: Google QR Code
-description: A module that allows placing QR codes via the Google Charts API
-package: Other
-type: module
-version: 1.0
-core: 8.x
-core_version_requirement: ^8 || ^9
-configure: googleqrcode.GoogleQRCodeAdminForm
-
