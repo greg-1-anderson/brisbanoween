@@ -6,3 +6,5 @@ visitor_cookie:
   dependencies:
     - core/drupal
     - core/drupalSettings
+    - core/jquery
+    - core/jquery.once

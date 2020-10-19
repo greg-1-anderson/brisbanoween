@@ -26,3 +26,36 @@ function multiplex_help($route_name, RouteMatchInterface $route_match) {
     default:
   }
 }
+
+function multiplex_get_visitor_cookie_value() {
+  $settings_name = 'multiplex.settings';
+  if (\Drupal::moduleHandler()->moduleExists('guest_upload')) {
+    $settings_name = 'guest_upload.settings';
+  }
+  $cookie = \Drupal::config($settings_name)->get('cookie');
+  $who = $_COOKIE[$cookie] ?? '';
+  return $who;
+}
+
+/**
+ * Attach our Javascript
+ */
+function multiplex_page_attachments(array &$page) {
+  //if (!\Drupal::currentUser()->hasPermission('some permission not yet defined')) {
+  //  return;
+  //}
+
+  $who = multiplex_get_visitor_cookie_value();
+  if (empty($who)) {
+    return;
+  }
+
+  $config = \Drupal::config('multiplex.settings');
+
+  $computed_settings = [
+    'foo' => 'bar', // $config->get('cookie'),
+  ];
+
+  $page['#attached']['library'][] = 'multiplex/multiplex';
+  $page['#attached']['drupalSettings']['multiplex'] = $computed_settings;
+}

@@ -74,11 +74,7 @@ class MultiplexController extends ControllerBase {
     $this->pageCacheKillSwitch->trigger();
 
     // Get identifier for visiting user.
-    $cookie = $this->config->get('multiplex.settings')->get('cookie');
-    if (\Drupal::moduleHandler()->moduleExists('guest_upload')) {
-      $cookie = $this->config->get('guest_upload.settings')->get('cookie');
-    }
-    $who = $_COOKIE[$cookie] ?? '';
+    $who = multiplex_get_visitor_cookie_value();
 
     // Debug code for inspection
     if ($path == "debug") {
@@ -110,7 +106,7 @@ class MultiplexController extends ControllerBase {
     // Redirect to the target.
     $response = new RedirectResponse($target_node->Url(), 302);
 
-    $cookie = new Cookie('STXKEY_objects', $object, 0, '/', null, false, false);
+    $cookie = new Cookie('STYXKEY_objects', $object, 0, '/', null, false, false);
     $response->headers->setCookie($cookie);
 
     return $response;
