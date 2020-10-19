@@ -179,7 +179,7 @@ class QRFieldFormatter extends FormatterBase {
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
     $imageWidth = $this->getSetting('image')['width'];
-    $imageHeight = $this->getSetting('image')['width'];
+    $imageHeight = $this->getSetting('image')['height'];
     $qrImageActivePlugin = $this->getFieldSetting('qrcode_plugin');
     $targetEntity = $items->getEntity();
     $targetEntityType = $items->getFieldDefinition()->getTargetEntityTypeId();
