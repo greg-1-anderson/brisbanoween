@@ -11,7 +11,7 @@ class SpookyMapLegendItem {
 
 	update() {
 		if (this.i_element != null) {
-			this.i_icon.src = this.i_icon;
+			this.i_icon_img.src = this.i_icon;
 			this.i_label.innerHTML = this.i_name;
 		}
 	}
@@ -21,9 +21,9 @@ class SpookyMapLegendItem {
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "SpookyMapLegendItem";
 
-				this.i_icon = document.createElement('IMG');
-				this.i_icon.className = "SpookyMapLegendItem_image";
-				this.i_element.appendChild(this.i_icon);
+				this.i_icon_img = document.createElement('IMG');
+				this.i_icon_img.className = "SpookyMapLegendItem_image";
+				this.i_element.appendChild(this.i_icon_img);
 
 				this.i_label = document.createElement('DIV');
 				this.i_label.className = "SpookyMapLegendItem_label";
