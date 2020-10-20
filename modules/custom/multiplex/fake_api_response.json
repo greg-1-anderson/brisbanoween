@@ -24,7 +24,7 @@
 			"legendId": "unvisited"
 		},
 		{
-			"position": [37.681767, -122.401551]
+			"position": [37.681767, -122.401551],
 			"code": "door",
 			"legendId": "unvisited"
 		},
@@ -40,7 +40,7 @@
 			"legendId": "unvisited"
 		},
 		{
-			"position": [37.695850, -122.417633]
+			"position": [37.695850, -122.417633],
 			"code": "bat",
 			"legendId": "unvisited"
 		}
