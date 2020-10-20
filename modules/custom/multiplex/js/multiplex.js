@@ -15,10 +15,6 @@
 				setTimeout(() => {
 					inventoryBox.attach(document.body);
 				}, 10);
-
-
-				document.cookie = "myInventory=lantern,old_key,top_hat; path=/";
-				document.cookie = "myInventory_added=" + (new Date()).getTime() + "; path=/";
 			}
     }
   };
