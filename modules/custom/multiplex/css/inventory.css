@@ -64,7 +64,7 @@
 
 		/* The DIV that contains the inventory open/close icon image */
 		.InventoryBox_show_image, .InventoryBox_hide_image {
-			background:  url(./modules/custom/multiplex/images/sack.png) center center no-repeat;
+			background:  url(../images/sack.png) center center no-repeat;
 			background-size: 42px 42px;
 			min-height: 40px;
 		}
@@ -91,8 +91,6 @@
 		border-left: 1px solid #000000;
 
 		grid-template-columns: 1fr auto;
-		
-		width: 100%;
 	}
 
 		/* The DIV that contains the close button when the inventory bar is open.  The styles of the inner close button
@@ -159,3 +157,4 @@
 			.InventoryBoxItem_wiggle {
 				animation: wiggle 1s linear infinite;
 			}
+			
