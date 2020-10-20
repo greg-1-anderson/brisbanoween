@@ -53,7 +53,7 @@ function multiplex_page_attachments(array &$page) {
   $config = \Drupal::config('multiplex.settings');
 
   $computed_settings = [
-    'foo' => 'bar', // $config->get('cookie'),
+    'imagePath' => drupal_get_path('module', 'Multiplex') // $config->get('cookie'),
   ];
 
   $page['#attached']['library'][] = 'multiplex/multiplex';
