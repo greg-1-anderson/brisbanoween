@@ -82,8 +82,8 @@ function multiplex_page_attachments(array &$page) {
     'wiggle_duration_ms' => 120000,                           // How many milliseconds after aquiring an item should it wiggle (0 = disabled)
     'use_fixed_order' => true,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
     'image_width' => 72,
-    'image_height' => 72,
-  ]
+    'image_height' => 72
+  ];
 
 
   $computed_settings = [
