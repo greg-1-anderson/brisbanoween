@@ -175,6 +175,17 @@ function multiplex_page_attachments(array &$page) {
       // A key, to make it possible to recognize this HTML <HEAD> element when altering.
       'googleMapAPI'
     ];
+    
+    // Hide the main page elements
+    $page['#attached']['html_head'][] = [
+      [
+        '#tag' => 'style',
+        '#value' => 'BODY { margin:0px 0px 0px 0px; } .dialog-off-canvas-main-canvas { display:none; }',
+        '#weight' => -1,
+      ],
+      // A key, to make it possible to recognize this HTML <HEAD> element when altering.
+      'hidePageUI'
+    ];
   }
 
   // Pass some values down the JS to configure the map and inventory displays

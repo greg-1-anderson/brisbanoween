@@ -1,12 +1,3 @@
-/* Remove the margins on the document, otherwise the map wouldnt go up to the borders */
-BODY {
-	margin: 0px 0px 0px 0px;
-}
-	/* Dont show the rest of the main page interface */
-	.dialog-off-canvas-main-canvas {
-		display: none;
-	}
-
 /* The main wrapper for the controls and the map */
 .SpookyMap {
 	position: fixed;
