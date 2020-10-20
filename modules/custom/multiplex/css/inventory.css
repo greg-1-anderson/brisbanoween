@@ -16,6 +16,7 @@
 		background-color: #FFFFFF;
 		border: 1px solid #000000;
 		text-align: center;
+		font-family: Arial;
 
 		grid-template-rows: auto auto auto;
 		grid-gap: 20px;
