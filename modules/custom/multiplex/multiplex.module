@@ -96,8 +96,8 @@ function getMapConfig() {
       'lat' => 37.689846,
       'lng' => -122.402881
     ],
-    'zoomLevel':14,
-    'openLinksInNewWindow': false
+    'zoomLevel' => 14,
+    'openLinksInNewWindow' => false
   ];
 }
 
