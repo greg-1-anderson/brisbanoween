@@ -39,8 +39,10 @@
         }
       );
 
-      // Attach it to the page
-      inventoryBox.attach(document.body);
+      // Attach it to the page (give it a second, so we drop below the privacy policy - this is a hack)
+      setTimeout(() => {
+      	inventoryBox.attach(document.body);
+      }, 10);
     }
   };
 })(jQuery, Drupal);
