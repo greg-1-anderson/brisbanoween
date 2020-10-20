@@ -38,6 +38,100 @@ function multiplex_get_visitor_cookie_value() {
 }
 
 /**
+ * Get the display configuration for the inventory component
+ */
+function getInventoryConfig() {
+  return [
+    'cookie_name' => 'myInventory',                           // The name of the cookie to store the inventory in
+    'last_item_added_cookie_name' => 'myInventory_added',     // The name of the cookie to store hte last added timestamp in
+    'wiggle_duration_ms' => 120000,                           // How many milliseconds after aquiring an item should it wiggle (0 = disabled)
+    'use_fixed_order' => true,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
+    'image_width' => 72,
+    'image_height' => 72
+  ];
+}
+
+/**
+ * Get a collection of all the possible inventory items and their associated display configuration
+ */
+function getInventoryItems() {
+  $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
+  return [
+    'lantern' => [
+      'url' => $base_path . 'images/objects/lantern.png',
+      'alt' => 'The green spooky lantern of magic',
+      'fixed_order' => 1,
+    ],
+    'pumpkin' => [
+      'url' => $base_path . 'images/objects/pumpkin.png',
+      'alt' => 'The enchanted pumpkin',
+      'fixed_order' => 2,
+    ],
+    'top_hat' => [
+      'url' => $base_path . 'images/objects/top_hat.png',
+      'alt' => 'A musty old hat',
+      'fixed_order' => 3,
+    ],
+    'old_key' => [
+      'url' => $base_path . 'images/objects/old_key.png',
+      'alt' => 'A mysterious key, I wonder what it goes to',
+      'fixed_order' => 4,
+    ]
+  ];
+}
+
+/**
+ * Get the map display configuration 
+ */
+function getMapConfig() {
+  $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
+  return [
+    'backgroundImage' => $base_path . 'images/map_background.jpg',    // A repeating background image, or one that is the exact size of the map
+    'visitedIcon' => $base_path . 'images/visited.png',               // The URL of the icon to use for locations that have codes
+    'unvisitedIcon' => $base_path . 'images/unvisited.png',           // The URL of the icon to use for locations without codes
+    'linkPrefix' => 'https://g1a.io/',                                // The URL to prefix codes with when creating links
+    'visitedName' => 'Visited',                                       // What to call unvisited locations in the legend
+    'unvisitedName' => 'Unvisited',                                   // What to call visited locations in the legend
+    'centerPosition' => [              // Where to center the map
+      'lat' => 37.689846,
+      'lng' => -122.402881
+    ],
+    'zoomLevel' => 14,                 // How close to zoom in, the higher the closer to street level it will zoom
+    'openLinksInNewWindow' => false    // Whether to open links in a new window (true) or redirect the current window (false)
+  ];
+}
+
+/**
+ *	Get an array of all the map locations to pin, and their associated code (if they should be treated as links)
+ */
+function getMapLocations() {
+  return [
+    [
+      "position" => [37.681823, -122.405767],
+      "code" => "spork"
+    ],
+    [
+      "position" => [37.680241, -122.403926],
+      "code" => "blacklight"
+    ],
+    [
+      "position" => [37.681767, -122.401551]
+    ],
+    [
+      "position" => [37.682960, -122.404706],
+      "code" => "warthog"
+    ],
+    [
+      "position" => [37.696488, -122.419449],
+      "code" => "sealion"
+    ],
+    [
+      "position" => [37.695850, -122.417633]
+    ]
+  ];
+}
+
+/**
  * Attach our Javascript
  */
 function multiplex_page_attachments(array &$page) {
@@ -51,9 +145,61 @@ function multiplex_page_attachments(array &$page) {
   }
 
   $config = \Drupal::config('multiplex.settings');
+  
+  $inventory_enabled = true;
+  $map_enabled = false;
+  $mapLocations = [];
 
+  // See if this is the map page
+  $current_path = \Drupal::service('path.current')->getPath();
+  if ($current_path == "/map") {
+    // It is, so show the map, but dont show the inventory component
+    $inventory_enabled = false;
+    $map_enabled = true;
+    
+    // Get the pin locations
+    $mapLocations = getMapLocations();
+    
+    // Attach the google api script
+    $page['#attached']['html_head'][] = [
+      [
+        '#tag' => 'script',
+        '#attributes' => [
+        	'src' => "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY&callback=initMap",
+        	'type' => "text/javascript",
+        	"defer" => true
+        ],
+        // Give weight so it appears after meta tags, etc.
+        '#weight' => -1,
+      ],
+      // A key, to make it possible to recognize this HTML <HEAD> element when altering.
+      'googleMapAPI'
+    ];
+    
+    // Hide the main page elements
+    $page['#attached']['html_head'][] = [
+      [
+        '#tag' => 'style',
+        '#value' => 'BODY { margin:0px 0px 0px 0px; } .dialog-off-canvas-main-canvas { display:none; }',
+        '#weight' => -1,
+      ],
+      // A key, to make it possible to recognize this HTML <HEAD> element when altering.
+      'hidePageUI'
+    ];
+  }
+
+  // Pass some values down the JS to configure the map and inventory displays
   $computed_settings = [
-    'foo' => 'bar', // $config->get('cookie'),
+    'map' => [
+      'enabled' => $map_enabled,
+      'config' => getMapConfig(),
+      'locations' => $mapLocations
+    ],
+    'inventory' => [
+      'items' => getInventoryItems(),
+      'config' => getInventoryConfig(),
+      'enabled' => $inventory_enabled
+    ] // $config->get('cookie'),
   ];
 
   $page['#attached']['library'][] = 'multiplex/multiplex';

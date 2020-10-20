@@ -1,0 +1,68 @@
+/* The main wrapper for the controls and the map */
+.SpookyMap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: grid;
+	grid-template-rows: auto 1fr;
+}
+
+	/* The control bar */
+	.SpookyMap_controls {
+		display: grid;
+		height: 30px;
+		padding: 10px;
+		background-color: #fb6205;
+
+		grid-template-columns: 80px 1fr 26px auto 26px auto;
+		grid-gap: 5px;
+		
+		border-bottom: 1px solid #000000;
+	}
+
+		/* The icon in the legend for visited locations */
+		.SpookyMap_legend_visited {
+			width: 26px;
+			height: 26px;
+		}
+
+		/* The icon in the legend for unvisited locations */
+		.SpookyMap_legend_unvisited {
+			width: 26px;
+			height: 26px;
+		}
+
+		/* The labels in the legend */
+		.SpookyMap_legend_visited_label, .SpookyMap_legend_unvisited_label {
+			font-family: Arial;
+			font-size: 20px;
+			color: #000000;
+			line-height: 26px;
+			vertical-align: middle;
+			font-weight: bold;
+		}
+
+		/* The visited label, to add extra space before the unvisited legend item */
+		.SpookyMap_legend_visited_label {
+			padding-right: 20px;
+		}
+		
+	/* Make the background scroll up and to the left */
+	@keyframes giggle {
+		0% {
+			background-position: 300px 300px;
+		}
+		100% {
+			background-position: 0px 0px;
+		}
+	}
+
+	/* The DIV that contains the actual map */
+	.SpookyMap_wrapper {
+		display: grid;
+		grid-template-rows: 1fr;
+		
+		background-size: 300px 300px !important;
+		
+		animation: giggle 15s linear infinite;
+	}

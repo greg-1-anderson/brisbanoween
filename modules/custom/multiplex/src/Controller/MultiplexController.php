@@ -48,6 +48,15 @@ class MultiplexController extends ControllerBase {
   }
 
   /**
+   * Host page for the map controls
+   */
+  public function map() {
+    return [
+      '#markup' => 'Opening map, please wait...',
+    ];
+  }
+
+  /**
    * Builds the response, which is usually a redirect.
    *
    * The route to this controller is `/to/{path}`. If there are
