@@ -51,6 +51,18 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("Page to redirect to if an unidentified visitor (no cookie set) goes to a random multiplex path. If empty, will pass through."),
       '#default_value' => $this->config('multiplex.settings')->get('unidentified_user_path'),
     ];
+    $form['inventory_cookie'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Inventory Cookie Name'),
+      '#description' => $this->t("ID of cookie that contains the user's inventory."),
+      '#default_value' => "STYXKEY_inventory",
+    ];
+    $form['inventory_added_cookie'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Inventory Added Cookie Name'),
+      '#description' => $this->t("ID of cookie that contains the unix timestamp (in milliseconds) of the last item added to inventory."),
+      '#default_value' => "STYXKEY_inventory_added",
+    ];
     return parent::buildForm($form, $form_state);
   }
 
