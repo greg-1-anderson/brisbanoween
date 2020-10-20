@@ -450,7 +450,7 @@ class InventoryBox {
 				}
 
 				// Update the icon container with the current inventory item data
-				this.i_item_cache[x].setConfig(this.i_items[currentInventory[x]], currentInventory[x] == wiggleId, this.i_config.image_width, this.i_config.image_height, this.i_config.openLinksInNewWindow);
+				this.i_item_cache[x].setConfig(this.i_items[currentInventory[x]], currentInventory[x] == wiggleId, this.i_config.image_width, this.i_config.image_height, this.i_config.open_links_in_new_window);
 
 				// Attach it to the DOM if its not already
 				if (this.i_item_cache[x].i_attached != true) {
