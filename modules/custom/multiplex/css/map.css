@@ -35,7 +35,7 @@
 	/* The control bar */
 	.SpookyMap_controls {
 		display: grid;
-		height: 30px;
+		min-height: 30px;
 		padding: 10px;
 		padding-right: 0px;
 		background-color: #fb6205;
