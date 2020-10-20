@@ -16,6 +16,17 @@ class SpookyMap {
 	}
 
 	/**
+	 *	Update the legend
+	 *
+	 *	@param {Object[]} legendItems the array of legend data
+	 */
+	setLegend(legendItems) {
+		this.i_legend = i_legend;
+		this.updateLegend();
+	}
+
+
+	/**
 	 *	Update the list of locations and their visited states
 	 *
 	 *	@param {Object[]} newLocations the array of location data
@@ -23,6 +34,15 @@ class SpookyMap {
 	setLocations(newLocations) {
 		this.i_locations = newLocations;
 		this.updateLocations();
+	}
+
+	/**
+	 *	Update the items in the legend
+	 */
+	updateLegend() {
+		if (this.i_map != null) {
+
+		}
 	}
 
 	/**
@@ -168,6 +188,7 @@ class SpookyMap {
 
 			// Update the map location set if we have it already
 			this.updateLocations();
+			this.updateLegend();
 		}
 	}
 }

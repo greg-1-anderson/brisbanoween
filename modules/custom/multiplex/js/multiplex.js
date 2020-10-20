@@ -45,7 +45,19 @@
 				window.initMap = () => {
 					myMap.attach(document.body);
 
-					myMap.setLocations(settings.multiplex.map.locations);
+					// Make an API call to get the location data (must be on the same domain, or have special headers to allow cross-domain requests)
+					function updateMap() {
+						fetch(settings.multiplex.map.config.apiEndpoint).then(response => response.text()).then(data => {
+							myMap.setLegend(JSON.parse(data).legend);
+							myMap.setLocations(JSON.parse(data).locations);
+						});
+					};
+					updateMap();
+					if (settings.multiplex.map.config.updateFrequency > 0) {
+						setInterval(() => {
+							updateMap();
+						}, settings.multiplex.map.config.updateFrequency * 1000);
+					}
 				}
 
 				if (google != null && google.maps) {
