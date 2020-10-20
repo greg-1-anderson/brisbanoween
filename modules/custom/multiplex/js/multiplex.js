@@ -22,10 +22,10 @@
 				let myMap = new SpookyMap({
 					width: "100vw",							// The width of the map + control bar (100vw = full width)
 					height: "100vh",						// The height of the map + control bar (100vh = full height)
-					allowMapTypeToggle: false,				// Can the user switch between street view and satellite view
-					defaultStreetMapType: true, 					// Is street view the default view (true), or satellite (false)
-					allowStreetView: false,						// Whether to allow the user to zoom all the way into street view
-					mapOpacity: 0.8,							// How opaque the map is.  The lower this value, the more the backgorund
+					allowMapTypeToggle: settings.multiplex.map.config.allowChangeMapType,				// Can the user switch between street view and satellite view
+					defaultStreetMapType: settings.multiplex.map.config.useRoadmap, 					// Is street view the default view (true), or satellite (false)
+					allowStreetView: settings.multiplex.map.config.allowStreetView,						// Whether to allow the user to zoom all the way into street view
+					mapOpacity: settings.multiplex.map.config.mapOpacity,							// How opaque the map is.  The lower this value, the more the backgorund
 																	// image will bleed through (0 = hidden, 1 = fully opaque, 0.5 = half visible, etc...)
 					backgroundImage: settings.multiplex.map.config.backgroundImage,		// A repeating background image, or one that is the exact size of the map
 					visitedIconImage: settings.multiplex.map.config.visitedIcon,			// The URL of the icon to use for locations that have codes

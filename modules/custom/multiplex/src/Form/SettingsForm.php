@@ -51,6 +51,77 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("Page to redirect to if an unidentified visitor (no cookie set) goes to a random multiplex path. If empty, will pass through."),
       '#default_value' => $this->config('multiplex.settings')->get('unidentified_user_path'),
     ];
+
+    $form['map_link_prefix'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Base Link'),
+      '#description' => $this->t("The URL to open when the user clicks on a visited map icon.  The code for the icon will be appended"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_link_prefix') ? $this->config('multiplex.settings')->get('map_link_prefix') : 'https://g1a.io/'
+    ];
+    $form['map_visited_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Visited Label'),
+      '#description' => $this->t("The text label to show in the legend for the visited icon"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_visited_label') ? $this->config('multiplex.settings')->get('map_visited_label') : 'Visited'
+    ];
+    $form['map_unvisited_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Unvisited Label'),
+      '#description' => $this->t("The text label to show in the legend for the unvisited icon"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_unvisited_label') ? $this->config('multiplex.settings')->get('map_unvisited_label') : 'Unvisited'
+    ];
+    $form['map_center_lat'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Center Latitude'),
+      '#description' => $this->t("Center the map on this latitude"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_center_lat') ? $this->config('multiplex.settings')->get('map_center_lat') : 37.689846
+    ];
+    $form['map_center_lng'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Center Longitude'),
+      '#description' => $this->t("Center the map on this longitude"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_center_lng') ? $this->config('multiplex.settings')->get('map_center_lng') : -122.402881
+    ];
+    $form['map_default_zoom'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Default Zoom'),
+      '#description' => $this->t("The default zoom level for the map.  14 is about the size of Brisbane on a phone screen.  Larger numbers zoom furhter in."),
+      '#default_value' => $this->config('multiplex.settings')->get('map_default_zoom') ? $this->config('multiplex.settings')->get('map_default_zoom') : 14
+    ];
+    $form['map_open_links_in_new_window'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Map Open Links In New Window'),
+      '#description' => $this->t("Show inventory in a fixed display order, instead of by order of aquisition"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_open_links_in_new_window') ? $this->config('multiplex.settings')->get('map_open_links_in_new_window') : false
+    ];
+
+    $form['map_allow_type_toggle'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Map Allow Map Type Switching'),
+      '#description' => $this->t("Allow the user to switch between sattalite and roadmap types"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_allow_type_toggle') ? $this->config('multiplex.settings')->get('map_allow_type_toggle') : false
+    ];
+
+    $form['map_use_roadmap'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Map Use Roadmap By Default'),
+      '#description' => $this->t("Start the map in roadmap view, otherwise start in sattalite view"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_use_roadmap') ? $this->config('multiplex.settings')->get('map_use_roadmap') : false
+    ];
+
+    $form['map_allow_street_view'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Map Allow Street View'),
+      '#description' => $this->t("Allow the user to zoom all the way into street view (where you can virtually walk around)"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_allow_street_view') ? $this->config('multiplex.settings')->get('map_allow_street_view') : false
+    ];
+    $form['map_opacity'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Transparency Level'),
+      '#description' => $this->t("How opaque should the map be.  The less opaque, the more visible the background pattern will be.  0.8 = 80% visible."),
+      '#default_value' => $this->config('multiplex.settings')->get('map_opacity') ? $this->config('multiplex.settings')->get('map_opacity') : 0.8
+    ];
+
     $form['inventory_cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Cookie Name'),
@@ -118,36 +189,18 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('multiplex.settings')
-      ->set('cookie', $form_state->getValue('cookie'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('unidentified_user_path', $form_state->getValue('unidentified_user_path'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('inventory_cookie', $form_state->getValue('inventory_cookie'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('inventory_added_cookie', $form_state->getValue('inventory_added_cookie'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('inventory_fixed_order', $form_state->getValue('inventory_fixed_order'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('inventory_links_in_new_window', $form_state->getValue('inventory_links_in_new_window'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('inventory_wiggle_duration', $form_state->getValue('inventory_wiggle_duration'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('inventory_icon_width', $form_state->getValue('inventory_icon_width'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('inventory_icon_height', $form_state->getValue('inventory_icon_height'))
-      ->save();
-    $this->config('multiplex.settings')
-      ->set('inventory_update_frequency', $form_state->getValue('inventory_update_frequency'))
-      ->save();
+  	$form_fields = [
+  		'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
+  		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'map_link_prefix',
+  		'map_visited_label', 'map_unvisited_label', 'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window',
+  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity'
+  	];
+
+  	foreach ($form_field as $field) {
+      $this->config('multiplex.settings')
+        ->set($field, $form_state->getValue($field))
+        ->save();
+    }
 
     parent::submitForm($form, $form_state);
   }
