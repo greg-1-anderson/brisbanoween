@@ -42,8 +42,6 @@
 
 		grid-template-columns: 80px 1fr;
 		grid-gap: 5px;
-		justify-items: center;
-		align-items: center;
 		
 		border-bottom: 1px solid #000000;
 	}
