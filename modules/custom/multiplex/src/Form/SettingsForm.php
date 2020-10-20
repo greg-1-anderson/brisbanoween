@@ -189,12 +189,12 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-  	$form_fields = [
+  	$form_fields = array(
   		'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'map_link_prefix',
   		'map_visited_label', 'map_unvisited_label', 'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window',
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity'
-  	];
+  	);
 
   	foreach ($form_field as $field) {
       $this->config('multiplex.settings')
