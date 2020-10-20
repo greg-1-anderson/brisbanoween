@@ -309,7 +309,6 @@ class InventoryBox {
 	getInventory() {
 		// Get all the cookies
 		let cookies = this.getCookies();
-		console.log(cookies);
 
 		// Parse out the inventory cookie if we have one
 		let currentInventory = [];
@@ -416,7 +415,6 @@ class InventoryBox {
 		currentInventory.push(id);
 
 		// Update the cookie with the new inventory
-		console.log(this.i_config.cookie_name + "=" + encodeURIComponent(currentInventory.join(",")) + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT");
 		document.cookie = this.i_config.cookie_name + "=" + encodeURIComponent(currentInventory.join(",")) + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT";
 
 		// Update the last added timestamp so we know how long to wiggle for
@@ -449,7 +447,6 @@ class InventoryBox {
 		if (this.i_element != null) {
 			// Get the user's inventory
 			let currentInventory = this.getInventory();
-			console.log(currentInventory);
 
 			// Update if we're showing the inventory right now
 			this.i_bar.style.display = ((this.i_visible !== false && currentInventory.length > 0) ? "grid" : "none");
