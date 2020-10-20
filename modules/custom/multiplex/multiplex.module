@@ -38,22 +38,10 @@ function multiplex_get_visitor_cookie_value() {
 }
 
 /**
- * Attach our Javascript
+ * Get a map of all the possible inventory items and their associated display configuration
  */
-function multiplex_page_attachments(array &$page) {
-  //if (!\Drupal::currentUser()->hasPermission('some permission not yet defined')) {
-  //  return;
-  //}
-
-  $who = multiplex_get_visitor_cookie_value();
-  if (empty($who)) {
-    return;
-  }
-
-  $config = \Drupal::config('multiplex.settings');
-
-  $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
-  $inventory_items = [
+function getInventoryItems() {
+  return [
     'lantern' => [
       'url' => $base_path . 'images/objects/lantern.png',
       'alt' => 'The green spooky lantern of magic',
@@ -75,6 +63,54 @@ function multiplex_page_attachments(array &$page) {
       'fixed_order' => 4,
     ]
   ];
+}
+
+/**
+ *	Get an array of all the map locations to pin, and their associated code (if they should be treated as links)
+ */
+function getMapLocations() {
+  return [
+    [
+      "position" => [37.681823, -122.405767],
+      "code" => "spork"
+    ],
+    [
+      "position" => [37.680241, -122.403926],
+      "code" => "blacklight"
+    ],
+    [
+      "position" => [37.681767, -122.401551]
+    ],
+    [
+      "position" => [37.682960, -122.404706],
+      "code" => "warthog"
+    ],
+    [
+      "position" => [37.696488, -122.419449],
+      "code" => "sealion"
+    ],
+    [
+      "position" => [37.695850, -122.417633]
+    ]
+  ];
+}
+
+/**
+ * Attach our Javascript
+ */
+function multiplex_page_attachments(array &$page) {
+  //if (!\Drupal::currentUser()->hasPermission('some permission not yet defined')) {
+  //  return;
+  //}
+
+  $who = multiplex_get_visitor_cookie_value();
+  if (empty($who)) {
+    return;
+  }
+
+  $config = \Drupal::config('multiplex.settings');
+
+  $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
   
   $inventory_config = [
     'cookie_name' => 'myInventory',                           // The name of the cookie to store the inventory in
@@ -86,19 +122,25 @@ function multiplex_page_attachments(array &$page) {
   ];
 
   $inventory_enabled = true;
+  $inventory_items = getInventoryItems();
+  
   $map_enabled = false;
-
-  $current_path = \Drupal::service('path.current')->getPath();
   $mapLocations = [];
+
+  // See if this is the map page
+  $current_path = \Drupal::service('path.current')->getPath();
   if ($current_path == "/map") {
-    $inventory_enabled = false;		// dont show the inventory on the map screen
-    $map_enabled = true;		// do show the map interface though
+    // It is, so show the map, but dont show the inventory component
+    $inventory_enabled = false;
+    $map_enabled = true;
+    
+    // Get the pin locations
+    $mapLocations = getMapLocations();
+    
+    // Attach the google api script
     $page['#attached']['html_head'][] = [
-      // The data.
       [
-        // Add a <script> tag.
         '#tag' => 'script',
-        // Add JavaScript to the <script> tag.
         '#attributes' => [
         	'src' => "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY&callback=initMap",
         	'type' => "text/javascript",
@@ -110,35 +152,9 @@ function multiplex_page_attachments(array &$page) {
       // A key, to make it possible to recognize this HTML <HEAD> element when altering.
       'googleMapAPI'
     ];
-    
-    $mapLocations = [
-      [
-        "position" => [37.681823, -122.405767],
-        "code" => "spork"
-      ],
-      [
-        "position" => [37.680241, -122.403926],
-        "code" => "blacklight"
-      ],
-      [
-        "position" => [37.681767, -122.401551]
-      ],
-      [
-        "position" => [37.682960, -122.404706],
-        "code" => "warthog"
-      ],
-      [
-        "position" => [37.696488, -122.419449],
-        "code" => "sealion"
-      ],
-      [
-        "position" => [37.695850, -122.417633]
-      ]
-    ];
-    
   }
 
-
+  // Pass some values down the JS to configure the map and inventory displays
   $computed_settings = [
     'map' => [
       'enabled' => $map_enabled,
