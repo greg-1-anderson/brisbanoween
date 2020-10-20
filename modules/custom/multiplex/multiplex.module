@@ -85,19 +85,10 @@ function multiplex_page_attachments(array &$page) {
     'image_height' => 72
   ];
 
-
-  $computed_settings = [
-    'inventory' => [
-      'items' => $inventory_items,
-      'config' => $inventory_config
-    ] // $config->get('cookie'),
-  ];
-
-  $page['#attached']['library'][] = 'multiplex/multiplex';
-  $page['#attached']['drupalSettings']['multiplex'] = $computed_settings;
-  
   $current_path = \Drupal::service('path.current')->getPath();
+  $inventory_enabled = true;
   if ($current_path == "/map") {
+    $inventory_enabled = false;		// dont show the inventory on the map screen
     $page['#attached']['html_head'][] = [
       // The data.
       [
@@ -115,4 +106,16 @@ function multiplex_page_attachments(array &$page) {
       'googleMapAPI'
     ];
   }
+
+
+  $computed_settings = [
+    'inventory' => [
+      'items' => $inventory_items,
+      'config' => $inventory_config,
+      'enabled' => $inventory_enabled
+    ] // $config->get('cookie'),
+  ];
+
+  $page['#attached']['library'][] = 'multiplex/multiplex';
+  $page['#attached']['drupalSettings']['multiplex'] = $computed_settings;
 }
