@@ -2,10 +2,12 @@ multiplex:
   version: 1.x
   js:
     js/inventory.js: {}
+    js/map.js: {}
     js/multiplex.js: {}
   css:
     component:
       css/inventory.css: {}
+      css/map.css: {}
       css/multiplex.css: {}
   dependencies:
     - core/drupal

@@ -85,10 +85,13 @@ function multiplex_page_attachments(array &$page) {
     'image_height' => 72
   ];
 
-  $current_path = \Drupal::service('path.current')->getPath();
   $inventory_enabled = true;
+  $map_enabled = false;
+
+  $current_path = \Drupal::service('path.current')->getPath();
   if ($current_path == "/map") {
     $inventory_enabled = false;		// dont show the inventory on the map screen
+    $map_enabled = true;		// do show the map interface though
     $page['#attached']['html_head'][] = [
       // The data.
       [
@@ -109,6 +112,12 @@ function multiplex_page_attachments(array &$page) {
 
 
   $computed_settings = [
+    'map' => [
+      'enabled' => $map_enabled,
+      'backgroundImage' => $base_path . 'images/map_background.jpg',
+      'visitedIcon' => $base_path . 'images/visited.png',
+      'unvisitedIcon' => $base_path . 'images/unvisited.png'
+    ],
     'inventory' => [
       'items' => $inventory_items,
       'config' => $inventory_config,
