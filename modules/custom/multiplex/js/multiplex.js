@@ -17,7 +17,6 @@
 				}, 10);
 			}
 			if (context == document && settings.multiplex.map.enabled !== false) {
-				console.log(settings);
 				// Create the map
 				let myMap = new SpookyMap({
 					width: "100vw",							// The width of the map + control bar (100vw = full width)
