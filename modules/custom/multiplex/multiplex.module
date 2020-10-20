@@ -96,3 +96,10 @@ function multiplex_page_attachments(array &$page) {
   $page['#attached']['library'][] = 'multiplex/multiplex';
   $page['#attached']['drupalSettings']['multiplex'] = $computed_settings;
 }
+
+function multiplex_static_content_dirs() {
+  $dir = drupal_get_path('module', 'multiplex') . '/images';
+  return array(
+    $dir => array()
+  );
+}
