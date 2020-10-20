@@ -55,24 +55,24 @@ function multiplex_page_attachments(array &$page) {
   $basePath = "/" . drupal_get_path('module', 'multiplex') . "/";
   $items = [
     'lantern' => [
-      'url':$basePath . 'images/objects/lantern.png',
-      'alt':'The green spooky lantern of magic',
-      'fixed_order': 1,
+      'url' => $basePath . 'images/objects/lantern.png',
+      'alt' => 'The green spooky lantern of magic',
+      'fixed_order' => 1,
     ],
     'pumpkin' => [
-      'url':$basePath . 'images/objects/pumpkin.png',
-      'alt':'The enchanted pumpkin',
-      'fixed_order': 2,
+      'url' => $basePath . 'images/objects/pumpkin.png',
+      'alt' => 'The enchanted pumpkin',
+      'fixed_order' => 2,
     ],
     'top_hat' => [
-      'url':$basePath . 'images/objects/top_hat.png',
-      'alt':'A musty old hat',
-      'fixed_order': 3,
+      'url' => $basePath . 'images/objects/top_hat.png',
+      'alt' => 'A musty old hat',
+      'fixed_order' => 3,
     ],
     'old_key' => [
-      'url':$basePath . 'images/objects/old_key.png',
-      'alt':'A mysterious key, I wonder what it goes to',
-      'fixed_order': 4,
+      'url' => $basePath . 'images/objects/old_key.png',
+      'alt' => 'A mysterious key, I wonder what it goes to',
+      'fixed_order' => 4,
     ]
   ];
 
