@@ -3,7 +3,6 @@ multiplex:
   js:
     js/inventory.js: {}
     js/multiplex.js: {}
-    https://maps.googleapis.com/maps/api/js?key=AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY&callback=initMap: {}
   css:
     component:
       css/inventory.css: {}

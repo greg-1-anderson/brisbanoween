@@ -95,4 +95,17 @@ function multiplex_page_attachments(array &$page) {
 
   $page['#attached']['library'][] = 'multiplex/multiplex';
   $page['#attached']['drupalSettings']['multiplex'] = $computed_settings;
+  $page['#attached']['html_head'][] = [
+    // The data.
+    [
+      // Add a <script> tag.
+      '#tag' => 'script',
+      // Add JavaScript to the <script> tag.
+      '#value' => "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY&callback=initMap",
+      // Give weight so it appears after meta tags, etc.
+      '#weight' => -1,
+    ],
+    // A key, to make it possible to recognize this HTML <HEAD> element when altering.
+    'googleMapAPI'
+  ];
 }
