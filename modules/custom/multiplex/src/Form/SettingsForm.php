@@ -158,6 +158,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("How high should the inventory icons be"),
       '#default_value' => $this->config('multiplex.settings')->get('inventory_icon_height') ? $this->config('multiplex.settings')->get('inventory_icon_height') : '72'
     ];
+    $form['inventory_base_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Inventory Base URL'),
+      '#description' => $this->t("When an item is clicked in inventory, which has a link associated, this will be its prefix. It should have a trailing slash.  It can also be empty for absolute URLs."),
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_base_url') ? $this->config('multiplex.settings')->get('inventory_base_url') : ''
+    ];
     $form['inventory_update_frequency'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Update Frequency'),
@@ -185,7 +191,7 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
   	$form_fields = array(
   		'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
-  		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'map_link_prefix',
+  		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window',
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency'
   	);

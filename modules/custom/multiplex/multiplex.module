@@ -49,6 +49,7 @@ function getInventoryConfig() {
     'use_fixed_order' => $config->get('inventory_fixed_order') ? true : false,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
     'image_width' => intval($config->get('inventory_icon_width')),
     'image_height' => intval($config->get('inventory_icon_height')),
+    'link_base_url' => $config->get('inventory_base_url'),
     'open_links_in_new_window' => $config->get('inventory_links_in_new_window') ? true : false,
     'update_frequency' =>  intval($config->get('inventory_update_frequency'))
   ];
@@ -63,7 +64,6 @@ function getInventoryItems() {
     'lantern' => [
       'url' => $base_path . 'images/objects/lantern.png',
       'alt' => 'The green spooky lantern of magic',
-      'link' => 'http://www.gogole.com/woot',
       'fixed_order' => 1,
     ],
     'pumpkin' => [
