@@ -55,13 +55,13 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Cookie Name'),
       '#description' => $this->t("ID of cookie that contains the user's inventory."),
-      '#default_value' => $this->config('multiplex.settings')->get('inventory_cookie')
+      '#default_value' => 'STYXKEY_inventory'
     ];
     $form['inventory_added_cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Added Cookie Name'),
       '#description' => $this->t("ID of cookie that contains the unix timestamp (in milliseconds) of the last item added to inventory."),
-      '#default_value' => $this->config('multiplex.settings')->get('inventory_added_cookie')
+      '#default_value' => 'STYXKEY_inventory_added'
     ];
     return parent::buildForm($form, $form_state);
   }
@@ -87,6 +87,12 @@ class SettingsForm extends ConfigFormBase {
       ->save();
     $this->config('multiplex.settings')
       ->set('unidentified_user_path', $form_state->getValue('unidentified_user_path'))
+      ->save();
+    $this->config('multiplex.settings')
+      ->set('inventory_cookie', $form_state->getValue('inventory_cookie'))
+      ->save();
+    $this->config('multiplex.settings')
+      ->set('inventory_added_cookie', $form_state->getValue('inventory_added_cookie'))
       ->save();
 
     parent::submitForm($form, $form_state);
