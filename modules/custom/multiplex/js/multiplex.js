@@ -45,6 +45,10 @@
 					myMap.attach(document.body);
 				}
 
+				if (google != null && google.maps) {
+					initMap();
+				}
+
 			}
     }
   };
