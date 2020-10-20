@@ -93,6 +93,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("How high should the inventory icons be"),
       '#default_value' => $this->config('multiplex.settings')->get('inventory_icon_height') ? $this->config('multiplex.settings')->get('inventory_icon_height') : '72'
     ];
+    $form['inventory_update_frequency'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Inventory Update Frequency'),
+      '#description' => $this->t("How many seconds between inventory updates.  (0 = only update on page load)"),
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_update_frequency') ? $this->config('multiplex.settings')->get('inventory_update_frequency') : '0'
+    ];
     return parent::buildForm($form, $form_state);
   }
 
@@ -138,6 +144,9 @@ class SettingsForm extends ConfigFormBase {
       ->save();
     $this->config('multiplex.settings')
       ->set('inventory_icon_height', $form_state->getValue('inventory_icon_height'))
+      ->save();
+    $this->config('multiplex.settings')
+      ->set('inventory_update_frequency', $form_state->getValue('inventory_update_frequency'))
       ->save();
 
     parent::submitForm($form, $form_state);

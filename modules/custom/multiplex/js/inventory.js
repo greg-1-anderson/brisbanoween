@@ -531,6 +531,13 @@ class InventoryBox {
 
 			// Populate the widget with the user's inventory
 			this.updateInventoryWidget();
+
+			// If we have an update frequency, setup a timer to re-check the cookie contents
+			if (this.i_config.update_frequency > 0) {
+				setInterval(() => {
+					this.updateInventoryWidget();
+				}, this.i_config.update_frequency * 1000);
+			}
 		}
 		else {
 			// We have, which means we probably attached it somewhere else, so remove it from where ever that is
