@@ -1,10 +1,3 @@
-function Multiplex_static_content_dirs() {
-  $dir = drupal_get_path('module', 'Multiplex') . '/images';
-  return array(
-    $dir => array()
-  );
-}
-
 (function ($, Drupal) {
   Drupal.behaviors.myModuleBehavior = {
     attach: function (context, settings) {
