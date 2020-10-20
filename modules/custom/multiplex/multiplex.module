@@ -105,7 +105,7 @@ function multiplex_page_attachments(array &$page) {
       	'src' => "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY&callback=initMap",
       	'type' => "text/javascript",
       	'defer' => NULL
-      },
+      ],
       // Give weight so it appears after meta tags, etc.
       '#weight' => -1,
     ],
