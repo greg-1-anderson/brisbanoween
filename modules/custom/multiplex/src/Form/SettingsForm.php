@@ -64,18 +64,6 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("The URL to open when the user clicks on a visited map icon.  The code for the icon will be appended"),
       '#default_value' => $this->config('multiplex.settings')->get('map_link_prefix') ? $this->config('multiplex.settings')->get('map_link_prefix') : 'https://g1a.io/'
     ];
-    $form['map_visited_label'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Map Visited Label'),
-      '#description' => $this->t("The text label to show in the legend for the visited icon"),
-      '#default_value' => $this->config('multiplex.settings')->get('map_visited_label') ? $this->config('multiplex.settings')->get('map_visited_label') : 'Visited'
-    ];
-    $form['map_unvisited_label'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Map Unvisited Label'),
-      '#description' => $this->t("The text label to show in the legend for the unvisited icon"),
-      '#default_value' => $this->config('multiplex.settings')->get('map_unvisited_label') ? $this->config('multiplex.settings')->get('map_unvisited_label') : 'Unvisited'
-    ];
     $form['map_center_lat'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Map Center Latitude'),
@@ -198,7 +186,7 @@ class SettingsForm extends ConfigFormBase {
   	$form_fields = array(
   		'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'map_link_prefix',
-  		'map_visited_label', 'map_unvisited_label', 'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window',
+  		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window',
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency'
   	);
 

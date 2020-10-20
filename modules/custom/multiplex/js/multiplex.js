@@ -32,9 +32,6 @@
 					unvisitedIconImage: settings.multiplex.map.config.unvisitedIcon,		// The URL of the icon to use for locations without codes
 					linkBaseURL: settings.multiplex.map.config.linkPrefix,				// The URL to prefix codes with when creating links
 
-					visitedName: settings.multiplex.map.config.visitedName,						// What to call unvisited locations in the legend
-					unvisitedName: settings.multiplex.map.config.unvisitedName,					// What to call visited locations in the legend
-
 					centerMapPosition: settings.multiplex.map.config.centerPosition,		// Where to center the map
 					defaultZoomLevel: settings.multiplex.map.config.zoomLevel,					// How close to zoom in, the higher the closer to street level it will zoom
 
