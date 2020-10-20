@@ -101,13 +101,3 @@ function multiplex_requirements($phase) {
 
   return $requirements;
 }
-
-/**
- * Implements multiplex_static_content_dirs().
- */
-function multiplex_static_content_dirs() {
-  $dir = drupal_get_path('module', 'Multiplex') . '/images';
-  return array(
-    $dir => array()
-  );
-}
