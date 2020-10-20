@@ -52,7 +52,7 @@ class MultiplexController extends ControllerBase {
    */
   public function map() {
     return [
-      '#markup' => 'Hello, world',
+      '#markup' => 'Opening map, please wait...',
     ];
   }
 
