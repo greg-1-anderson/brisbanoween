@@ -49,7 +49,7 @@ function getInventoryConfig() {
     'use_fixed_order' => $config->get('inventory_fixed_order') ? true : false,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
     'image_width' => $config->get('inventory_icon_width'),
     'image_height' => $config->get('inventory_icon_height'),
-    'open_links_in_new_window' => $config->get('inventory_links_in_new_window')
+    'open_links_in_new_window' => $config->get('inventory_links_in_new_window') ? true : false
   ];
 }
 
