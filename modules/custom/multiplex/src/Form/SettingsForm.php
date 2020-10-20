@@ -55,37 +55,37 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Cookie Name'),
       '#description' => $this->t("ID of cookie that contains the user's inventory."),
-      '#default_value' => 'STYXKEY_inventory'
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_cookie') ? $this->config('multiplex.settings')->get('inventory_cookie') : 'STYXKEY_inventory'
     ];
     $form['inventory_added_cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Added Cookie Name'),
       '#description' => $this->t("ID of cookie that contains the unix timestamp (in milliseconds) of the last item added to inventory."),
-      '#default_value' => 'STYXKEY_inventory_added'
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_added_cookie') ? $this->config('multiplex.settings')->get('inventory_added_cookie') : 'STYXKEY_inventory_added'
     ];
     $form['inventory_fixed_order'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Inventory Fixed Display Order'),
       '#description' => $this->t("Show inventory in a fixed display order, instead of by order of aquisition"),
-      '#default_value' => true
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_fixed_order') ? $this->config('multiplex.settings')->get('inventory_fixed_order') : true
     ];
     $form['inventory_wiggle_duration'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory New Item Wiggle Duration'),
       '#description' => $this->t("How many milliseconds after an item is aquired, should it wiggle in the inventory panel"),
-      '#default_value' => '120000'
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_wiggle_duration') ? $this->config('multiplex.settings')->get('inventory_wiggle_duration') : '120000'
     ];
     $form['inventory_icon_width'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Icon Width'),
       '#description' => $this->t("How wide should the inventory icons be"),
-      '#default_value' => '72'
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_icon_width') ? $this->config('multiplex.settings')->get('inventory_icon_width') : '72'
     ];
     $form['inventory_icon_height'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Icon Height'),
       '#description' => $this->t("How high should the inventory icons be"),
-      '#default_value' => '72'
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_icon_height') ? $this->config('multiplex.settings')->get('inventory_icon_height') : '72'
     ];
     return parent::buildForm($form, $form_state);
   }
