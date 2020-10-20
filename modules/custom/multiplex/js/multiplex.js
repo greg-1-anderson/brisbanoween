@@ -16,22 +16,22 @@
         // Map of items
         {
           'lantern':{
-            'url':'./modules/custom/multiplex/images/objects/lantern.png',
+            'url':'/modules/custom/multiplex/images/objects/lantern.png',
             'alt':'The green spooky lantern of magic',
             'fixed_order': 1,
           },
           'pumpkin':{
-            'url':'./modules/custom/multiplex/images/objects/pumpkin.png',
+            'url':'/modules/custom/multiplex/images/objects/pumpkin.png',
             'alt':'The enchanted pumpkin',
             'fixed_order': 2,
           },
           'top_hat':{
-            'url':'./modules/custom/multiplex/images/objects/top_hat.png',
+            'url':'/modules/custom/multiplex/images/objects/top_hat.png',
             'alt':'A musty old hat',
             'fixed_order': 3,
           },
           'old_key':{
-            'url':'./modules/custom/multiplex/images/objects/old_key.png',
+            'url':'/modules/custom/multiplex/images/objects/old_key.png',
             'alt':'A mysterious key, I wonder what it goes to',
             'fixed_order': 4,
           },
