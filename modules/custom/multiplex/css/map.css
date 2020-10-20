@@ -2,7 +2,7 @@
 .SpookyMapLegendItem {
 	display: inline-grid;
 	grid-template-columns: auto auto;
-	grid-gap: 10px;
+	grid-gap: 5px;
 	align-items: center;
 	justify-items: center;
 }
@@ -20,6 +20,7 @@
 		color: #000000;
 		font-family: Arial;
 		font-size: 20px;
+		padding-right: 20px;
 	}
 
 /* The main wrapper for the controls and the map */
@@ -36,6 +37,7 @@
 		display: grid;
 		height: 30px;
 		padding: 10px;
+		padding-right: 0px;
 		background-color: #fb6205;
 
 		grid-template-columns: 80px 1fr;
