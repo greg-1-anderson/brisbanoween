@@ -46,7 +46,7 @@ class SpookyMap {
 					this.i_marker_cache[x].marker = new google.maps.Marker({
 						position: { lat: locations[x].position[0], lng: locations[x].position[1] },
 						map: this.i_map,
-						icon: (locations[x].code ? "./visited.png" : "./unvisited.png")
+						icon: (locations[x].code ? this.i_config.visitedIconImage : this.i_config.unvisitedIconImage)
 					});
 
 					// Setup the click handler to redirect the browser (or open a window)
@@ -65,7 +65,7 @@ class SpookyMap {
 				else {
 					// We already had a marker, so move it to the new location
 					this.i_marker_cache[x].marker.setPosition(new google.maps.LatLng(locations[x].position[0], locations[x].position[1]));
-					this.i_marker_cache[x].marker.setIcon(locations[x].code ? "./visited.png" : "./unvisited.png");
+					this.i_marker_cache[x].marker.setIcon(locations[x].code ? this.i_config.visitedIconImage : this.i_config.unvisitedIconImage);
 					this.i_marker_cache[x].marker.setMap(this.i_map);
 				}
 			}
