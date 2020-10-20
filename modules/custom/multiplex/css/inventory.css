@@ -1,0 +1,161 @@
+/* Container used to position the information dialog when a user opens an inventory item */
+.DialogWidget {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+
+	/* DIV that provides layout and background styling to the information dialog contents */
+	.DialogWidget_body {
+		display: grid;
+
+		margin: 20px;
+		padding: 20px;
+		border-radius: 10px;
+		background-color: #FFFFFF;
+		border: 1px solid #000000;
+		text-align: center;
+
+		grid-template-rows: auto auto auto;
+		grid-gap: 20px;
+		
+		justify-items: center;
+		
+		box-shadow: 3px 3px 5px 6px rgba(0,0,0,0.2); 
+	}
+	
+		/* DIV that contains the item description in the information dialog */
+		.DialogWidget_text {
+			font-size: 25px;
+			color: #888888;
+			font-weight: bold;
+		}
+
+		/* The close button in the information dialog */
+		.DialogWidget_close {
+			font-family: Arial;
+			font-size: 20px;
+			color: #777777;
+			cursor: pointer;
+			width: 100px;
+		}
+
+/* The DIV that groups the visible inventory bar, and the button we show when its closed */
+.InventoryBox {
+
+}
+
+	/* The DIV that contains the button we show when the inventory bar is closed */
+	.InventoryBox_show_wrapper {
+		display: grid;
+		position: fixed;
+		bottom: 0;
+		right: 0;
+		border-top: 1px solid #000000;
+		border-left: 1px solid rgb(133, 80, 40);	
+		cursor: pointer;	
+
+		background-color: #f5b510;
+
+		grid-template-rows: 1fr auto;
+		grid-gap: 5px;
+		padding: 10px;
+	}
+
+		/* The DIV that contains the inventory open/close icon image */
+		.InventoryBox_show_image, .InventoryBox_hide_image {
+			background:  url(./sack.png) center center no-repeat;
+			background-size: 42px 42px;
+			min-height: 40px;
+		}
+
+		/* The DIV that contains the inventory open/close label text */		
+		.InventoryBox_show_arrow, .InventoryBox_hide_arrow  {
+			font-family: Arial;
+			font-size: 15px;
+			color: #000000;
+			text-align: center;
+			font-weight: bold;
+		}
+
+
+	/* The DIV that contains the visible inventory bar when it's open */
+	.InventoryBox_bar {
+		display: grid;
+		position: fixed;
+		bottom: 0;
+		right: 0;
+
+		background-color: #fb6205;
+		border-top: 1px solid #000000;
+		border-left: 1px solid #000000;
+
+		grid-template-columns: 1fr auto;
+		
+		width: 100%;
+	}
+
+		/* The DIV that contains the close button when the inventory bar is open.  The styles of the inner close button
+		   are the same as the open button, so they arent repeated here */
+		.InventoryBox_hide_wrapper {
+			display: grid;
+			background: #f5b510;
+			border-left: 1px solid rgb(133, 80, 40);
+
+			grid-template-rows: 1fr auto;
+			grid-gap: 5px;
+			padding: 10px;
+			
+			cursor: pointer;
+		}
+
+		/* The DIV that contains all the item IMG elements */
+		.InventoryBox_images {
+			padding: 10px;
+			text-align: center;
+		}
+
+			/* The IMG element used to show an inventory item */
+			.InventoryBoxItem {
+				margin-left: 5px;
+				margin-right: 5px;
+			}
+
+			/* The wiggle animation.  This causes the IMG to rotate 10 degrees right, then left, twice, then a pause. */
+			@keyframes wiggle {
+				0% {
+					transform: rotate(0deg);
+				}
+				5% {
+					transform: rotate(10deg);
+				}
+				10% {
+					transform: rotate(0deg);
+				}
+				15% {
+					transform: rotate(-10deg);
+				}
+				20% {
+					transform: rotate(0deg);
+				}
+				25% {
+					transform: rotate(10deg);
+				}
+				30% {
+					transform: rotate(0deg);
+				}
+				35% {
+					transform: rotate(-10deg);
+				}
+				40% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(0deg);
+				}
+			}
+
+			/* The style added to an inventory IMG if it was added recently */
+			.InventoryBoxItem_wiggle {
+				animation: wiggle 1s linear infinite;
+			}
