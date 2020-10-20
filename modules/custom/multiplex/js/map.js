@@ -87,14 +87,14 @@ class SpookyMap {
 				this.i_legend_cache[x].setIcon(this.i_legend[x].icon);
 
 				if (this.i_legend_cache[x].i_attached != true) {
-					this.i_legend_box.appendChild(this.i_legend_cache[x]);
+					this.i_legend_box.appendChild(this.i_legend_cache[x].getElement());
 					this.i_legend_cache[x].i_attached = true;
 				}
 			}
 			for (x; x < this.i_legend_cache.length; x++) {
 				if (this.i_legend_cache[x].i_attached) {
 					this.i_legend_cache[x].i_attached = false;
-					this.i_legend_box.removeChild(this.i_legend_cache[x]);
+					this.i_legend_box.removeChild(this.i_legend_cache[x].getElement());
 				}
 			}
 		}
