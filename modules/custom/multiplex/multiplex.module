@@ -89,6 +89,7 @@ function multiplex_page_attachments(array &$page) {
   $map_enabled = false;
 
   $current_path = \Drupal::service('path.current')->getPath();
+  $mapLocations = [];
   if ($current_path == "/map") {
     $inventory_enabled = false;		// dont show the inventory on the map screen
     $map_enabled = true;		// do show the map interface though
@@ -109,6 +110,32 @@ function multiplex_page_attachments(array &$page) {
       // A key, to make it possible to recognize this HTML <HEAD> element when altering.
       'googleMapAPI'
     ];
+    
+    $mapLocations = [
+      [
+        "position" => [37.681823, -122.405767],
+        "code" => "spork"
+      ],
+      [
+        "position" => [37.680241, -122.403926],
+        "code" => "blacklight"
+      ],
+      [
+        "position" => [37.681767, -122.401551]
+      ],
+      [
+        "position" => [37.682960, -122.404706],
+        "code" => "warthog"
+      ],
+      [
+        "position" => [37.696488, -122.419449],
+        "code" => "sealion"
+      ],
+      [
+        "position" => [37.695850, -122.417633]
+      ]
+    ];
+    
   }
 
 
@@ -117,7 +144,8 @@ function multiplex_page_attachments(array &$page) {
       'enabled' => $map_enabled,
       'backgroundImage' => $base_path . 'images/map_background.jpg',
       'visitedIcon' => $base_path . 'images/visited.png',
-      'unvisitedIcon' => $base_path . 'images/unvisited.png'
+      'unvisitedIcon' => $base_path . 'images/unvisited.png',
+      'locations' => $mapLocations
     ],
     'inventory' => [
       'items' => $inventory_items,

@@ -43,6 +43,8 @@
 				// Google callback to initialize map contents (in our case, this is when we attach our map)
 				window.initMap = () => {
 					myMap.attach(document.body);
+
+					myMap.setLocations(settings.multiplex.map.locations);
 				}
 
 				if (google != null && google.maps) {
