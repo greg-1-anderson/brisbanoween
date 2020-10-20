@@ -21,7 +21,7 @@ class SpookyMap {
 	 *	@param {Object[]} legendItems the array of legend data
 	 */
 	setLegend(legendItems) {
-		this.i_legend = i_legend;
+		this.i_legend = legendItems;
 		this.updateLegend();
 	}
 
