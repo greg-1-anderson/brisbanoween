@@ -1,6 +1,8 @@
 (function ($, Drupal) {
   Drupal.behaviors.myModuleBehavior = {
     attach: function (context, settings) {
+      console.log(context, settings);
+
       // Create the inventory widget
       let inventoryBox = new InventoryBox(
       // Configuration
