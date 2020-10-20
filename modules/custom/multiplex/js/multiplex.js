@@ -41,7 +41,7 @@
 				});
 
 				// Google callback to initialize map contents (in our case, this is when we attach our map)
-				function initMap() {
+				window.initMap = () => {
 					myMap.attach(document.body);
 				}
 
