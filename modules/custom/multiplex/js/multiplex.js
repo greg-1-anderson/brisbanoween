@@ -6,7 +6,7 @@
         //$('body').append('<div style="background-color: orange; position: fixed; bottom: 0px;"><h1>Inventory: ' + objects + '</h1></div>')
       //}
       let elem = document.createElement('DIV');
-      elem.innerHTML = "Hello world";
+      elem.innerHTML = "Hello world 2";
       $('body').append(elem);
     }
   };
