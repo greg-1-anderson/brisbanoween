@@ -50,32 +50,10 @@
 		.SpookyMap_legend {
 			text-align: right;
 		}
-
-		/* The icon in the legend for visited locations */
-		.SpookyMap_legend_visited {
-			width: 26px;
-			height: 26px;
-		}
-
-		/* The icon in the legend for unvisited locations */
-		.SpookyMap_legend_unvisited {
-			width: 26px;
-			height: 26px;
-		}
-
-		/* The labels in the legend */
-		.SpookyMap_legend_visited_label, .SpookyMap_legend_unvisited_label {
-			font-family: Arial;
-			font-size: 20px;
-			color: #000000;
-			line-height: 26px;
-			vertical-align: middle;
-			font-weight: bold;
-		}
-
-		/* The visited label, to add extra space before the unvisited legend item */
-		.SpookyMap_legend_visited_label {
-			padding-right: 20px;
+	
+		/* The back button */
+		.SpookyMap_button {
+			background: url(../images/back.png) center center no-repeat;
 		}
 		
 	/* Make the background scroll up and to the left */

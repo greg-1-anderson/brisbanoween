@@ -180,7 +180,7 @@ class SpookyMap {
 
 					// The back button
 					this.i_back_button = document.createElement('BUTTON');
-					this.i_back_button.innerHTML = "< Back";
+					this.i_back_button.className = "SpookyMap_button";
 					this.i_back_button.addEventListener("click", () => {
 						history.go(-1);
 					});
