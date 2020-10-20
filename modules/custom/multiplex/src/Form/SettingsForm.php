@@ -63,6 +63,30 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("ID of cookie that contains the unix timestamp (in milliseconds) of the last item added to inventory."),
       '#default_value' => 'STYXKEY_inventory_added'
     ];
+    $form['inventory_fixed_order'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Inventory Fixed Display Order'),
+      '#description' => $this->t("Show inventory in a fixed display order, instead of by order of aquisition"),
+      '#default_value' => true
+    ];
+    $form['inventory_wiggle_duration'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Inventory New Item Wiggle Duration'),
+      '#description' => $this->t("How many milliseconds after an item is aquired, should it wiggle in the inventory panel"),
+      '#default_value' => '120000'
+    ];
+    $form['inventory_icon_width'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Inventory Icon Width'),
+      '#description' => $this->t("How wide should the inventory icons be"),
+      '#default_value' => '72'
+    ];
+    $form['inventory_icon_height'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Inventory Icon Height'),
+      '#description' => $this->t("How high should the inventory icons be"),
+      '#default_value' => '72'
+    ];
     return parent::buildForm($form, $form_state);
   }
 
@@ -93,6 +117,18 @@ class SettingsForm extends ConfigFormBase {
       ->save();
     $this->config('multiplex.settings')
       ->set('inventory_added_cookie', $form_state->getValue('inventory_added_cookie'))
+      ->save();
+    $this->config('multiplex.settings')
+      ->set('inventory_fixed_order', $form_state->getValue('inventory_fixed_order'))
+      ->save();
+    $this->config('multiplex.settings')
+      ->set('inventory_wiggle_duration', $form_state->getValue('inventory_wiggle_duration'))
+      ->save();
+    $this->config('multiplex.settings')
+      ->set('inventory_icon_width', $form_state->getValue('inventory_icon_width'))
+      ->save();
+    $this->config('multiplex.settings')
+      ->set('inventory_icon_height', $form_state->getValue('inventory_icon_height'))
       ->save();
 
     parent::submitForm($form, $form_state);
