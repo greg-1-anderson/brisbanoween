@@ -1,3 +1,27 @@
+/* The container for 1 legend item */
+.SpookyMapLegendItem {
+	display: inline-grid;
+	grid-template-columns: auto auto;
+	grid-gap: 10px;
+	align-items: center;
+	justify-items: center;
+}
+
+	/* The legend icon */
+	.SpookyMapLegendItem_image {
+		width: 24px;
+		height: 24px;
+	}
+
+	/* The legend label */
+	.SpookyMapLegendItem_label {
+		white-space: nowrap;
+		font-weight: bold;
+		color: #000000;
+		font-family: Arial;
+		font-size: 20px;
+	}
+
 /* The main wrapper for the controls and the map */
 .SpookyMap {
 	position: fixed;
@@ -14,11 +38,16 @@
 		padding: 10px;
 		background-color: #fb6205;
 
-		grid-template-columns: 80px 1fr 26px auto 26px auto;
+		grid-template-columns: 80px 1fr;
 		grid-gap: 5px;
 		
 		border-bottom: 1px solid #000000;
 	}
+		
+		/* The box that contains the legend */
+		.SpookyMap_legend {
+			text-align: right;
+		}
 
 		/* The icon in the legend for visited locations */
 		.SpookyMap_legend_visited {

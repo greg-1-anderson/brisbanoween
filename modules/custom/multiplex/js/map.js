@@ -1,3 +1,39 @@
+class SpookyMapLegendItem {
+	setName(name) {
+		this.i_name = name;
+		this.update();
+	}
+
+	setIcon(url) {
+		this.i_icon = url;
+		this.update();
+	}
+
+	update() {
+		if (this.i_element != null) {
+			this.i_icon.src = this.i_icon;
+			this.i_label.innerHTML = this.i_name;
+		}
+	}
+
+	getElement() {
+		if (this.i_element == null) {
+			this.i_element = document.createElement('DIV');
+			this.i_element.className = "SpookyMapLegendItem";
+
+				this.i_icon = document.createElement('IMG');
+				this.i_icon.className = "SpookyMapLegendItem_image";
+				this.i_element.appendChild(this.i_icon);
+
+				this.i_label = document.createElement('DIV');
+				this.i_label.className = "SpookyMapLegendItem_label";
+				this.i_element.appendChild(this.i_label);
+
+			this.update();
+		}
+	}
+}
+
 /**
  *	SpookyMap
  *	This component creates a google map with spooky undertones.  It pins visited and unvisited locations that are
@@ -13,6 +49,7 @@ class SpookyMap {
 		this.i_config = config;
 
 		this.i_marker_cache = [];
+		this.i_legend_cache = [];
 	}
 
 	/**
@@ -40,8 +77,26 @@ class SpookyMap {
 	 *	Update the items in the legend
 	 */
 	updateLegend() {
-		if (this.i_map != null) {
+		if (this.i_map != null && this.i_legend != null) {
+			let x = 0;
+			for (x; x < this.i_legend.length; x++) {
+				if (this.i_legend_cache[x] == null) {
+					this.i_legend_cache[x] = new SpookyMapLegendItem();
+				}
+				this.i_legend_cache[x].setName(this.i_legend[x].name);
+				this.i_legend_cache[x].setIcon(this.i_legend[x].icon);
 
+				if (this.i_legend_cache[x].i_attached != true) {
+					this.i_legend_box.appendChild(this.i_legend_cache[x]);
+					this.i_legend_cache[x].i_attached = true;
+				}
+			}
+			for (x; x < this.i_legend_cache.length; x++) {
+				if (this.i_legend_cache[x].i_attached) {
+					this.i_legend_cache[x].i_attached = false;
+					this.i_legend_box.removeChild(this.i_legend_cache[x]);
+				}
+			}
 		}
 	}
 
@@ -55,6 +110,12 @@ class SpookyMap {
 		if (this.i_map != null) {
 			// Get the locations
 			let locations = this.i_locations ? this.i_locations : [];
+			let legend = this.i_legend ? this.i_legend : [];
+			let legendMap = {};
+			for (let x = 0; x < legend.length; x++) {
+				legendMap[legend[x].id] = legend[x];
+			}
+
 
 			// For each visible locations
 			let x = 0;
@@ -66,13 +127,13 @@ class SpookyMap {
 					this.i_marker_cache[x].marker = new google.maps.Marker({
 						position: { lat: locations[x].position[0], lng: locations[x].position[1] },
 						map: this.i_map,
-						icon: (locations[x].code ? this.i_config.visitedIconImage : this.i_config.unvisitedIconImage)
+						icon: legendMap[locations[x].state].icon
 					});
 
 					// Setup the click handler to redirect the browser (or open a window)
 					let locationIndex = x;
 					this.i_marker_cache[x].marker.addListener("click", () => {
-						if (locations[locationIndex].code != null) {
+						if (locations[locationIndex].usable == true) {
 							if (this.i_config.openLinksInNewWindow) {
 								window.open(this.i_config.linkBaseURL + locations[locationIndex].code);
 							}
@@ -85,7 +146,7 @@ class SpookyMap {
 				else {
 					// We already had a marker, so move it to the new location
 					this.i_marker_cache[x].marker.setPosition(new google.maps.LatLng(locations[x].position[0], locations[x].position[1]));
-					this.i_marker_cache[x].marker.setIcon(locations[x].code ? this.i_config.visitedIconImage : this.i_config.unvisitedIconImage);
+					this.i_marker_cache[x].marker.setIcon(legendMap[locations[x].state].icon);
 					this.i_marker_cache[x].marker.setMap(this.i_map);
 				}
 			}
@@ -124,34 +185,10 @@ class SpookyMap {
 					});
 					this.i_controls.appendChild(this.i_back_button);
 
-					// Spacer between back button and legend
-					this.i_spacer = document.createElement('DIV');
-					this.i_spacer.className = "SpookyMap_spacer";
-					this.i_controls.appendChild(this.i_spacer);
-
-					// Legend visited icon
-					this.i_legend_visited = document.createElement('IMG');
-					this.i_legend_visited.className = "SpookyMap_legend_visited";
-					this.i_legend_visited.src = this.i_config.visitedIconImage;
-					this.i_controls.appendChild(this.i_legend_visited);
-
-					// Legend visited label
-					this.i_legend_visited_label = document.createElement('DIV');
-					this.i_legend_visited_label.className = "SpookyMap_legend_visited_label";
-					this.i_legend_visited_label.innerHTML = this.i_config.visitedName;
-					this.i_controls.appendChild(this.i_legend_visited_label);
-
-					// Legend unvisted icon
-					this.i_legend_unvisited = document.createElement('IMG');
-					this.i_legend_unvisited.className = "SpookyMap_legend_unvisited";
-					this.i_legend_unvisited.src = this.i_config.unvisitedIconImage;
-					this.i_controls.appendChild(this.i_legend_unvisited);
-
-					// Legend unvisited label
-					this.i_legend_unvisited_label = document.createElement('DIV');
-					this.i_legend_unvisited_label.className = "SpookyMap_legend_unvisited_label";
-					this.i_legend_unvisited_label.innerHTML = this.i_config.unvisitedName;
-					this.i_controls.appendChild(this.i_legend_unvisited_label);
+					// Legend
+					this.i_legend_box = document.createElement('DIV');
+					this.i_legend_box.className = "SpookyMap_legend";
+					this.i_controls.appendChild(this.i_legend_box);
 
 				// Wrapper that contains the background for the map
 				this.i_map_wrapper = document.createElement('DIV');
