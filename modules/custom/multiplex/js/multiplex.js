@@ -28,8 +28,6 @@
 					mapOpacity: settings.multiplex.map.config.mapOpacity,							// How opaque the map is.  The lower this value, the more the backgorund
 																	// image will bleed through (0 = hidden, 1 = fully opaque, 0.5 = half visible, etc...)
 					backgroundImage: settings.multiplex.map.config.backgroundImage,		// A repeating background image, or one that is the exact size of the map
-					visitedIconImage: settings.multiplex.map.config.visitedIcon,			// The URL of the icon to use for locations that have codes
-					unvisitedIconImage: settings.multiplex.map.config.unvisitedIcon,		// The URL of the icon to use for locations without codes
 					linkBaseURL: settings.multiplex.map.config.linkPrefix,				// The URL to prefix codes with when creating links
 
 					centerMapPosition: settings.multiplex.map.config.centerPosition,		// Where to center the map
