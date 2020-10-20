@@ -31,6 +31,7 @@ class SpookyMapLegendItem {
 
 			this.update();
 		}
+		return this.i_element;
 	}
 }
 
