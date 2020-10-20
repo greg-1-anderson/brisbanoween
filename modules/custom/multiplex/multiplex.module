@@ -41,6 +41,7 @@ function multiplex_get_visitor_cookie_value() {
  * Get a map of all the possible inventory items and their associated display configuration
  */
 function getInventoryItems() {
+  $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
   return [
     'lantern' => [
       'url' => $base_path . 'images/objects/lantern.png',
@@ -96,6 +97,38 @@ function getMapLocations() {
 }
 
 /**
+ * Get the display configuration for the inventory component
+ */
+function getInventoryConfig() {
+  return [
+    'cookie_name' => 'myInventory',                           // The name of the cookie to store the inventory in
+    'last_item_added_cookie_name' => 'myInventory_added',     // The name of the cookie to store hte last added timestamp in
+    'wiggle_duration_ms' => 120000,                           // How many milliseconds after aquiring an item should it wiggle (0 = disabled)
+    'use_fixed_order' => true,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
+    'image_width' => 72,
+    'image_height' => 72
+  ];
+}
+
+function getMapConfig() {
+  $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
+  return [
+    'backgroundImage' => $base_path . 'images/map_background.jpg',
+    'visitedIcon' => $base_path . 'images/visited.png',
+    'unvisitedIcon' => $base_path . 'images/unvisited.png',
+    'linkPrefix' => 'https://g1a.io/',
+    'visitedName' => 'Visited',
+    'unvisitedName' => 'Unvisited',
+    'centerPosition' => [
+      'lat' => 37.689846,
+      'lng' => -122.402881
+    ],
+    'zoomLevel':14,
+    'openLinksInNewWindow': false
+  ];
+}
+
+/**
  * Attach our Javascript
  */
 function multiplex_page_attachments(array &$page) {
@@ -109,21 +142,8 @@ function multiplex_page_attachments(array &$page) {
   }
 
   $config = \Drupal::config('multiplex.settings');
-
-  $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
   
-  $inventory_config = [
-    'cookie_name' => 'myInventory',                           // The name of the cookie to store the inventory in
-    'last_item_added_cookie_name' => 'myInventory_added',     // The name of the cookie to store hte last added timestamp in
-    'wiggle_duration_ms' => 120000,                           // How many milliseconds after aquiring an item should it wiggle (0 = disabled)
-    'use_fixed_order' => true,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
-    'image_width' => 72,
-    'image_height' => 72
-  ];
-
   $inventory_enabled = true;
-  $inventory_items = getInventoryItems();
-  
   $map_enabled = false;
   $mapLocations = [];
 
@@ -158,14 +178,12 @@ function multiplex_page_attachments(array &$page) {
   $computed_settings = [
     'map' => [
       'enabled' => $map_enabled,
-      'backgroundImage' => $base_path . 'images/map_background.jpg',
-      'visitedIcon' => $base_path . 'images/visited.png',
-      'unvisitedIcon' => $base_path . 'images/unvisited.png',
+      'config' => getMapConfig(),
       'locations' => $mapLocations
     ],
     'inventory' => [
-      'items' => $inventory_items,
-      'config' => $inventory_config,
+      'items' => getInventoryItems(),
+      'config' => getInventoryConfig(),
       'enabled' => $inventory_enabled
     ] // $config->get('cookie'),
   ];
