@@ -9,8 +9,8 @@
 
 	/* The legend icon */
 	.SpookyMapLegendItem_image {
-		width: 24px;
-		height: 24px;
+		width: 18px;
+		height: 18px;
 	}
 
 	/* The legend label */
@@ -19,8 +19,8 @@
 		font-weight: bold;
 		color: #000000;
 		font-family: Arial;
-		font-size: 20px;
-		padding-right: 20px;
+		font-size: 16px;
+		padding-right: 14px;
 	}
 
 /* The main wrapper for the controls and the map */
@@ -35,13 +35,15 @@
 	/* The control bar */
 	.SpookyMap_controls {
 		display: grid;
-		min-height: 30px;
+		min-height: 20px;
 		padding: 10px;
 		padding-right: 0px;
 		background-color: #fb6205;
 
 		grid-template-columns: 80px 1fr;
 		grid-gap: 5px;
+		justify-items: center;
+		align-items: center;
 		
 		border-bottom: 1px solid #000000;
 	}
