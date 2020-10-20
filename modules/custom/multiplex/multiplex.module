@@ -48,7 +48,8 @@ function getInventoryConfig() {
     'wiggle_duration_ms' => $config->get('inventory_wiggle_duration'),                           // How many milliseconds after aquiring an item should it wiggle (0 = disabled)
     'use_fixed_order' => $config->get('inventory_fixed_order') ? true : false,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
     'image_width' => $config->get('inventory_icon_width'),
-    'image_height' => $config->get('inventory_icon_height')
+    'image_height' => $config->get('inventory_icon_height'),
+    'open_links_in_new_window' => $config->get('inventory_links_in_new_window')
   ];
 }
 
@@ -61,6 +62,7 @@ function getInventoryItems() {
     'lantern' => [
       'url' => $base_path . 'images/objects/lantern.png',
       'alt' => 'The green spooky lantern of magic',
+      'link' => 'http://www.gogole.com/woot',
       'fixed_order' => 1,
     ],
     'pumpkin' => [

@@ -31,6 +31,15 @@
 			color: #888888;
 			font-weight: bold;
 		}
+		
+		.DialogWidget_no_use_text {
+			font-size: 25px;
+			font-style: italic;
+			color: rgb(201, 20, 47);
+			text-aling: center;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
 
 		/* The close button in the information dialog */
 		.DialogWidget_close {

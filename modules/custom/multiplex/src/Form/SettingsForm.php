@@ -69,6 +69,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("Show inventory in a fixed display order, instead of by order of aquisition"),
       '#default_value' => $this->config('multiplex.settings')->get('inventory_fixed_order') ? $this->config('multiplex.settings')->get('inventory_fixed_order') : true
     ];
+    $form['inventory_links_in_new_window'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Inventory Open Links In New Window'),
+      '#description' => $this->t("If an inventory item is usable and is clicked, should a new window open, or should the current window change locations?"),
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_links_in_new_window') ? $this->config('multiplex.settings')->get('inventory_links_in_new_window') : true
+    ];
     $form['inventory_wiggle_duration'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory New Item Wiggle Duration'),
@@ -120,6 +126,9 @@ class SettingsForm extends ConfigFormBase {
       ->save();
     $this->config('multiplex.settings')
       ->set('inventory_fixed_order', $form_state->getValue('inventory_fixed_order'))
+      ->save();
+    $this->config('multiplex.settings')
+      ->set('inventory_links_in_new_window', $form_state->getValue('inventory_links_in_new_window'))
       ->save();
     $this->config('multiplex.settings')
       ->set('inventory_wiggle_duration', $form_state->getValue('inventory_wiggle_duration'))

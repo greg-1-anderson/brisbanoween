@@ -83,6 +83,12 @@ class DialogWidget {
 					this.i_text_container.className = "DialogWidget_text";
 					this.i_body.appendChild(this.i_text_container);
 
+					// Create a DIV for the message about not being able to use it
+					this.i_no_use_container = document.createElement('DIV');
+					this.i_no_use_container.className = "DialogWidget_no_use_text";
+					this.i_no_use_container.innerHTML = "You cannot use this item right now";
+					this.i_body.appendChild(this.i_no_use_container);
+
 					// Add a button to close
 					this.i_close_button = document.createElement('BUTTON');
 					this.i_close_button.className = "DialogWidget_close";
@@ -113,11 +119,14 @@ class InventoryBoxItem {
 	 *	@param {Boolean} wiggle Whether to wiggle the item
 	 *	@param {Integer} width the width of each item in pixels
 	 *	@param {Integer} height The height of each item in pixels
+	 *	@param {Boolean} openLinksInNewWindow whether to open links in a new window, or on the same page
 	 */
-	setConfig(item, wiggle, width, height) {
+	setConfig(item, wiggle, width, height, openLinksInNewWindow) {
 		// Update state
 		this.i_url = item.url;
 		this.i_alt = item.alt;
+		this.i_link = item.link;
+		this.i_openLinksInNewWindow = openLinksInNewWindow;
 		this.i_wiggle = wiggle;
 		this.i_width = width;
 		this.i_height = height;
@@ -182,7 +191,17 @@ class InventoryBoxItem {
 			// We havent, so create it
 			this.i_element = document.createElement('IMG');
 			this.i_element.addEventListener("click", () => {
-				this.openDialog();
+				if (this.i_link != null) {
+					if (this.i_openLinksInNewWindow) {
+						window.open(this.i_link);
+					}
+					else {
+						document.location = this.i_link;
+					}
+				}
+				else {
+					this.openDialog();
+				}
 			});
 
 			// Update it to reflect our initial state
@@ -431,7 +450,7 @@ class InventoryBox {
 				}
 
 				// Update the icon container with the current inventory item data
-				this.i_item_cache[x].setConfig(this.i_items[currentInventory[x]], currentInventory[x] == wiggleId, this.i_config.image_width, this.i_config.image_height);
+				this.i_item_cache[x].setConfig(this.i_items[currentInventory[x]], currentInventory[x] == wiggleId, this.i_config.image_width, this.i_config.image_height, this.i_config.openLinksInNewWindow);
 
 				// Attach it to the DOM if its not already
 				if (this.i_item_cache[x].i_attached != true) {
