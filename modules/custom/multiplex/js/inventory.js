@@ -86,7 +86,7 @@ class DialogWidget {
 					// Create a DIV for the message about not being able to use it
 					this.i_no_use_container = document.createElement('DIV');
 					this.i_no_use_container.className = "DialogWidget_no_use_text";
-					this.i_no_use_container.innerHTML = "You cannot use this item right now";
+					this.i_no_use_container.innerHTML = "You can't use this item right now!";
 					this.i_body.appendChild(this.i_no_use_container);
 
 					// Add a button to close
