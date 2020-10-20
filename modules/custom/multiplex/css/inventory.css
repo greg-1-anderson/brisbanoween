@@ -3,6 +3,7 @@
 	position: fixed;
 	bottom: 0;
 	right: 0;
+	z-index: 100000;
 }
 
 	/* DIV that provides layout and background styling to the information dialog contents */
