@@ -26,7 +26,7 @@
 		{
 			"position": [37.681767, -122.401551],
 			"code": "door",
-			"legendId": "unvisited"
+			"icon": "sack.png"
 		},
 		{
 			"position": [37.682960, -122.404706],
