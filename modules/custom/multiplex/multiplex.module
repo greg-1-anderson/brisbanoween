@@ -92,9 +92,8 @@ function getMapConfig() {
   $config = \Drupal::config('multiplex.settings');
   return [
     'backgroundImage' => $base_path . 'images/map_background.jpg',    // A repeating background image, or one that is the exact size of the map
-    'visitedIcon' => $base_path . 'images/visited.png',               // The URL of the icon to use for locations that have codes
-    'unvisitedIcon' => $base_path . 'images/unvisited.png',           // The URL of the icon to use for locations without codes
     'linkPrefix' => $config->get('map_link_prefix'),                                // The URL to prefix codes with when creating links
+    'iconPrefix' => $base_path . "images/",					// The URL to prefix icon paths with
     'visitedName' => $config->get('map_visited_label'),                                       // What to call unvisited locations in the legend
     'unvisitedName' => $config->get('map_unvisited_label'),                                   // What to call visited locations in the legend
     'centerPosition' => [              // Where to center the map

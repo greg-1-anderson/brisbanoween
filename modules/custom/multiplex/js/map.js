@@ -85,7 +85,7 @@ class SpookyMap {
 					this.i_legend_cache[x] = new SpookyMapLegendItem();
 				}
 				this.i_legend_cache[x].setName(this.i_legend[x].name);
-				this.i_legend_cache[x].setIcon(this.i_legend[x].icon);
+				this.i_legend_cache[x].setIcon(this.i_config.iconBaseURL + this.i_legend[x].icon);
 
 				if (this.i_legend_cache[x].i_attached != true) {
 					this.i_legend_box.appendChild(this.i_legend_cache[x].getElement());

@@ -29,6 +29,7 @@
 																	// image will bleed through (0 = hidden, 1 = fully opaque, 0.5 = half visible, etc...)
 					backgroundImage: settings.multiplex.map.config.backgroundImage,		// A repeating background image, or one that is the exact size of the map
 					linkBaseURL: settings.multiplex.map.config.linkPrefix,				// The URL to prefix codes with when creating links
+					iconBaseURL: settings.multiplex.map.config.iconPrefix,		// The URL to prefix icon images with
 
 					centerMapPosition: settings.multiplex.map.config.centerPosition,		// Where to center the map
 					defaultZoomLevel: settings.multiplex.map.config.zoomLevel,					// How close to zoom in, the higher the closer to street level it will zoom
