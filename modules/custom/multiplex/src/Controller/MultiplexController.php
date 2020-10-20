@@ -91,6 +91,23 @@ class MultiplexController extends ControllerBase {
       throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
 
+    // TODO: What's the best way to identify qr_code nodes?
+    if ($node->bundle() == 'qr_code') {
+      // If the user is an admin (TODO: define custom permission?), go to edit page
+      $user = \Drupal::currentUser();
+      if ($user->hasPermission('access administration menu')) {
+        $nid = $node->id();
+        return new RedirectResponse("/node/$nid/edit");
+      }
+      // Otherwise we will evaluate the target of the QR Code.
+      // We will return a 404 if there is no story page.
+      $qr_code_target = $node->get('field_story_page')->getValue();
+      if (empty($qr_code_target[0]['target_id'])) {
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+      }
+      $node = \Drupal\node\Entity\Node::load($qr_code_target[0]['target_id']);
+    }
+
     // Look for redirection rules attached to the entity at "$node".
     // If there are any that match, then redirect to the multiplexed location.
     $target = $this->multiplexService->findMultiplexLocation($who, $node);
