@@ -196,9 +196,9 @@ class SettingsForm extends ConfigFormBase {
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity'
   	);
 
-  	foreach ($form_field as $field) {
+  	foreach ($form_fields as $f) {
       $this->config('multiplex.settings')
-        ->set($field, $form_state->getValue($field))
+        ->set($f, $form_state->getValue($f))
         ->save();
     }
 

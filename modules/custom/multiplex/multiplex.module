@@ -102,7 +102,11 @@ function getMapConfig() {
       'lng' => $config->get('map_center_lng')
     ],
     'zoomLevel' => $config->get('map_default_zoom'),                 // How close to zoom in, the higher the closer to street level it will zoom
-    'openLinksInNewWindow' => $config->get('map_open_links_in_new_window') ? true : false    // Whether to open links in a new window (true) or redirect the current window (false)
+    'openLinksInNewWindow' => $config->get('map_open_links_in_new_window') ? true : false,    // Whether to open links in a new window (true) or redirect the current window (false)
+    'allowChangeMapType' => $config->get('map_allow_type_toggle') ? true : false,
+    'useRoadmap' => $config->get('map_use_roadmap') ? true : false,
+    'allowStreetView' => $config->get('map_allow_street_view') ? true : false,
+    'mapOpacity' => $config->get('map_opacity')
   ];
 }
 
