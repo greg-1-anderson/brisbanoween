@@ -97,9 +97,7 @@ function multiplex_page_attachments(array &$page) {
   $page['#attached']['drupalSettings']['multiplex'] = $computed_settings;
   
   $current_path = \Drupal::service('path.current')->getPath();
-  $patterns = "/map";
-  $match = \Drupal::service('path.matcher')->matchPath($current_path, $patterns);
-  if ($match) {
+  if ($current_path == "/map") {
     $page['#attached']['html_head'][] = [
       // The data.
       [
@@ -108,8 +106,7 @@ function multiplex_page_attachments(array &$page) {
         // Add JavaScript to the <script> tag.
         '#attributes' => [
         	'src' => "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY&callback=initMap",
-        	'type' => "text/javascript",
-        	'defer' => NULL
+        	'type' => "text/javascript"
         ],
         // Give weight so it appears after meta tags, etc.
         '#weight' => -1,
