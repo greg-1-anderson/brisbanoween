@@ -60,7 +60,9 @@ class MultiplexController extends ControllerBase {
    * Host page for the map controls
    */
   public function specialMap($map_type) {
-    return map();
+    return [
+      '#markup' => 'Opening map, please wait...',
+    ];
   }
 
   /**

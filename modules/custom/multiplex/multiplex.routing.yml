@@ -27,7 +27,7 @@ multiplex.map:
     _permission: 'access content'
     
 multiplex.map:
-  path: '/map/{map_type}'
+  path: '/map/{maptype}'
   defaults:
     _title: 'Map'
     _controller: '\Drupal\multiplex\Controller\MultiplexController::specialMap'
