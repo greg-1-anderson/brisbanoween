@@ -240,7 +240,7 @@ class SpookyMap {
 			});
 
 			// Attempt to track the user so we can put a pin on the map showing where they are
-			if (this.i_conifg.showUserLocation) {
+			if (this.i_config.showUserLocation) {
 				try {
 					this.i_my_watcher = navigator.geolocation.watchPosition((p) => {
 						this.updateMyPosition(p);
