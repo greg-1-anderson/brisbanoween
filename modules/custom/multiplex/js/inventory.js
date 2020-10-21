@@ -429,6 +429,9 @@ class InventoryBox {
 		// Update the visible state
 		this.i_visible = state;
 
+		// Remember the state for next time
+		document.cookie = "inv_expanded=" + (state ? "1" : "0") + "; path=/";
+
 		// Re-render
 		this.updateInventoryWidget();
 	}
@@ -521,6 +524,12 @@ class InventoryBox {
 	attach(container) {
 		// See if we've build the inventory widget yet
 		if (this.i_element == null) {
+			// Get all the cookies
+			let cookies = this.getCookies();
+
+			// Restore the visible state
+			this.i_visible = cookies['inv_expanded'] == "0" ? false : true;
+
 			// We have not, so build it
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "InventoryBox";
