@@ -221,10 +221,6 @@ class InventoryBoxItem {
  *	This widget is designed to maintain a menu of inventory items, identified by a cookie
  */
 class InventoryBox {
-	/* A map of item id's to the links they should open */
-	static linkMap = {};
-	static linkMapHandlers = [];
-
 	/**
 	 *	Get the link associated with a specific item ID
 	 *
@@ -598,3 +594,7 @@ class InventoryBox {
 		container.appendChild(this.i_element);
 	}
 }
+
+// Safari didnt like the static keyword on member variables
+InventoryBox.linkMap = {};
+InventoryBox.linkMapHandlers = [];
