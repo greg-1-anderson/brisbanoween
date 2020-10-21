@@ -119,36 +119,6 @@ function getMapConfig() {
 }
 
 /**
- *	Get an array of all the map locations to pin, and their associated code (if they should be treated as links)
- */
-function getMapLocations() {
-  return [
-    [
-      "position" => [37.681823, -122.405767],
-      "code" => "spork"
-    ],
-    [
-      "position" => [37.680241, -122.403926],
-      "code" => "blacklight"
-    ],
-    [
-      "position" => [37.681767, -122.401551]
-    ],
-    [
-      "position" => [37.682960, -122.404706],
-      "code" => "warthog"
-    ],
-    [
-      "position" => [37.696488, -122.419449],
-      "code" => "sealion"
-    ],
-    [
-      "position" => [37.695850, -122.417633]
-    ]
-  ];
-}
-
-/**
  * Attach our Javascript
  */
 function multiplex_page_attachments(array &$page) {
@@ -165,7 +135,6 @@ function multiplex_page_attachments(array &$page) {
   
   $inventory_enabled = true;
   $map_enabled = false;
-  $mapLocations = [];
 
   // See if this is the map page
   $current_path = \Drupal::service('path.current')->getPath();
@@ -173,9 +142,6 @@ function multiplex_page_attachments(array &$page) {
     // It is, so show the map, but dont show the inventory component
     $inventory_enabled = false;
     $map_enabled = true;
-    
-    // Get the pin locations
-    $mapLocations = getMapLocations();
     
     // Attach the google api script
     $page['#attached']['html_head'][] = [
@@ -209,8 +175,7 @@ function multiplex_page_attachments(array &$page) {
   $computed_settings = [
     'map' => [
       'enabled' => $map_enabled,
-      'config' => getMapConfig(),
-      'locations' => $mapLocations
+      'config' => getMapConfig()
     ],
     'inventory' => [
       'items' => getInventoryItems(),
