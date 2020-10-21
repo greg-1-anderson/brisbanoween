@@ -1,0 +1,18 @@
+uuid: 08b9c579-e4db-4dd6-8548-79454d9033cd
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'QR code'
+type: qr_code
+description: 'Use <i>qr codes</i> to keep track of the physical location of the printed code pages, and to control which <i>story page</i> each code belongs to.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

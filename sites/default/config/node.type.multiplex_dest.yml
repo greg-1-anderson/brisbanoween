@@ -1,0 +1,23 @@
+uuid: bedcc340-a2cf-442a-844c-c4a122c9b73e
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - multiplex
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: K02PI3z_BoS9Ak1nEirXm5QOBBBgeBf-Yo41OJRWXtA
+name: 'Multiplex destinations'
+type: multiplex_dest
+description: 'Use <i>multiplex destinations</i> to store the target locations used in multiplex rules.'
+help: 'Add list of destination nodes for multiplex rules.'
+new_revision: false
+preview_mode: 0
+display_submitted: true

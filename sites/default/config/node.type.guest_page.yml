@@ -1,0 +1,18 @@
+uuid: 5699eacd-6518-451f-bb42-3d523a983c06
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Guest page'
+type: guest_page
+description: '<i>Guest pages</i> are created as needed to store cross-references to photos uploaded by guest users.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

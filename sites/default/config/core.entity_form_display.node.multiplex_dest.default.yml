@@ -1,0 +1,96 @@
+uuid: 332f2ac7-4d0c-453e-bcea-91c9147595f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.multiplex_dest.field_multiplex_dest_fallback
+    - field.field.node.multiplex_dest.field_multiplex_dest_random
+    - field.field.node.multiplex_dest.field_multiplex_dest_targets
+    - node.type.multiplex_dest
+  module:
+    - path
+_core:
+  default_config_hash: bzLMOl13g28DAKdptZfY1wkLw7wVsn3x8XzduKw61UU
+id: node.multiplex_dest.default
+targetEntityType: node
+bundle: multiplex_dest
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_multiplex_dest_fallback:
+    type: entity_reference_autocomplete
+    weight: 30
+    settings:
+      match_limit: 10
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  field_multiplex_dest_random:
+    type: string_textfield
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_multiplex_dest_targets:
+    type: entity_reference_autocomplete
+    weight: 10
+    settings:
+      match_limit: 10
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: '60'
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden: {  }

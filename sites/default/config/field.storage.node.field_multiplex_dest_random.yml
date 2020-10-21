@@ -1,0 +1,23 @@
+uuid: f4e24176-dc2c-4c3c-a8a8-59e9bbcd7160
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - multiplex
+  module:
+    - node
+_core:
+  default_config_hash: AQtq6b6fW3pbVaZgukenBbGWGudd2lWk2AXjMnegSMc
+id: node.field_multiplex_dest_random
+field_name: field_multiplex_dest_random
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

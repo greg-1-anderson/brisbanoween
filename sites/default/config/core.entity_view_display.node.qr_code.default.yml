@@ -1,0 +1,56 @@
+uuid: 48e59cf9-f538-4279-9ebb-12a01cf6d2ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.qr_code.body
+    - field.field.node.qr_code.field_accepted_guidelines
+    - field.field.node.qr_code.field_address
+    - field.field.node.qr_code.field_geolocation
+    - field.field.node.qr_code.field_qr_code
+    - field.field.node.qr_code.field_story_page
+    - node.type.qr_code
+  module:
+    - address
+    - geolocation
+    - qrfield
+    - user
+id: node.qr_code.default
+targetEntityType: node
+bundle: qr_code
+mode: default
+content:
+  field_address:
+    type: address_default
+    weight: 2
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+  field_geolocation:
+    type: geolocation_latlng
+    weight: 3
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+  field_qr_code:
+    weight: 1
+    label: hidden
+    settings:
+      display_text: true
+      image:
+        width: '100'
+        height: '100'
+    third_party_settings: {  }
+    type: qrfield_formatter
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  body: true
+  field_accepted_guidelines: true
+  field_story_page: true

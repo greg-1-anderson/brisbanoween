@@ -1,0 +1,24 @@
+uuid: f74c2a19-1be9-44e9-b03d-a86e418bc68d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_qr_code
+    - node.type.qr_code
+  module:
+    - qrfield
+id: node.qr_code.field_qr_code
+field_name: field_qr_code
+entity_type: node
+bundle: qr_code
+label: 'QR code'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    text: 'https://g1a.io[node:url:path]'
+default_value_callback: ''
+settings:
+  qrcode_plugin: gchart
+field_type: qrfield

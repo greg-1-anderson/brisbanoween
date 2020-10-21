@@ -1,0 +1,25 @@
+uuid: 7012c7df-823b-4fce-bfee-0424a06ba352
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_multiplex_dest_random
+    - node.type.multiplex_dest
+_core:
+  default_config_hash: xr63aT7Uymgi2aKWoNudqUcn1UQ4OBmLznxgtwmBR14
+id: node.multiplex_dest.field_multiplex_dest_random
+field_name: field_multiplex_dest_random
+entity_type: node
+bundle: multiplex_dest
+label: Random
+description: 'Enable to return destinations in a random order'
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Random
+  off_label: Ordered
+field_type: boolean

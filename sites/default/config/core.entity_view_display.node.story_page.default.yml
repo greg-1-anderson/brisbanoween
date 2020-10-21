@@ -1,0 +1,41 @@
+uuid: 7667e58e-6ad0-45bd-86de-64a002082d93
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.story_page.body
+    - field.field.node.story_page.field_guest_photos
+    - field.field.node.story_page.field_image
+    - field.field.node.story_page.field_object
+    - field.field.node.story_page.field_rules
+    - node.type.story_page
+  module:
+    - image
+    - text
+    - user
+id: node.story_page.default
+targetEntityType: node
+bundle: story_page
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_image:
+    weight: 0
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden:
+  field_guest_photos: true
+  field_object: true
+  field_rules: true
+  links: true

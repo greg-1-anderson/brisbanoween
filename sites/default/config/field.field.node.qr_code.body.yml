@@ -1,0 +1,23 @@
+uuid: c212a85b-436b-4464-a175-833b154100f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.qr_code
+  module:
+    - text
+id: node.qr_code.body
+field_name: body
+entity_type: node
+bundle: qr_code
+label: Notes
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+field_type: text_with_summary

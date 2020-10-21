@@ -1,0 +1,12 @@
+uuid: 47a7f150-88e5-4067-92c5-999e5587be62
+langcode: en
+status: true
+dependencies: {  }
+id: site_style
+label: 'Site Style'
+code: ".view-id-qr_codes .node__title {\n  display: none;\n}\n\n.view-id-qr_codes .node__content {\n  width: 100%;\n  text-align: center;\n}\n\n.view-id-qr_codes article {\n  border-bottom: none;\n}\n\n.survey-button {\n  text-align: center;\n}\n\n.survey-button a {\n  font-size: 2em;\n  padding-left: 8px;\n  padding-right: 8px;\n}\n\n.survey-button a:link, .survey-button a:visited {\n  border: 4px solid black;\n  color: #000;\n  background-color: #44e530;\n}\n\n.survey-button a:hover {\n  color: #aaa;\n  background-color: #44e530;\n}\n\n.survey-button a:active {\n  color: #fff;\n  background-color: #44e530;\n}\n\n.path-frontpage #block-mainnavigation li:first-child, #block-mainnavigation .menu-item--active-trail {\n  border: 4px solid black;\n  margin-top: -3px;\n}\n\n#block-mainnavigation li {\n  border: 1px solid black;\n  float: left;\n  margin-right: 10px;\n  padding-left: 8px;\n  padding-right: 8px;\n  font-size: 1.5em;\n}\n\n#block-mainnavigation li a {\n  border-bottom: 0;\n}\n\n#block-mainnavigation li, #block-mainnavigation li a:link, #block-mainnavigation li a:visited {\n  color: #000;\n  background-color: #ff8225;\n}\n\n#block-mainnavigation li a:hover {\n  color: #666;\n  background-color: #ff8225;\n}\n\n#block-mainnavigation li a:active {\n  color: #fff;\n  background-color: #ff8225;\n}\n\n#block-bartik-page-title {\n  float: none;\n  font-size: 4em;\n  padding-top: 0;\n  margin-top: -2em;\n  margin-bottom: -0.8em;\n  font-family: 'black-widow';\n  font-style: normal;\n  font-weight: 100;\n}\n\n.node__content {\n  font-size: 1.5em;\n}\n\n.eu-cookie-compliance-message a {\n  color: #ffffff\n}\n\n.eu-cookie-compliance-message a:hover {\n  font-weight: bold\n}\n"
+conditions_require_all: true
+conditions: {  }
+contexts: {  }
+media: all
+preprocess: true

@@ -1,0 +1,32 @@
+uuid: 4b16242a-7aa7-4d74-a914-b5d62ca91797
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.guest_page.body
+    - field.field.node.guest_page.field_guest_photos
+    - node.type.guest_page
+  module:
+    - text
+    - user
+id: node.guest_page.teaser
+targetEntityType: node
+bundle: guest_page
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_guest_photos: true

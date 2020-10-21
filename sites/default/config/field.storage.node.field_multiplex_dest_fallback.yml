@@ -1,0 +1,24 @@
+uuid: 5c00f490-88aa-4510-a6a8-97cb7b55902d
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - multiplex
+  module:
+    - node
+_core:
+  default_config_hash: 7oQ96RKwnYgcIWf5d7f0X-mvL4G6lZ6yiJiiH5t35eU
+id: node.field_multiplex_dest_fallback
+field_name: field_multiplex_dest_fallback
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

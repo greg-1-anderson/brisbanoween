@@ -1,0 +1,28 @@
+uuid: 718676f9-676b-4764-b81c-e05ca36f758f
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_upload
+    - node
+  theme:
+    - bartik
+id: blockupload1
+theme: bartik
+region: sidebar_second
+weight: -7
+provider: null
+plugin: 'block_upload:block_upload1'
+settings:
+  id: 'block_upload:block_upload1'
+  label: 'Upload Selfie!'
+  provider: block_upload
+  label_display: visible
+visibility:
+  node_type:
+    id: node_type
+    bundles:
+      story_page: story_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

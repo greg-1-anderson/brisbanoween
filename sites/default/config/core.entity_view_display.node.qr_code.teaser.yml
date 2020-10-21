@@ -1,0 +1,39 @@
+uuid: cfb9c4e8-7d6c-4fce-8107-784b563769d4
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.qr_code.body
+    - field.field.node.qr_code.field_accepted_guidelines
+    - field.field.node.qr_code.field_address
+    - field.field.node.qr_code.field_geolocation
+    - field.field.node.qr_code.field_qr_code
+    - field.field.node.qr_code.field_story_page
+    - node.type.qr_code
+  module:
+    - qrfield
+    - user
+id: node.qr_code.teaser
+targetEntityType: node
+bundle: qr_code
+mode: teaser
+content:
+  field_qr_code:
+    type: qrfield_formatter
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      display_text: true
+      image:
+        width: '100'
+        height: '100'
+    third_party_settings: {  }
+hidden:
+  body: true
+  field_accepted_guidelines: true
+  field_address: true
+  field_geolocation: true
+  field_story_page: true
+  links: true

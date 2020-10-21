@@ -1,0 +1,14 @@
+uuid: 00ccaa66-0f01-46af-a7d2-ab9124ae4a04
+name: Brisbanoween
+mail: greg+brisbanoween@pantheon.io
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node/32
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yTxtFqBHnEWxQswuWvkjE8mKw2t8oKuCL1q8KnfHuGE
