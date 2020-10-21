@@ -175,11 +175,6 @@
 				animation: wiggle 1s linear infinite;
 			}
 		
-			/* Animate the show button if they hid the inventory and a new item is added, or one becomes linked */
-			.InventoryBox_show_active {
-				animation: wiggle 1s linear infinite;
-			}
-			
 			@keyframes pulse {
 				0% {
 					transform: scale(1);
@@ -202,4 +197,9 @@
 			.InventoryBoxItem_hasLink {
 				animation: pulse 1.2s linear infinite;
 				cursor: pointer;
+			}
+			
+			/* Animate the show button if they hid the inventory and a new item is added, or one becomes linked */
+			.InventoryBox_show_active {
+				animation: pulse 1s linear infinite;
 			}
