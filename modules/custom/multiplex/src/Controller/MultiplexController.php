@@ -57,7 +57,7 @@ class MultiplexController extends ControllerBase {
   }
 
   /**
-   * Host page for the map controls
+   * Host page for the map controls (which accept a parameter to pass through to the API)
    */
   public function specialMap($map_type) {
     return [
