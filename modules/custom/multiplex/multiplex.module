@@ -149,7 +149,7 @@ function multiplex_page_attachments(array &$page) {
       [
         '#tag' => 'script',
         '#attributes' => [
-        	'src' => "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY&callback=initMap",
+        	'src' => "https://maps.googleapis.com/maps/api/js?key=" . $config->get('map_api_key') . "&callback=initMap",
         	'type' => "text/javascript",
         	"defer" => true
         ],
