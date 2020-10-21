@@ -57,6 +57,15 @@ class MultiplexController extends ControllerBase {
   }
 
   /**
+   * Host page for the map controls (which accept a parameter to pass through to the API)
+   */
+  public function specialMap($map_type=NULL) {
+    return [
+      '#markup' => 'Opening map, please wait...',
+    ];
+  }
+
+  /**
    * Builds the response, which is usually a redirect.
    *
    * The route to this controller is `/to/{path}`. If there are

@@ -16,6 +16,7 @@
 		background-color: #FFFFFF;
 		border: 1px solid #000000;
 		text-align: center;
+		font-family: Arial;
 
 		grid-template-rows: auto auto auto;
 		grid-gap: 20px;
@@ -30,6 +31,15 @@
 			font-size: 25px;
 			color: #888888;
 			font-weight: bold;
+		}
+		
+		.DialogWidget_no_use_text {
+			font-size: 25px;
+			font-style: italic;
+			color: rgb(201, 20, 47);
+			text-aling: center;
+			padding-top: 5px;
+			padding-bottom: 5px;
 		}
 
 		/* The close button in the information dialog */
@@ -65,7 +75,7 @@
 		/* Make sure we dont get covered by the privacy policy bar */
 		z-index: 99999;
 	}
-
+	
 		/* The DIV that contains the inventory open/close icon image */
 		.InventoryBox_show_image, .InventoryBox_hide_image {
 			background:  url(../images/sack.png) center center no-repeat;
@@ -164,4 +174,32 @@
 			.InventoryBoxItem_wiggle {
 				animation: wiggle 1s linear infinite;
 			}
+		
+			@keyframes pulse {
+				0% {
+					transform: scale(1);
+				}
+				25% {
+					transform: scale(1.1);
+				}
+				50% {
+					transform: scale(1);	
+				}
+				75% {
+					transform: scale(0.9);
+				}
+				100% {
+					transform: scale(1);
+				}
+			}
+
+			/* The style added to an inventory IMG if it was added recently */
+			.InventoryBoxItem_hasLink {
+				animation: pulse 1.2s linear infinite;
+				cursor: pointer;
+			}
 			
+			/* Animate the show button if they hid the inventory and a new item is added, or one becomes linked */
+			.InventoryBox_show_active {
+				animation: pulse 1s linear infinite;
+			}

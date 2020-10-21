@@ -1,0 +1,48 @@
+{
+	"legend": [
+		{
+			"id":"visited",
+			"name":"Visited",
+			"icon":"visited.png"
+		},
+		{
+			"id":"unvisited",
+			"name":"Unvisited",
+			"icon":"unvisited.png"
+		}
+	],
+	"locations": [
+		{
+			"position": [37.681823, -122.405767],
+			"code": "spork",
+			"legendId": "visited",
+			"visited": true
+		},
+		{
+			"position": [37.680241, -122.403926],
+			"code": "blacklight",
+			"legendId": "unvisited"
+		},
+		{
+			"position": [37.681767, -122.401551],
+			"code": "door",
+			"icon": "objects/top_hat.png"
+		},
+		{
+			"position": [37.682960, -122.404706],
+			"code": "warthog",
+			"legendId": "visited",
+			"visited": true
+		},
+		{
+			"position": [37.696488, -122.419449],
+			"code": "sealion",
+			"legendId": "unvisited"
+		},
+		{
+			"position": [37.695850, -122.417633],
+			"code": "bat",
+			"legendId": "unvisited"
+		}
+	]
+}

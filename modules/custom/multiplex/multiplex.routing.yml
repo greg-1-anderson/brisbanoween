@@ -18,6 +18,18 @@ multiplex.settings_form:
   requirements:
     _permission: 'administer multiplex configuration'
 
+multiplex.typedmap:
+  path: '/map/{maptype}'
+  defaults:
+    _title: 'Map'
+    _controller: '\Drupal\multiplex\Controller\MultiplexController::specialMap'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      maptype:
+        type: string
+
 multiplex.map:
   path: '/map'
   defaults:
@@ -25,3 +37,4 @@ multiplex.map:
     _controller: '\Drupal\multiplex\Controller\MultiplexController::map'
   requirements:
     _permission: 'access content'
+    

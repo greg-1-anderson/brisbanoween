@@ -1,3 +1,28 @@
+/* The container for 1 legend item */
+.SpookyMapLegendItem {
+	display: inline-grid;
+	grid-template-columns: auto auto;
+	grid-gap: 5px;
+	align-items: center;
+	justify-items: center;
+}
+
+	/* The legend icon */
+	.SpookyMapLegendItem_image {
+		width: 18px;
+		height: 18px;
+	}
+
+	/* The legend label */
+	.SpookyMapLegendItem_label {
+		white-space: nowrap;
+		font-weight: bold;
+		color: #000000;
+		font-family: Arial;
+		font-size: 16px;
+		padding-right: 14px;
+	}
+
 /* The main wrapper for the controls and the map */
 .SpookyMap {
 	position: fixed;
@@ -10,41 +35,27 @@
 	/* The control bar */
 	.SpookyMap_controls {
 		display: grid;
-		height: 30px;
+		min-height: 20px;
 		padding: 10px;
+		padding-right: 0px;
 		background-color: #fb6205;
 
-		grid-template-columns: 80px 1fr 26px auto 26px auto;
+		grid-template-columns: 80px 1fr;
 		grid-gap: 5px;
 		
 		border-bottom: 1px solid #000000;
 	}
-
-		/* The icon in the legend for visited locations */
-		.SpookyMap_legend_visited {
-			width: 26px;
-			height: 26px;
+		
+		/* The box that contains the legend */
+		.SpookyMap_legend {
+			text-align: right;
 		}
-
-		/* The icon in the legend for unvisited locations */
-		.SpookyMap_legend_unvisited {
-			width: 26px;
-			height: 26px;
-		}
-
-		/* The labels in the legend */
-		.SpookyMap_legend_visited_label, .SpookyMap_legend_unvisited_label {
-			font-family: Arial;
-			font-size: 20px;
-			color: #000000;
-			line-height: 26px;
-			vertical-align: middle;
-			font-weight: bold;
-		}
-
-		/* The visited label, to add extra space before the unvisited legend item */
-		.SpookyMap_legend_visited_label {
-			padding-right: 20px;
+	
+		/* The back button */
+		.SpookyMap_button {
+			background-image: url(../images/back.png);
+			background-position: center center;
+			background-repeat: no-repeat;
 		}
 		
 	/* Make the background scroll up and to the left */

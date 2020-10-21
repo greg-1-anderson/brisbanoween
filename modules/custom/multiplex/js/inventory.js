@@ -83,6 +83,12 @@ class DialogWidget {
 					this.i_text_container.className = "DialogWidget_text";
 					this.i_body.appendChild(this.i_text_container);
 
+					// Create a DIV for the message about not being able to use it
+					this.i_no_use_container = document.createElement('DIV');
+					this.i_no_use_container.className = "DialogWidget_no_use_text";
+					this.i_no_use_container.innerHTML = "You can't use this item right now!";
+					this.i_body.appendChild(this.i_no_use_container);
+
 					// Add a button to close
 					this.i_close_button = document.createElement('BUTTON');
 					this.i_close_button.className = "DialogWidget_close";
@@ -109,18 +115,24 @@ class InventoryBoxItem {
 	/**
 	 *	Update the configuration of this item
 	 *
+	 *	@param {String} id the ID of the item
 	 *	@param {Object} item The item configuration (url and alt properties)
 	 *	@param {Boolean} wiggle Whether to wiggle the item
 	 *	@param {Integer} width the width of each item in pixels
 	 *	@param {Integer} height The height of each item in pixels
+	 *	@param {Boolean} openLinksInNewWindow whether to open links in a new window, or on the same page
+	 *	@param {String} linkURL (Optional) the link assigned to this item, if there is one
 	 */
-	setConfig(item, wiggle, width, height) {
+	setConfig(id, item, wiggle, width, height, openLinksInNewWindow, linkURL) {
 		// Update state
+		this.i_id = id;
 		this.i_url = item.url;
 		this.i_alt = item.alt;
+		this.i_openLinksInNewWindow = openLinksInNewWindow;
 		this.i_wiggle = wiggle;
 		this.i_width = width;
 		this.i_height = height;
+		this.i_link = linkURL;
 
 		// re-render
 		this.update();
@@ -162,7 +174,7 @@ class InventoryBoxItem {
 	update() {
 		// Make sure we have a DOM element, or updating wouldnt do anything
 		if (this.i_element != null) {
-			this.i_element.className = "InventoryBoxItem" + (this.i_wiggle ? " InventoryBoxItem_wiggle" : "");
+			this.i_element.className = "InventoryBoxItem" + (this.i_wiggle ? " InventoryBoxItem_wiggle" : "") + (this.i_link ? " InventoryBoxItem_hasLink" : "");
 			this.i_element.src = this.i_url ? this.i_url : "";
 			this.i_element.width = this.i_width;
 			this.i_element.height = this.i_height;
@@ -182,7 +194,17 @@ class InventoryBoxItem {
 			// We havent, so create it
 			this.i_element = document.createElement('IMG');
 			this.i_element.addEventListener("click", () => {
-				this.openDialog();
+				if (this.i_link) {
+					if (this.i_openLinksInNewWindow) {
+						window.open(this.i_link);
+					}
+					else {
+						document.location = this.i_link;
+					}
+				}
+				else {
+					this.openDialog();
+				}
 			});
 
 			// Update it to reflect our initial state
@@ -199,6 +221,43 @@ class InventoryBoxItem {
  *	This widget is designed to maintain a menu of inventory items, identified by a cookie
  */
 class InventoryBox {
+	/* A map of item id's to the links they should open */
+	static linkMap = {};
+	static linkMapHandlers = [];
+
+	/**
+	 *	Get the link associated with a specific item ID
+	 *
+	 *	@param {String} id The ID of the item to get the link for
+	 *
+	 *	@return {String} the link to open when the item is clicked
+	 */
+	static getLink(id) {
+		return InventoryBox.linkMap[id];
+	}
+
+	/**
+	 *	Set the link to open when an item in the inventory is clicked
+	 *
+	 *	@param {String} id The ID of the item to assign a link to
+	 *	@param {String} url the relative URL to the inventory's configured base URL to open when the item is clicked
+	 */
+	static setItemLink(id, url) {
+		InventoryBox.linkMap[id] = url;
+		InventoryBox.linkMapHandlers.forEach((callback) => {
+			callback(id);
+		});
+	}
+
+	/**
+	 *	Register a handler for when a link is attached to an item
+	 *
+	 *	@param {Function} callback the callback to execute
+	 */
+	static addLinkChangeHandler(callback) {
+		InventoryBox.linkMapHandlers.push(callback);
+	}
+
 	/**
 	 *	Create a new instance of an inventory box
 	 *
@@ -210,6 +269,9 @@ class InventoryBox {
 		this.i_items = items;
 
 		this.i_item_cache = [];	// Array that will contain DOM elements for each item
+
+		// Update the inventory when a link is assigned to one of the items
+		InventoryBox.addLinkChangeHandler(this.updateInventoryWidget.bind(this));
 	}
 
 	/**
@@ -247,7 +309,6 @@ class InventoryBox {
 	getInventory() {
 		// Get all the cookies
 		let cookies = this.getCookies();
-		console.log(cookies);
 
 		// Parse out the inventory cookie if we have one
 		let currentInventory = [];
@@ -354,7 +415,6 @@ class InventoryBox {
 		currentInventory.push(id);
 
 		// Update the cookie with the new inventory
-		console.log(this.i_config.cookie_name + "=" + encodeURIComponent(currentInventory.join(",")) + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT");
 		document.cookie = this.i_config.cookie_name + "=" + encodeURIComponent(currentInventory.join(",")) + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT";
 
 		// Update the last added timestamp so we know how long to wiggle for
@@ -387,7 +447,6 @@ class InventoryBox {
 		if (this.i_element != null) {
 			// Get the user's inventory
 			let currentInventory = this.getInventory();
-			console.log(currentInventory);
 
 			// Update if we're showing the inventory right now
 			this.i_bar.style.display = ((this.i_visible !== false && currentInventory.length > 0) ? "grid" : "none");
@@ -412,7 +471,7 @@ class InventoryBox {
 				}
 			}
 
-
+			let hasActivity = wiggleId != null;
 
 			// See if we need to sort the list
 			if (this.i_config.use_fixed_order) {
@@ -430,8 +489,15 @@ class InventoryBox {
 					this.i_item_cache[x] = new InventoryBoxItem();
 				}
 
+				// See if we have a link attached to it
+				let linkURL = InventoryBox.getLink(currentInventory[x]);
+				if (linkURL) {
+					linkURL = this.i_config.link_base_url + linkURL;
+					hasActivity = true;
+				}
+
 				// Update the icon container with the current inventory item data
-				this.i_item_cache[x].setConfig(this.i_items[currentInventory[x]], currentInventory[x] == wiggleId, this.i_config.image_width, this.i_config.image_height);
+				this.i_item_cache[x].setConfig(currentInventory[x], this.i_items[currentInventory[x]], currentInventory[x] == wiggleId, this.i_config.image_width, this.i_config.image_height, this.i_config.open_links_in_new_window, linkURL);
 
 				// Attach it to the DOM if its not already
 				if (this.i_item_cache[x].i_attached != true) {
@@ -447,6 +513,7 @@ class InventoryBox {
 				}
 			}
 
+			this.i_show_image.className = "InventoryBox_show_image" + (hasActivity ? " InventoryBox_show_active" : "");
 		}
 	}
 
@@ -512,6 +579,13 @@ class InventoryBox {
 
 			// Populate the widget with the user's inventory
 			this.updateInventoryWidget();
+
+			// If we have an update frequency, setup a timer to re-check the cookie contents
+			if (this.i_config.update_frequency > 0) {
+				setInterval(() => {
+					this.updateInventoryWidget();
+				}, this.i_config.update_frequency * 1000);
+			}
 		}
 		else {
 			// We have, which means we probably attached it somewhere else, so remove it from where ever that is

@@ -41,13 +41,24 @@ function multiplex_get_visitor_cookie_value() {
  * Get the display configuration for the inventory component
  */
 function getInventoryConfig() {
+  $config = \Drupal::config('multiplex.settings');
   return [
-    'cookie_name' => 'myInventory',                           // The name of the cookie to store the inventory in
-    'last_item_added_cookie_name' => 'myInventory_added',     // The name of the cookie to store hte last added timestamp in
-    'wiggle_duration_ms' => 120000,                           // How many milliseconds after aquiring an item should it wiggle (0 = disabled)
-    'use_fixed_order' => true,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
-    'image_width' => 72,
-    'image_height' => 72
+    'cookie_name' => $config->get('inventory_cookie'),                           // The name of the cookie to store the inventory in
+    'last_item_added_cookie_name' => $config->get('inventory_added_cookie'),     // The name of the cookie to store hte last added timestamp in
+    'wiggle_duration_ms' => intval($config->get('inventory_wiggle_duration')),                           // How many milliseconds after aquiring an item should it wiggle (0 = disabled)
+    'use_fixed_order' => $config->get('inventory_fixed_order') ? true : false,                                // Visibly display items in a fixed order.  set to false to ignore "fixed_order" property on each item
+    'image_width' => intval($config->get('inventory_icon_width')),
+    'image_height' => intval($config->get('inventory_icon_height')),
+    'link_base_url' => $config->get('inventory_base_url'),
+    'open_links_in_new_window' => $config->get('inventory_links_in_new_window') ? true : false,
+    'update_frequency' =>  intval($config->get('inventory_update_frequency')),
+    'links' => [
+    	// If you want to make some inventory items into links (from the server side), you can add the item_id -> link mapping here.
+    	// You can also include some javascript (see example_js_for_adding_links_to_inventory.js) on the specific page you want to activate an item for.
+    	//
+    	// 'item_id' => 'url',
+    	// 'item2_id' => 'url'
+    ]
   ];
 }
 
@@ -85,49 +96,25 @@ function getInventoryItems() {
  */
 function getMapConfig() {
   $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
+  $config = \Drupal::config('multiplex.settings');
   return [
     'backgroundImage' => $base_path . 'images/map_background.jpg',    // A repeating background image, or one that is the exact size of the map
-    'visitedIcon' => $base_path . 'images/visited.png',               // The URL of the icon to use for locations that have codes
-    'unvisitedIcon' => $base_path . 'images/unvisited.png',           // The URL of the icon to use for locations without codes
-    'linkPrefix' => 'https://g1a.io/',                                // The URL to prefix codes with when creating links
-    'visitedName' => 'Visited',                                       // What to call unvisited locations in the legend
-    'unvisitedName' => 'Unvisited',                                   // What to call visited locations in the legend
+    'linkPrefix' => $config->get('map_link_prefix'),                                // The URL to prefix codes with when creating links
+    'iconPrefix' => $base_path . "images/",					// The URL to prefix icon paths with
+    'visitedName' => $config->get('map_visited_label'),                                       // What to call unvisited locations in the legend
+    'unvisitedName' => $config->get('map_unvisited_label'),                                   // What to call visited locations in the legend
     'centerPosition' => [              // Where to center the map
-      'lat' => 37.689846,
-      'lng' => -122.402881
+      'lat' => floatval($config->get('map_center_lat')),
+      'lng' => floatval($config->get('map_center_lng'))
     ],
-    'zoomLevel' => 14,                 // How close to zoom in, the higher the closer to street level it will zoom
-    'openLinksInNewWindow' => false    // Whether to open links in a new window (true) or redirect the current window (false)
-  ];
-}
-
-/**
- *	Get an array of all the map locations to pin, and their associated code (if they should be treated as links)
- */
-function getMapLocations() {
-  return [
-    [
-      "position" => [37.681823, -122.405767],
-      "code" => "spork"
-    ],
-    [
-      "position" => [37.680241, -122.403926],
-      "code" => "blacklight"
-    ],
-    [
-      "position" => [37.681767, -122.401551]
-    ],
-    [
-      "position" => [37.682960, -122.404706],
-      "code" => "warthog"
-    ],
-    [
-      "position" => [37.696488, -122.419449],
-      "code" => "sealion"
-    ],
-    [
-      "position" => [37.695850, -122.417633]
-    ]
+    'zoomLevel' => intval($config->get('map_default_zoom')),                 // How close to zoom in, the higher the closer to street level it will zoom
+    'openLinksInNewWindow' => $config->get('map_open_links_in_new_window') ? true : false,    // Whether to open links in a new window (true) or redirect the current window (false)
+    'allowChangeMapType' => $config->get('map_allow_type_toggle') ? true : false,
+    'useRoadmap' => $config->get('map_use_roadmap') ? true : false,
+    'allowStreetView' => $config->get('map_allow_street_view') ? true : false,
+    'mapOpacity' => floatval($config->get('map_opacity')),
+    'updateFrequency' => intval($config->get('map_update_frequency')),
+    'apiEndpoint' => $base_path . "fake_api_response.json"
   ];
 }
 
@@ -148,17 +135,13 @@ function multiplex_page_attachments(array &$page) {
   
   $inventory_enabled = true;
   $map_enabled = false;
-  $mapLocations = [];
 
   // See if this is the map page
   $current_path = \Drupal::service('path.current')->getPath();
-  if ($current_path == "/map") {
+  if (strpos($current_path, "/map") === 0) {
     // It is, so show the map, but dont show the inventory component
     $inventory_enabled = false;
     $map_enabled = true;
-    
-    // Get the pin locations
-    $mapLocations = getMapLocations();
     
     // Attach the google api script
     $page['#attached']['html_head'][] = [
@@ -192,8 +175,7 @@ function multiplex_page_attachments(array &$page) {
   $computed_settings = [
     'map' => [
       'enabled' => $map_enabled,
-      'config' => getMapConfig(),
-      'locations' => $mapLocations
+      'config' => getMapConfig()
     ],
     'inventory' => [
       'items' => getInventoryItems(),
