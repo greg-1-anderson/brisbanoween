@@ -57,6 +57,13 @@ class MultiplexController extends ControllerBase {
   }
 
   /**
+   * Host page for the map controls
+   */
+  public function specialMap($map_type) {
+    return map();
+  }
+
+  /**
    * Builds the response, which is usually a redirect.
    *
    * The route to this controller is `/to/{path}`. If there are
