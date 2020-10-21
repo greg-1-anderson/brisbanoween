@@ -169,7 +169,7 @@ function multiplex_page_attachments(array &$page) {
 
   // See if this is the map page
   $current_path = \Drupal::service('path.current')->getPath();
-  if ($current_path == "/map") {
+  if (strpos($current_path, "/map") == 0) {
     // It is, so show the map, but dont show the inventory component
     $inventory_enabled = false;
     $map_enabled = true;
