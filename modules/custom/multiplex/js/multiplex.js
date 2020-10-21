@@ -15,6 +15,14 @@
 				// Attach it to the page (give it a second, so we drop below the privacy policy - this is a hack)
 				setTimeout(() => {
 					inventoryBox.attach(document.body);
+
+					// Add any links assigned server-side (this can be done client-side too)
+					if (settings.multiplex.inventory.config.links) {
+						for (id in settings.multiplex.inventory.config.links) {
+							InventoryBox.setItemLink(id, settings.multiplex.inventory.config.links[id]);
+						}
+					}
+
 				}, 10);
 			}
 			if (context == document && settings.multiplex.map.enabled !== false) {

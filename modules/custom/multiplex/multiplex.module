@@ -51,7 +51,15 @@ function getInventoryConfig() {
     'image_height' => intval($config->get('inventory_icon_height')),
     'link_base_url' => $config->get('inventory_base_url'),
     'open_links_in_new_window' => $config->get('inventory_links_in_new_window') ? true : false,
-    'update_frequency' =>  intval($config->get('inventory_update_frequency'))
+    'update_frequency' =>  intval($config->get('inventory_update_frequency')),
+    'links' => [
+    	// If you want to make some inventory items into links (from the server side), you can add the item_id -> link mapping here.
+    	// You can also include some javascript (see example_js_for_adding_links_to_inventory.js) on the specific page you want to activate an item for.
+    	//
+    	// 'item_id' => 'url',
+    	// 'item2_id' => 'url'
+    	'top_hat' => 'crab'
+    ]
   ];
 }
 
