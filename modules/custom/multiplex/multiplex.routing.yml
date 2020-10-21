@@ -33,3 +33,7 @@ multiplex.map:
     _controller: '\Drupal\multiplex\Controller\MultiplexController::specialMap'
   requirements:
     _permission: 'access content'
+  options:
+    parameters:
+      maptype:
+        type: string
