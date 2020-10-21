@@ -51,7 +51,11 @@
 
 					// Make an API call to get the location data (must be on the same domain, or have special headers to allow cross-domain requests)
 					function updateMap() {
-						fetch(settings.multiplex.map.config.apiEndpoint).then(response => response.text()).then(data => {
+						let query = "";
+						if (document.location.href.indexOf("/map/") >= 0) {
+							query = "?path=" + document.location.href.substring(document.location.href.indexOf("/map/") + 5);
+						}
+						fetch(settings.multiplex.map.config.apiEndpoint + query).then(response => response.text()).then(data => {
 							myMap.setLegend(JSON.parse(data).legend);
 							myMap.setLocations(JSON.parse(data).locations);
 						});
