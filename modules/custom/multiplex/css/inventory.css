@@ -75,7 +75,7 @@
 		/* Make sure we dont get covered by the privacy policy bar */
 		z-index: 99999;
 	}
-
+	
 		/* The DIV that contains the inventory open/close icon image */
 		.InventoryBox_show_image, .InventoryBox_hide_image {
 			background:  url(../images/sack.png) center center no-repeat;
@@ -172,6 +172,11 @@
 
 			/* The style added to an inventory IMG if it was added recently */
 			.InventoryBoxItem_wiggle {
+				animation: wiggle 1s linear infinite;
+			}
+		
+			/* Animate the show button if they hid the inventory and a new item is added, or one becomes linked */
+			.InventoryBox_show_active {
 				animation: wiggle 1s linear infinite;
 			}
 			

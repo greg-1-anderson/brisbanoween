@@ -471,7 +471,7 @@ class InventoryBox {
 				}
 			}
 
-
+			let hasActivity = wiggleId != null;
 
 			// See if we need to sort the list
 			if (this.i_config.use_fixed_order) {
@@ -493,6 +493,7 @@ class InventoryBox {
 				let linkURL = InventoryBox.getLink(currentInventory[x]);
 				if (linkURL) {
 					linkURL = this.i_config.link_base_url + linkURL;
+					hasActivity = true;
 				}
 
 				// Update the icon container with the current inventory item data
@@ -512,6 +513,7 @@ class InventoryBox {
 				}
 			}
 
+			this.i_show_image.className = "InventoryBox_show_image" + (hasActivity ? " InventoryBox_show_active" : "");
 		}
 	}
 
