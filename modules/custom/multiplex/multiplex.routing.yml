@@ -26,7 +26,7 @@ multiplex.map:
   requirements:
     _permission: 'access content'
     
-multiplex.map:
+multiplex.typedmap:
   path: '/map/{maptype}'
   defaults:
     _title: 'Map'
