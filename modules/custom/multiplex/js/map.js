@@ -167,7 +167,7 @@ class SpookyMap {
 				this.i_my_marker = new google.maps.Marker({
 					position: this.i_config.centerMapPosition,
 					map: this.i_map,
-					icon: this.i_config.iconBaseURL + "you_are_here.png")
+					icon: this.i_config.iconBaseURL + "you_are_here.png"
 				});
 		}
 		let usePos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
