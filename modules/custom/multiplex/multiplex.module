@@ -58,7 +58,6 @@ function getInventoryConfig() {
     	//
     	// 'item_id' => 'url',
     	// 'item2_id' => 'url'
-    	'top_hat' => 'crab'
     ]
   ];
 }
