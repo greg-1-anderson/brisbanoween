@@ -39,13 +39,14 @@ class SettingsForm extends ConfigFormBase {
       $cookie_value = $this->config('guest_upload.settings')->get('cookie');
     }
 
+	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DateTimePlus::createFromTimestamp(time());
     $form['game_start_time'] = [
       '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
-      '#default_value' => $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DateTimePlus::createFromTimestamp(time())
+      '#default_value' => $currentStartTime->format('c')
     ];
-    error_log("now date: " . var_export(DateTimePlus::createFromTimestamp(time()), true));
+    error_log("loading date: " . var_export($currentStartTime, true));
     $form['cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Cookie'),
@@ -235,7 +236,7 @@ class SettingsForm extends ConfigFormBase {
   		$useValue = $form_state->getValue($f);
   		if ($f == 'game_start_time' && $useValue !== NULL) {
   			$t = intval($useValue->format("U"));
-  			error_log("writing date " . $t . " from date " . var_export($useValue, true));
+  			error_log("saving timestamp [" . $t . "] from date object " . var_export($useValue, true));
   			$useValue = $t;
   		}
 		$this->config('multiplex.settings')
