@@ -41,16 +41,13 @@ class SettingsForm extends ConfigFormBase {
 
 	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DateTimePlus::createFromTimestamp(time());
     $form['game_start_time'] = [
-      '#type' => 'datetime',
+      '#type' => 'date',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
       '#default_value' => [
       	'day' => 12,
       	'month' => 10,
-      	'year' => '2020',
-      	'hour' => 20,
-      	'minute' => 16,
-      	'second' => 0
+      	'year' => 2020
       ] //$currentStartTime
     ];
     error_log("loading date [" . $currentStartTime->format('r') . "]: " . var_export($currentStartTime, true));
