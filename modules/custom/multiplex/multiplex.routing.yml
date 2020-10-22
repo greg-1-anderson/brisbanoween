@@ -13,7 +13,7 @@ multiplex.to:
 multiplex.wait:
   path: '/wait/{path}'
   defaults:
-    _title: 'Please wait...'
+    _title: "You're Early!"
     _controller: '\Drupal\multiplex\Controller\MultiplexController::waitForGameToStartPage'
   requirements:
     _permission: 'access content'

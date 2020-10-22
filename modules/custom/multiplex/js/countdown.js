@@ -39,7 +39,7 @@ class CountdownDisplay {
 					clearInterval(this.i_update_timer);
 					this.i_update_timer = null;
 					if (this.i_targetPath != null) {
-						if (this.i_openInNewWindow)
+						if (this.i_openInNewWindow) {
 							window.open(this.i_targetPath);
 						}
 						else {
