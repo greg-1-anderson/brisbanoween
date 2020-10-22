@@ -52,6 +52,12 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config('multiplex.settings')->get('unidentified_user_path'),
     ];
 
+    $form['map_api_key'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map API Key'),
+      '#description' => $this->t("Google Maps API enabled API key.  You will need to get this from the google credential management interface, and will need to whitelist the domain name you plan to use it on."),
+      '#default_value' => $this->config('multiplex.settings')->get('map_api_key') ? $this->config('multiplex.settings')->get('map_api_key') : ''
+    ];
     $form['map_update_frequency'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Map Update Frequency'),
@@ -109,6 +115,14 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("Allow the user to zoom all the way into street view (where you can virtually walk around)"),
       '#default_value' => $this->config('multiplex.settings')->get('map_allow_street_view') ? $this->config('multiplex.settings')->get('map_allow_street_view') : false
     ];
+
+    $form['map_show_user_location'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Map Show User Location'),
+      '#description' => $this->t("Show the user where they are on the map, updated live (only works if the user allows location tracking and they have GPS)"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_show_user_location') ? $this->config('multiplex.settings')->get('map_show_user_location') : false
+    ];
+
     $form['map_opacity'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Map Transparency Level'),
@@ -192,7 +206,7 @@ class SettingsForm extends ConfigFormBase {
   	$form_fields = array(
   		'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
-  		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window',
+  		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key',
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency'
   	);
 

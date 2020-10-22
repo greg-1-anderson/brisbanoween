@@ -42,6 +42,7 @@
 					defaultZoomLevel: settings.multiplex.map.config.zoomLevel,					// How close to zoom in, the higher the closer to street level it will zoom
 
 					openLinksInNewWindow: settings.multiplex.map.config.openLinksInNewWindow,				// Whether to open links in a new window (true) or redirect the current window (false)
+					showUserLocation: settings.multiplex.map.config.showUserLocation							// Whether to show a pin to indicate where the user currently is (requires GPS)
 				});
 
 				// Google callback to initialize map contents (in our case, this is when we attach our map)

@@ -160,6 +160,21 @@ class SpookyMap {
 	}
 
 	/**
+	 *	Update the marker on the map that reflects where the user actually is
+	 */
+	updateMyPosition(position) {
+		if (this.i_my_marker == null) {
+				this.i_my_marker = new google.maps.Marker({
+					position: this.i_config.centerMapPosition,
+					map: this.i_map,
+					icon: this.i_config.iconBaseURL + "you_are_here.png"
+				});
+		}
+		let usePos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		this.i_my_marker.setPosition(usePos);
+	}
+
+	/**
 	 *	Attach the map to the DOM
 	 *
 	 *	@param {DOMElement} container the container to add the map to
@@ -223,6 +238,22 @@ class SpookyMap {
 				mapTypeControl: this.i_config.allowMapTypeToggle,
 				streetViewControl: this.i_config.allowStreetView,
 			});
+
+			// Attempt to track the user so we can put a pin on the map showing where they are
+			if (this.i_config.showUserLocation) {
+				try {
+					this.i_my_watcher = navigator.geolocation.watchPosition((p) => {
+						this.updateMyPosition(p);
+					}, (err) => {
+						console.error("Error getting user's location: ", err);
+					},
+						{'enableHighAccuracy':true}	// Use GPS if we have it
+					);
+				}
+				catch (err) {
+					console.warn("User location is not available in this environment", err);
+				}
+			}
 
 			// Update the map location set if we have it already
 			this.updateLocations();

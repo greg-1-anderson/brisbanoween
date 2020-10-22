@@ -221,10 +221,6 @@ class InventoryBoxItem {
  *	This widget is designed to maintain a menu of inventory items, identified by a cookie
  */
 class InventoryBox {
-	/* A map of item id's to the links they should open */
-	static linkMap = {};
-	static linkMapHandlers = [];
-
 	/**
 	 *	Get the link associated with a specific item ID
 	 *
@@ -433,6 +429,9 @@ class InventoryBox {
 		// Update the visible state
 		this.i_visible = state;
 
+		// Remember the state for next time
+		document.cookie = "inv_expanded=" + (state ? "1" : "0") + "; path=/";
+
 		// Re-render
 		this.updateInventoryWidget();
 	}
@@ -525,6 +524,12 @@ class InventoryBox {
 	attach(container) {
 		// See if we've build the inventory widget yet
 		if (this.i_element == null) {
+			// Get all the cookies
+			let cookies = this.getCookies();
+
+			// Restore the visible state
+			this.i_visible = cookies['inv_expanded'] == "0" ? false : true;
+
 			// We have not, so build it
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "InventoryBox";
@@ -598,3 +603,7 @@ class InventoryBox {
 		container.appendChild(this.i_element);
 	}
 }
+
+// Safari didnt like the static keyword on member variables
+InventoryBox.linkMap = {};
+InventoryBox.linkMapHandlers = [];
