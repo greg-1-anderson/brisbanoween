@@ -39,3 +39,9 @@
 		transform-origin: bottom right;
 	}
 }
+
+@media {min-height: 500px) {
+	ul.menu {
+		display: flex;
+	}
+}
