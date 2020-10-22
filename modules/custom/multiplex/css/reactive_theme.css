@@ -19,9 +19,22 @@
 		margin: 0px 0px 0px 0px;
 	}
 	
-	.InventoryBox_bar, .InventoryBox_show_wrapper {
-		transform: scale(0.7);
-		transform-origin: bottom right;
+	.InventoryBoxItem {
+		width: 40px;
+		height: 40px;
+	}
+	
+	.InventoryBox_hide_wrapper {
+		padding: 3px;
+	}
+	
+	.InventoryBox_show_arrow, .InventoryBox_hide_arrow {
+		font-size: 10px;
+	}
+	
+	.InventoryBox_show_arrow, .InventoryBox_hide_arrow {
+		background-size: 32px 32px;
+		min-height: 32px;
 	}
 }
 
