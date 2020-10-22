@@ -32,7 +32,7 @@
 
 				// Give the document a second to load so our target DIV exists
 				setTimeout(() => {
-					counter.attach(document.getElementById("main_wrapper"));
+					counter.attach(document.getElementById("main-wrapper"));
 				}, 100);
 			}
 			if (context == document && settings.multiplex.map.enabled !== false) {
