@@ -60,14 +60,15 @@ class MultiplexController extends ControllerBase {
    * Host page for the map controls (which accept a parameter to pass through to the API)
    */
   public function specialMap($map_type=NULL) {
-    return [
+    $page = [
       '#markup' => 'Opening map, please wait...',
     ];
   }
 
   public function waitForGameToStartPage($path=NULL) {
+  	// We dont need to show anything, multiplex.module injects the counter on this page automatically.
     return [
-      '#markup' => 'Game has not yet started...',
+      '#markup' => '',
     ];
   }
 

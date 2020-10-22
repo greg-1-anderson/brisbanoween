@@ -24,6 +24,14 @@
 
 				}, 10);
 			}
+			if (context == document && settings.multiplex.countdown.enabled !== false) {
+				let counter = new CountdownDisplay((time() + (60 * 60 * 45)) * 1000, settings.multiplex.countdown.target, settings.multiplex.countdown.openInNewWindow);
+
+				// Give the document a second to load so our target DIV exists
+				setTimeout(() => {
+					counter.attach(document.getElementById("main_wrapper"));
+				}, 100);
+			}
 			if (context == document && settings.multiplex.map.enabled !== false) {
 				// Create the map
 				let myMap = new SpookyMap({

@@ -1,0 +1,22 @@
+.CountdownDisplay {
+	font-family: Arial;
+	font-size: 30px;
+	font-weight: bold;
+	color: #888888;
+}
+	.CountdownDisplay_waiting {
+		display: grid;
+		grid-template-rows: auto auto;
+		grid-gap: 10px;
+	}
+		.CountdownDisplay_header {
+		
+		}
+		
+		.CountdownDisplay_counter {
+			font-weight: normal;
+		}
+	
+	.CountdownDisplay_redirecting {
+
+	}

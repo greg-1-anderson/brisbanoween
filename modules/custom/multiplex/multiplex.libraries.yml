@@ -4,11 +4,13 @@ multiplex:
     js/inventory.js: {}
     js/map.js: {}
     js/multiplex.js: {}
+    js/countdown.js: {}
   css:
     component:
       css/inventory.css: {}
       css/map.css: {}
       css/multiplex.css: {}
+      css/countdown.css: {}
       css/reactive_theme.css: {}
   dependencies:
     - core/drupal
