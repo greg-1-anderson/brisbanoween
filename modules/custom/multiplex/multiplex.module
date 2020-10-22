@@ -127,11 +127,12 @@ function getMapConfig() {
       'lat' => floatval($config->get('map_center_lat')),
       'lng' => floatval($config->get('map_center_lng'))
     ],
-    'zoomLevel' => intval($config->get('map_default_zoom')),                 // How close to zoom in, the higher the closer to street level it will zoom
+    'zoomLevel' => floatval($config->get('map_default_zoom')),                 // How close to zoom in, the higher the closer to street level it will zoom
     'openLinksInNewWindow' => $config->get('map_open_links_in_new_window') ? true : false,    // Whether to open links in a new window (true) or redirect the current window (false)
     'allowChangeMapType' => $config->get('map_allow_type_toggle') ? true : false,
     'useRoadmap' => $config->get('map_use_roadmap') ? true : false,
     'allowStreetView' => $config->get('map_allow_street_view') ? true : false,
+    'nightMode' => $config->get('map_night_mode') ? true : false,
     'mapOpacity' => floatval($config->get('map_opacity')),
     'showUserLocation' => $config->get('map_show_user_location') ? true : false,
     'updateFrequency' => intval($config->get('map_update_frequency')),

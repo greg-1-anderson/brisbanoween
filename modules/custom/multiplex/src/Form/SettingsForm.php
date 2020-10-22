@@ -74,19 +74,19 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Map Center Latitude'),
       '#description' => $this->t("Center the map on this latitude"),
-      '#default_value' => $this->config('multiplex.settings')->get('map_center_lat') ? $this->config('multiplex.settings')->get('map_center_lat') : 37.689846
+      '#default_value' => $this->config('multiplex.settings')->get('map_center_lat') ? $this->config('multiplex.settings')->get('map_center_lat') : 37.681275
     ];
     $form['map_center_lng'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Map Center Longitude'),
       '#description' => $this->t("Center the map on this longitude"),
-      '#default_value' => $this->config('multiplex.settings')->get('map_center_lng') ? $this->config('multiplex.settings')->get('map_center_lng') : -122.402881
+      '#default_value' => $this->config('multiplex.settings')->get('map_center_lng') ? $this->config('multiplex.settings')->get('map_center_lng') : -122.401968
     ];
     $form['map_default_zoom'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Map Default Zoom'),
       '#description' => $this->t("The default zoom level for the map.  14 is about the size of Brisbane on a phone screen.  Larger numbers zoom furhter in."),
-      '#default_value' => $this->config('multiplex.settings')->get('map_default_zoom') ? $this->config('multiplex.settings')->get('map_default_zoom') : 14
+      '#default_value' => $this->config('multiplex.settings')->get('map_default_zoom') ? $this->config('multiplex.settings')->get('map_default_zoom') : 15.3
     ];
     $form['map_open_links_in_new_window'] = [
       '#type' => 'checkbox',
@@ -127,7 +127,14 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Map Transparency Level'),
       '#description' => $this->t("How opaque should the map be.  The less opaque, the more visible the background pattern will be.  0.8 = 80% visible."),
-      '#default_value' => $this->config('multiplex.settings')->get('map_opacity') ? $this->config('multiplex.settings')->get('map_opacity') : 0.8
+      '#default_value' => $this->config('multiplex.settings')->get('map_opacity') ? $this->config('multiplex.settings')->get('map_opacity') : 0.9
+    ];
+
+    $form['map_night_mode'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Map Night Mode'),
+      '#description' => $this->t("Invert the color scheme of the map, making it much darker."),
+      '#default_value' => $this->config('multiplex.settings')->get('map_night_mode') ? $this->config('multiplex.settings')->get('map_night_mode') : false
     ];
 
     $form['inventory_cookie'] = [
@@ -206,7 +213,7 @@ class SettingsForm extends ConfigFormBase {
   	$form_fields = array(
   		'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
-  		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key',
+  		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency'
   	);
 

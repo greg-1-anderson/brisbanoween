@@ -34,6 +34,7 @@
 					allowStreetView: settings.multiplex.map.config.allowStreetView,						// Whether to allow the user to zoom all the way into street view
 					mapOpacity: settings.multiplex.map.config.mapOpacity,							// How opaque the map is.  The lower this value, the more the backgorund
 																	// image will bleed through (0 = hidden, 1 = fully opaque, 0.5 = half visible, etc...)
+					nightMode: settings.multiplex.map.config.nightMode,
 					backgroundImage: settings.multiplex.map.config.backgroundImage,		// A repeating background image, or one that is the exact size of the map
 					linkBaseURL: settings.multiplex.map.config.linkPrefix,				// The URL to prefix codes with when creating links
 					iconBaseURL: settings.multiplex.map.config.iconPrefix,		// The URL to prefix icon images with
