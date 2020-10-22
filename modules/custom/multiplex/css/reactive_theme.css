@@ -40,7 +40,7 @@
 	}
 }
 
-@media {min-height: 500px) {
+@media {min-width: 500px) and(max-width: 800px) {
 	ul.menu {
 		display: flex;
 	}
