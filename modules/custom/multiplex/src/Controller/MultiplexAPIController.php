@@ -86,6 +86,7 @@ class MultiplexAPIController extends ControllerBase {
               floatval($geo[0]['lng']),
             ],
             "legendId" => empty($story) ? "unvisited" : "visited",
+            "visited" => true,
           ];
         }
       }
