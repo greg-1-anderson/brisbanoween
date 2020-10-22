@@ -239,6 +239,24 @@ class SpookyMap {
 				streetViewControl: this.i_config.allowStreetView,
 			});
 
+			// Dont show points of interest or transit stops
+			this.i_map.setOptions(
+				{
+					'styles':[
+						{
+							featureType: "poi",
+							elementType: "labels.icon",
+							stylers: [{ visibility: "off" }],
+						},
+						{
+							featureType: "transit",
+							elementType: "labels.icon",
+							stylers: [{ visibility: "off" }],
+						},
+						]
+					}
+			);
+
 			// Attempt to track the user so we can put a pin on the map showing where they are
 			if (this.i_config.showUserLocation) {
 				try {
