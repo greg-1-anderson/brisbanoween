@@ -71,6 +71,16 @@ function multiplex_schema() {
         'default' => 0,
         'description' => 'Timestamp when the record was most recently visited.',
       ],
+      'lat' => [
+        'type' => 'float',
+        'default' => 0,
+        'description' => 'Latitude',
+      ],
+      'lng' => [
+        'type' => 'float',
+        'default' => 0,
+        'description' => 'Longitude',
+      ],
     ],
     'primary key' => ['id'],
     'indexes' => [
@@ -80,6 +90,24 @@ function multiplex_schema() {
   ];
 
   return $schema;
+}
+
+/**
+ * Add latitude and longitude columns to multiplex_visitors
+ */
+function multiplex_update_8001() {
+  $spec = [
+    'type' => 'float',
+    'default' => 0,
+    'description' => 'Latitude',
+  ];
+  db_add_field('multiplex_visitors', 'lat', $spec);
+  $spec = [
+    'type' => 'float',
+    'default' => 0,
+    'description' => 'Longitude',
+  ];
+  db_add_field('multiplex_visitors', 'lng', $spec);
 }
 
 /**

@@ -18,7 +18,7 @@ class MultiplexService {
     $this->config = $config;
   }
 
-  public function findMultiplexLocation($who, $node) {
+  public function findMultiplexLocation($who, $node, $lat, $lng) {
     $path = $node->Url();
 
     // We can perform no service unless we have a visitor identifier.
@@ -31,7 +31,7 @@ class MultiplexService {
     }
 
     // Record that "$path" was visited, regardless of where it resolves to.
-    $visit_data = $this->visitationService->recordVisit($who, $path);
+    $visit_data = $this->visitationService->recordVisit($who, $path, $lat, $lng);
 
     $multiplex_result = $this->resolveMultiplexRules($visit_data, $node);
     if ($multiplex_result) {

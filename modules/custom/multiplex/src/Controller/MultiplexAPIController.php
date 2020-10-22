@@ -62,7 +62,18 @@ class MultiplexAPIController extends ControllerBase {
    * @return array
    */
   public function getLocationData() {
+    $user = \Drupal::currentUser();
+    if ($user->hasPermission('access administration menu')) {
+      return $this->getEditModeLocationData();
+    }
+    return $this->getVisitedLocationData();
+  }
 
+  protected function getVisitedLocationData() {
+    return [];
+  }
+
+  protected function getEditModeLocationData() {
     $locations=[];
     // TODO: How to add a condition on field_geolocation to test of lat/lng are populated?
     $query = \Drupal::entityQuery('node')
@@ -107,6 +118,7 @@ class MultiplexAPIController extends ControllerBase {
     ];
 
     return [
+      'yay' => 'woo hoo',
       'legend' => $legend,
       'locations' => $locations,
     ];

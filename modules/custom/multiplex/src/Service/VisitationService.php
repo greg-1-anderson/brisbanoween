@@ -23,7 +23,7 @@ class VisitationService {
    * @return VisitData
    *   Visitation data including record id and cached target path
    */
-  public function recordVisit($who, $path) {
+  public function recordVisit($who, $path, $lat = 0, $lng = 0) {
 
     // No user info, no tracking.
     if (empty($who)) {
@@ -61,6 +61,8 @@ class VisitationService {
         'who' => $who,
         'created' => $now,
         'visited' => $now,
+        'lat' => $lat,
+        'lng' => $lng,
       ])
       ->execute();
 
