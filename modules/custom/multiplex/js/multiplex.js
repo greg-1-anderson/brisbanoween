@@ -56,8 +56,8 @@
 							query = "?path=" + document.location.href.substring(document.location.href.indexOf("/map/") + 5);
 						}
 						fetch(settings.multiplex.map.config.apiEndpoint + query).then(response => response.text()).then(data => {
-							myMap.setLegend(JSON.parse(data).legend);
-							myMap.setLocations(JSON.parse(data).locations);
+							myMap.setLegend(JSON.parse(data).data.legend);
+							myMap.setLocations(JSON.parse(data).data.locations);
 						});
 					};
 					updateMap();
