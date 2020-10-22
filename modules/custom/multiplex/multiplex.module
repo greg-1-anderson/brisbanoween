@@ -196,17 +196,19 @@ function multiplex_page_attachments(array &$page) {
   
   // See if we need to show the countdown timer (/wait/*)
   $counter_target = NULL;
+  $game_start_time = NULL;
   if (strpos($current_path, "/wait") === 0) {
   	$counter_enabled = true;
   	$counter_target = substr($current_path, 6);
+  	$game_start_time = ((time() + (60 * 60  * 4)) * 1000);
   	$counter_new_window = $config->get("counter_open_in_new_window") ? true : false;
   }
 
   // Pass some values down the JS to configure the map and inventory displays
   $computed_settings = [
-    'counter' => {
     'countdown' => {
 	'enabled' => $counter_enabled,
+	'startTime' => $game_start_time,
 	'target' => $counter_target,
 	'openInNewWindow' => $counter_new_window,
     },
