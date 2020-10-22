@@ -333,6 +333,11 @@ class SpookyMap {
 				elementType: "labels.icon",
 				stylers: [{ visibility: "off" }],
 			});
+			styles.push({
+				featureType: "administrative",
+				elementType: "labels.text",
+				stylers: [{ visibility: 'off' }],
+			});
 			this.i_map.setOptions({styles: styles});
 
 			// Attempt to track the user so we can put a pin on the map showing where they are
