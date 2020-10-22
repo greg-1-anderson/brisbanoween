@@ -206,12 +206,12 @@ function multiplex_page_attachments(array &$page) {
 
   // Pass some values down the JS to configure the map and inventory displays
   $computed_settings = [
-    'countdown' => {
+    'countdown' => [
 	'enabled' => $counter_enabled,
 	'startTime' => $game_start_time,
 	'target' => $counter_target,
 	'openInNewWindow' => $counter_new_window,
-    },
+    ],
     'map' => [
 	'enabled' => $map_enabled,
 	'config' => getMapConfig()
