@@ -45,7 +45,7 @@ class SettingsForm extends ConfigFormBase {
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
       '#default_value' => [
-      	'day' => 12.
+      	'day' => 12,
       	'month' => 10,
       	'year' => '2020',
       	'hour' => 20,
