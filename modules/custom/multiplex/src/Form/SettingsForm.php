@@ -45,7 +45,7 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("When does the game officially begin?"),
       '#default_value' => $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DateTimePlus::createFromTimestamp(time())
     ];
-    error_log("now date: " . export_var(DateTimePlus::createFromTimestamp(time()), true));
+    error_log("now date: " . var_export(DateTimePlus::createFromTimestamp(time()), true));
     $form['cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Cookie'),
@@ -235,7 +235,7 @@ class SettingsForm extends ConfigFormBase {
   		$useValue = $form_state->getValue($f);
   		if ($f == 'game_start_time' && $useValue !== NULL) {
   			$t = intval($useValue->format("U"));
-  			error_log("writing date " . $t . " from date " . export_var($useValue, true));
+  			error_log("writing date " . $t . " from date " . var_export($useValue, true));
   			$useValue = $t;
   		}
 		$this->config('multiplex.settings')
