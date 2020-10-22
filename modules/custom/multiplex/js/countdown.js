@@ -33,7 +33,13 @@ class CountdownDisplay {
 				parts.splice(parts.length - 1, 0, 'and');
 			}
 
-			this.i_counter.innerHTML = (parts.length > 0 ? parts.join(" ") : "Now!");
+			let newLabel = (parts.length > 0 ? parts.join(" ") : "Now!");
+			if (this.i_last_label != newLabel) {
+				this.i_last_label = newLabel;
+				this.i_counter.innerHTML = newLabel;
+				this.i_counter.className = "CountdownDisplay_counter";	// Clear the last animation, so we can fire again.
+				this.i_counter.className = "CountdownDisplay_counter CountdownDisplay_counter_change_animation";	// Now assign the animation.
+			}
 
 			if (parts.length == 0) {
 				this.i_waiting_box.style.display = "none";

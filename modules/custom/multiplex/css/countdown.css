@@ -16,7 +16,21 @@
 		.CountdownDisplay_counter {
 			font-weight: normal;
 		}
+		
+		@keyframes flash {
+			0% {
+				color: #222222;
+			}
+			100% {
+				color: #888888;
+			}
+		}
+		
+		.CountdownDisplay_counter_change_animation {
+			animation: flash 300ms ease-in 1;
+		}
 	
 	.CountdownDisplay_redirecting {
 
 	}
+
