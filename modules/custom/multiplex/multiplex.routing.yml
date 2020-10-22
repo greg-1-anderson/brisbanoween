@@ -10,6 +10,18 @@ multiplex.to:
       path:
         type: string
 
+multiplex.wait:
+  path: '/wait/{target}'
+  defaults:
+    _title: 'Please wait...'
+    _controller: '\Drupal\multiplex\Controller\MultiplexController::waitForGameToStartPage'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      target:
+        type: string
+
 multiplex.locations_api:
   path: '/multiplex/api/locations'
   defaults:

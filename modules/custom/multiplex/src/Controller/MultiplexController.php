@@ -65,6 +65,12 @@ class MultiplexController extends ControllerBase {
     ];
   }
 
+  public function waitForGameToStart($target=NULL) {
+    return [
+      '#markup' => 'Game has not yet started...',
+    ];
+  }
+
   /**
    * Builds the response, which is usually a redirect.
    *
