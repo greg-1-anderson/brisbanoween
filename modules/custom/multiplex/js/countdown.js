@@ -29,6 +29,10 @@ class CountdownDisplay {
 				parts.push(remSeconds + " Second" + (remSeconds != 1 ? "s" : ""));
 			}
 
+			if (parts.length > 1) {
+				parts.splice(parts.length - 1, 0, 'and');
+			}
+
 			this.i_counter.innerHTML = (parts.length > 0 ? parts.join(" ") : "Now!");
 
 			if (parts.length == 0) {
