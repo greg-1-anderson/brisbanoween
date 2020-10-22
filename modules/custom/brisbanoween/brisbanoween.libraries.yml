@@ -4,6 +4,7 @@ brisbanoween:
     js/brisbanoween.js: {}
   css:
     component:
+      css/reactive_theme.css: {}
       css/brisbanoween.css: {}
   dependencies:
     - core/drupalSettings

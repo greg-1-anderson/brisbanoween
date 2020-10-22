@@ -1,0 +1,41 @@
+@media (max-width: 800px) {
+	.page-title {
+		font-size: 60px;
+		margin: 0px 0px 0px 0px;
+		padding: 0px;
+	}
+
+	.region-header {
+		display: grid;
+		grid-template-columns: 60px 1fr;
+		align-items: center;
+		justify-content: center;
+		padding: 0px 0px 0px 0px;
+		padding-left: 10px;
+	}
+	
+	#block-bartik-page-title {
+		font-size: 0px;
+		margin: 0px 0px 0px 0px;
+	}
+	
+	ul.menu {
+		margin: 0px 0px 0px 0px;
+		padding: 0px 0px 0px 0px;
+	}
+	
+	#block-mainnavigation li {
+		float: none;
+		margin-right: 0px;
+		overflow: hidden;
+	}
+	
+	#block-mainnavigation li A {
+		display: block;
+	}
+	
+	.InventoryBox_bar, .InventoryBox_show_wrapper {
+		transform: scale(0.7);
+		transform-origin: bottom right;
+	}
+}
