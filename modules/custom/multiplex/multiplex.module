@@ -132,6 +132,7 @@ function getMapConfig() {
     'allowChangeMapType' => $config->get('map_allow_type_toggle') ? true : false,
     'useRoadmap' => $config->get('map_use_roadmap') ? true : false,
     'allowStreetView' => $config->get('map_allow_street_view') ? true : false,
+    'nightMode' => $config->get('map_night_mode') ? true : false,
     'mapOpacity' => floatval($config->get('map_opacity')),
     'showUserLocation' => $config->get('map_show_user_location') ? true : false,
     'updateFrequency' => intval($config->get('map_update_frequency')),
