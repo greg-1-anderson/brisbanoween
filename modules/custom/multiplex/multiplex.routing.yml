@@ -11,7 +11,7 @@ multiplex.to:
         type: string
 
 multiplex.wait:
-  path: '/wait/{target}'
+  path: '/wait/{path}'
   defaults:
     _title: 'Please wait...'
     _controller: '\Drupal\multiplex\Controller\MultiplexController::waitForGameToStartPage'

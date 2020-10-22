@@ -65,7 +65,7 @@ class MultiplexController extends ControllerBase {
     ];
   }
 
-  public function waitForGameToStart($target=NULL) {
+  public function waitForGameToStartPage($path=NULL) {
     return [
       '#markup' => 'Game has not yet started...',
     ];
