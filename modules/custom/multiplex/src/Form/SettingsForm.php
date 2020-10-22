@@ -231,7 +231,7 @@ class SettingsForm extends ConfigFormBase {
 
   	foreach ($form_fields as $f) {
   		if ($f == 'game_start_time') {
-  			error_log("Saving date: " . var_export($form_state->getValue($f), true));
+  			error_log("Saving date: " . $form_state->getValue($f)->format("n/j/Y G:i:s"));
   		}
   		else {
 			$this->config('multiplex.settings')
