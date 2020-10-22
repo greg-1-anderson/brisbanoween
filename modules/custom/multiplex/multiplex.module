@@ -185,7 +185,7 @@ function multiplex_page_attachments(array &$page) {
     $page['#attached']['html_head'][] = [
       [
         '#tag' => 'style',
-        '#value' => 'BODY { ' . ($config->get('map_night_mode') ? 'background-color: #000000; ' : '') . margin:0px 0px 0px 0px; } .dialog-off-canvas-main-canvas { display:none; }',
+        '#value' => 'BODY { ' . ($config->get('map_night_mode') ? 'background-color: #000000; ' : '') . 'margin:0px 0px 0px 0px; } .dialog-off-canvas-main-canvas { display:none; }',
         '#weight' => -1,
       ],
       // A key, to make it possible to recognize this HTML <HEAD> element when altering.
