@@ -44,9 +44,9 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
-      '#value' => $currentStartTime->format('Y-m-d H:i:s')
+      '#value' => $currentStartTime
     ];
-    error_log("loading date [" . $currentStartTime->format('r') . "]: " . var_export($currentStartTime, true));
+    error_log("loading date [" . $currentStartTime->format('Y-m-d H:i:s') . "]: " . var_export($currentStartTime, true));
     $form['cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Cookie'),
