@@ -1,0 +1,67 @@
+@media (max-width: 800px) {
+	.page-title {
+		font-size: 60px;
+		margin: 0px 0px 0px 0px;
+		padding: 0px;
+	}
+
+	.region-header {
+		display: grid;
+		grid-template-columns: 60px 1fr;
+		align-items: center;
+		justify-content: center;
+		padding: 0px 0px 0px 0px;
+		padding-left: 10px;
+	}
+	
+	#block-bartik-page-title {
+		font-size: 0px;
+		margin: 0px 0px 0px 0px;
+	}
+	
+	.InventoryBoxItem {
+		width: 40px;
+		height: 40px;
+	}
+	
+	.InventoryBox_hide_wrapper {
+		padding: 3px;
+		grid-gap: 0px;
+	}
+	
+	.InventoryBox_show_wrapper {
+		padding: 5px;
+		grid-gap: 0px;
+	}
+	
+	.InventoryBox_show_arrow, .InventoryBox_hide_arrow {
+		font-size: 10px;
+	}
+	
+	.InventoryBox_show_image, .InventoryBox_hide_image {
+		background-size: 32px 32px;
+		min-height: 32px;
+	}
+	
+	.InventoryBox_images {
+		padding: 5px;
+	}
+	
+}
+
+@media (max-width: 500px) {
+	ul.menu {
+		margin: 0px 0px 0px 0px;
+		padding: 0px 0px 0px 0px;
+	}
+	
+	#block-mainnavigation li {
+		float: none;
+		margin-right: 0px;
+		overflow: hidden;
+	}
+	
+	#block-mainnavigation li A {
+		display: block;
+	}
+}
