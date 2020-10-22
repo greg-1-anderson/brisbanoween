@@ -74,19 +74,19 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Map Center Latitude'),
       '#description' => $this->t("Center the map on this latitude"),
-      '#default_value' => $this->config('multiplex.settings')->get('map_center_lat') ? $this->config('multiplex.settings')->get('map_center_lat') : 37.689846
+      '#default_value' => $this->config('multiplex.settings')->get('map_center_lat') ? $this->config('multiplex.settings')->get('map_center_lat') : 37.681275
     ];
     $form['map_center_lng'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Map Center Longitude'),
       '#description' => $this->t("Center the map on this longitude"),
-      '#default_value' => $this->config('multiplex.settings')->get('map_center_lng') ? $this->config('multiplex.settings')->get('map_center_lng') : -122.402881
+      '#default_value' => $this->config('multiplex.settings')->get('map_center_lng') ? $this->config('multiplex.settings')->get('map_center_lng') : -122.401968
     ];
     $form['map_default_zoom'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Map Default Zoom'),
       '#description' => $this->t("The default zoom level for the map.  14 is about the size of Brisbane on a phone screen.  Larger numbers zoom furhter in."),
-      '#default_value' => $this->config('multiplex.settings')->get('map_default_zoom') ? $this->config('multiplex.settings')->get('map_default_zoom') : 14
+      '#default_value' => $this->config('multiplex.settings')->get('map_default_zoom') ? $this->config('multiplex.settings')->get('map_default_zoom') : 15.3
     ];
     $form['map_open_links_in_new_window'] = [
       '#type' => 'checkbox',
