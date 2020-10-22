@@ -87,7 +87,7 @@ class CountdownDisplay {
 
 				this.i_redirecting_box = document.createElement('DIV');
 				this.i_redirecting_box.className = "CountdownDisplay_redirecting";
-				this.i_redirecting_box.innerHTML = "Game starting, one moment please...";
+				this.i_redirecting_box.innerHTML = "The game has begun, one moment please...";
 				this.i_redirecting_box.style.display = "none";
 				this.i_element.appendChild(this.i_redirecting_box);
 

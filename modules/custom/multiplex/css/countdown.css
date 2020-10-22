@@ -1,8 +1,6 @@
 .CountdownDisplay {
 	font-family: Arial;
-	font-size: 30px;
-	font-weight: bold;
-	color: #888888;
+	
 }
 	.CountdownDisplay_waiting {
 		display: grid;
@@ -10,11 +8,15 @@
 		grid-gap: 10px;
 	}
 		.CountdownDisplay_header {
+			font-size: 32px;
+			font-weight: bold;
 			color: #555555
 		}
 		
 		.CountdownDisplay_counter {
+			font-size: 25px;
 			font-weight: normal;
+			color: #888888;
 		}
 		
 		@keyframes flash {
