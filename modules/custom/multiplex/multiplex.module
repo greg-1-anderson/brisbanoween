@@ -205,6 +205,7 @@ function multiplex_page_attachments(array &$page) {
   // Pass some values down the JS to configure the map and inventory displays
   $computed_settings = [
     'counter' => {
+    'countdown' => {
 	'enabled' => $counter_enabled,
 	'target' => $counter_target,
 	'openInNewWindow' => $counter_new_window,
