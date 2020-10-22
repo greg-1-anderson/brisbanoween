@@ -1,5 +1,7 @@
 .CountdownDisplay {
 	font-family: Arial;
+	padding-left: 20px;
+	padding-right: 20px;
 	
 }
 	.CountdownDisplay_waiting {
@@ -36,3 +38,12 @@
 
 	}
 
+@media (max-width: 500px) {
+	.CountdownDisplay_header {
+		font-size: 20px;
+	}
+	
+	.CountdownDisplay_counter {
+		font-size: 17px;
+	}
+}
