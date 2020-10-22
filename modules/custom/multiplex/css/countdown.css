@@ -9,16 +9,18 @@
 		grid-template-rows: auto auto;
 		grid-gap: 10px;
 	}
-		.CountdownDisplay_header {
+		.CountdownDisplay_header, .CountdownDisplay_redirecting {
 			font-size: 32px;
 			font-weight: bold;
-			color: #555555
+			color: #555555;
+			text-align: center;
 		}
 		
 		.CountdownDisplay_counter {
 			font-size: 25px;
 			font-weight: normal;
 			color: #888888;
+			text-align: center;
 		}
 		
 		@keyframes flash {
@@ -33,10 +35,7 @@
 		.CountdownDisplay_counter_change_animation {
 			animation: flash 700ms ease-in 1;
 		}
-	
-	.CountdownDisplay_redirecting {
 
-	}
 
 @media (max-width: 500px) {
 	.CountdownDisplay_header {
@@ -44,6 +43,6 @@
 	}
 	
 	.CountdownDisplay_counter {
-		font-size: 17px;
+		font-size: 15px;
 	}
 }

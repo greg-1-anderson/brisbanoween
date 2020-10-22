@@ -75,7 +75,7 @@ class CountdownDisplay {
 
 					this.i_time_pending_header = document.createElement('DIV');
 					this.i_time_pending_header.className = "CountdownDisplay_header";
-					this.i_time_pending_header.innerHTML = "The game will start in:";
+					this.i_time_pending_header.innerHTML = "The game will start in";
 					this.i_waiting_box.appendChild(this.i_time_pending_header);
 
 					this.i_counter = document.createElement('DIV');
