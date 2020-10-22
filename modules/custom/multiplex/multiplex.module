@@ -38,6 +38,17 @@ function multiplex_get_visitor_cookie_value() {
 }
 
 /**
+ * Get the array of items in the user's inventory (in the order they were obtained)
+ *
+ * @return the array of item names
+ */
+function multiplex_get_user_inventory() {
+  $inventory_cookie = \Drupal::config('multiplex.settings')->get('inventory_cookie');
+  $currentInventoryValue = $_COOKIE[$inventory_cookie] ?? NULL;
+  return $currentInventoryValue ? explode(",", $currentInventoryValue) : array();
+}
+
+/**
  * Get the display configuration for the inventory component
  */
 function getInventoryConfig() {

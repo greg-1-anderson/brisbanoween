@@ -136,13 +136,29 @@ class MultiplexController extends ControllerBase {
       throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
 
-    $object = $this->checkObject($target_node);
-
     // Redirect to the target.
     $response = new RedirectResponse($target_node->Url(), 302);
 
-    $cookie = new Cookie('STYXKEY_objects', $object, 0, '/', null, false, false);
-    $response->headers->setCookie($cookie);
+	// See if the destination is going to give the user an object
+    $object = $this->checkObject($target_node);
+    if ($object) {
+    	// It will, so see if the user already has the object
+    	$currentInventory = multiplex_get_user_inventory();
+    	if (!in_array($object, $currentInventory)) {
+    		// They dont, so add it to the collection now (at the end)
+    		array_push($currentInventory, $object);
+
+			// Update the cookie with the new inventory items
+    		$inventory_cookie = \Drupal::config('multiplex.settings')->get('inventory_cookie');
+   			$update_inventory = new Cookie($inventory_cookie, implode(',', $currentInventory), 0, '/', null, false, false);
+    		$response->headers->setCookie($update_inventory);
+
+			// Update the cookie that specifies when the last item was obtained (in milliseconds)
+    		$inventory_added_cookie = \Drupal::config('multiplex.settings')->get('inventory_added_cookie');
+   			$update_inventory_added = new Cookie($inventory_added_cookie, (time() * 1000), 0, '/', null, false, false);
+    		$response->headers->setCookie($update_inventory_added);
+    	}
+    }
 
     return $response;
   }
