@@ -37,8 +37,7 @@ class CountdownDisplay {
 			if (this.i_last_label != newLabel) {
 				this.i_last_label = newLabel;
 				this.i_counter.innerHTML = newLabel;
-				this.i_counter.className = "CountdownDisplay_counter";	// Clear the last animation, so we can fire again.
-				this.i_counter.className = "CountdownDisplay_counter CountdownDisplay_counter_change_animation";	// Now assign the animation.
+				this.i_counter.className = "CountdownDisplay_counter CountdownDisplay_counter_change_animation";
 			}
 
 			if (parts.length == 0) {
@@ -81,6 +80,9 @@ class CountdownDisplay {
 
 					this.i_counter = document.createElement('DIV');
 					this.i_counter.className = "CountdownDisplay_counter";
+					this.i_counter.addEventListener("animationend", () => {
+						this.i_counter.className = "CountdownDisplay_counter";
+					});
 					this.i_waiting_box.appendChild(this.i_counter);
 
 				this.i_redirecting_box = document.createElement('DIV');
