@@ -186,6 +186,7 @@ class SpookyMap {
 			this.i_element = document.createElement('DIV');
 			this.i_element.style.width = this.i_config.width;
 			this.i_element.style.height = this.i_config.height;
+			this.i_element.style.visibility = "hidden";
 			this.i_element.className = "SpookyMap";
 
 				// The control bar
@@ -237,6 +238,10 @@ class SpookyMap {
 				mapTypeId: this.i_config.defaultStreetMapType ? 'roadmap' : 'satellite',
 				mapTypeControl: this.i_config.allowMapTypeToggle,
 				streetViewControl: this.i_config.allowStreetView,
+				backgroundColor: this.i_config.nightMode ? '#000000' : '#FFFFFF',
+				zoomControlOptions: {
+		   		position: google.maps.ControlPosition.LEFT_TOP,
+				}
 			});
 
 			// Dont show points of interest or transit stops
@@ -339,6 +344,10 @@ class SpookyMap {
 				stylers: [{ visibility: 'off' }],
 			});
 			this.i_map.setOptions({styles: styles});
+
+			setTimeout(() => {
+				this.i_element.style.visibility = "visible";
+			}, 100);
 
 			// Attempt to track the user so we can put a pin on the map showing where they are
 			if (this.i_config.showUserLocation) {
