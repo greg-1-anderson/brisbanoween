@@ -4,7 +4,7 @@ namespace Drupal\multiplex\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\DateTime\DrupalDateTime;
+use Drupal\Component\Datetime\DateTimePlus;
 
 /**
  * Configure Multiplex settings for this site.
@@ -43,7 +43,7 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
-      '#default_value' => $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp($this->config('multiplex.settings')->get('game_start_time')) : new DrupalDateTime()
+      '#default_value' => $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp($this->config('multiplex.settings')->get('game_start_time')) : new DateTimePlus()
     ];
     $form['cookie'] = [
       '#type' => 'textfield',
