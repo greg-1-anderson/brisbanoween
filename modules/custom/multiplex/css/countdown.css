@@ -27,7 +27,7 @@
 		}
 		
 		.CountdownDisplay_counter_change_animation {
-			animation: flash 300ms ease-in 1;
+			animation: flash 200ms ease-in 1;
 		}
 	
 	.CountdownDisplay_redirecting {
