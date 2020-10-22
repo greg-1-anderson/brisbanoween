@@ -39,7 +39,7 @@ class SettingsForm extends ConfigFormBase {
     }
 
     $form['game_start_time'] = [
-      '#type' => 'date',
+      '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
       '#default_value' => $this->config('multiplex.settings')->get('game_start_time') ? $this->config('multiplex.settings')->get('game_start_time') : ''
