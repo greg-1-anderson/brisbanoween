@@ -1,0 +1,5 @@
+cookie: STYXKEY_visitor
+guest_image_field: node.field_guest_photos
+guest_page_type: guest_page
+automatic_visitor_id: 1
+use_eu_cookie_compliance_module: 1

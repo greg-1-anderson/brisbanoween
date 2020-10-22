@@ -1,0 +1,28 @@
+uuid: 7b7bec13-fe3b-40a4-b5ab-fe3212e940da
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.guest_page.body
+    - field.field.node.guest_page.field_guest_photos
+    - node.type.guest_page
+  module:
+    - image
+    - user
+id: node.guest_page.default
+targetEntityType: node
+bundle: guest_page
+mode: default
+content:
+  field_guest_photos:
+    weight: 0
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden:
+  body: true
+  links: true

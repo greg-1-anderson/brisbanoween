@@ -109,18 +109,31 @@ class MultiplexController extends ControllerBase {
       throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
 
+    $lat = 0;
+    $lng = 0;
+
     // TODO: What's the best way to identify qr_code nodes?
     if ($node->bundle() == 'qr_code') {
-      // If the user is an admin (TODO: define custom permission?), go to edit page
-      $user = \Drupal::currentUser();
-      if ($user->hasPermission('access administration menu')) {
-        $nid = $node->id();
-        return new RedirectResponse("/node/$nid/edit");
+
+      // Look up the latitude and longitude of the QR code, if available
+      $geo = $node->get('field_geolocation')->getValue();
+      if (!empty($geo[0])) {
+        $lat = floatval($geo[0]['lat']);
+        $lng = floatval($geo[0]['lng']);
       }
+
       // Otherwise we will evaluate the target of the QR Code.
       // We will return a 404 if there is no story page.
       $qr_code_target = $node->get('field_story_page')->getValue();
       if (empty($qr_code_target[0]['target_id'])) {
+
+        // If the user is an admin (TODO: define custom permission?), go to edit page
+        $user = \Drupal::currentUser();
+        if ($user->hasPermission('access administration menu')) {
+          $nid = $node->id();
+          return new RedirectResponse("/node/$nid/edit");
+        }
+
         throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
       }
       $node = \Drupal\node\Entity\Node::load($qr_code_target[0]['target_id']);
@@ -128,7 +141,7 @@ class MultiplexController extends ControllerBase {
 
     // Look for redirection rules attached to the entity at "$node".
     // If there are any that match, then redirect to the multiplexed location.
-    $target = $this->multiplexService->findMultiplexLocation($who, $node);
+    $target = $this->multiplexService->findMultiplexLocation($who, $node, $lat, $lng);
 
     // It is also an error if the target does not exist; we return page not found.
     $target_node = $this->getNodeFromPath($target);

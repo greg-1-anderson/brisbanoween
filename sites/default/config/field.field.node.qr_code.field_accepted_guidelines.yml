@@ -1,0 +1,23 @@
+uuid: f2ece091-4a8e-4f1b-98de-f51807249e61
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_accepted_guidelines
+    - node.type.qr_code
+id: node.qr_code.field_accepted_guidelines
+field_name: field_accepted_guidelines
+entity_type: node
+bundle: qr_code
+label: 'Accepted safety guidelines'
+description: 'Check if participating location received safety guidelines and agreed to abide by them.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Accepted
+  off_label: Unanswered
+field_type: boolean

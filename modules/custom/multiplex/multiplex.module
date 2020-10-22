@@ -112,7 +112,7 @@ function getInventoryItems() {
 }
 
 /**
- * Get the map display configuration 
+ * Get the map display configuration
  */
 function getMapConfig() {
   $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
@@ -136,7 +136,7 @@ function getMapConfig() {
     'mapOpacity' => floatval($config->get('map_opacity')),
     'showUserLocation' => $config->get('map_show_user_location') ? true : false,
     'updateFrequency' => intval($config->get('map_update_frequency')),
-    'apiEndpoint' => $base_path . "fake_api_response.json"
+    'apiEndpoint' => 'multiplex/api/locations', // $base_path . "fake_api_response.json"
   ];
 }
 
@@ -154,7 +154,7 @@ function multiplex_page_attachments(array &$page) {
   }
 
   $config = \Drupal::config('multiplex.settings');
-  
+
   $inventory_enabled = true;
   $map_enabled = false;
 
@@ -164,7 +164,7 @@ function multiplex_page_attachments(array &$page) {
     // It is, so show the map, but dont show the inventory component
     $inventory_enabled = false;
     $map_enabled = true;
-    
+
     // Attach the google api script
     $page['#attached']['html_head'][] = [
       [
@@ -180,7 +180,7 @@ function multiplex_page_attachments(array &$page) {
       // A key, to make it possible to recognize this HTML <HEAD> element when altering.
       'googleMapAPI'
     ];
-    
+
     // Hide the main page elements
     $page['#attached']['html_head'][] = [
       [

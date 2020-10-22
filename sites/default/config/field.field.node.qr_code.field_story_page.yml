@@ -1,0 +1,28 @@
+uuid: d34192a8-d606-4201-8005-443d7204eb3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_story_page
+    - node.type.qr_code
+    - node.type.story_page
+id: node.qr_code.field_story_page
+field_name: field_story_page
+entity_type: node
+bundle: qr_code
+label: 'Story page'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      story_page: story_page
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,50 @@
+uuid: 60e98278-7d56-4664-af93-8987a6dfdcbc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_address
+    - node.type.qr_code
+  module:
+    - address
+id: node.qr_code.field_address
+field_name: field_address
+entity_type: node
+bundle: qr_code
+label: Address
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    langcode: ''
+    country_code: US
+    administrative_area: CA
+    locality: Brisbane
+    dependent_locality: null
+    postal_code: '94005'
+    sorting_code: null
+    address_line1: ''
+    address_line2: null
+    organization: null
+    given_name: null
+    additional_name: null
+    family_name: null
+default_value_callback: ''
+settings:
+  available_countries:
+    US: US
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    addressLine2:
+      override: hidden
+  fields: {  }
+field_type: address

@@ -1,0 +1,6 @@
+enabled_fonts:
+  - 'local_fonts://black_widow'
+load_all_enabled_fonts: 1
+load_on_themes: {  }
+_core:
+  default_config_hash: TghDxAeHu4gER0JZhzPbMawpRgxggVsIu54oyTeaJOo

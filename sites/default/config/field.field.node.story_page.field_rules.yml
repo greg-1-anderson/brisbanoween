@@ -1,0 +1,21 @@
+uuid: 01d9a024-1f9e-44e0-ac94-f7a80ef2d4ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rules
+    - node.type.story_page
+  module:
+    - multiplex
+id: node.story_page.field_rules
+field_name: field_rules
+entity_type: node
+bundle: story_page
+label: Rules
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: multiplexrule

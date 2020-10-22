@@ -1,0 +1,12 @@
+uuid: 92363a66-82b2-4e8c-8db7-0a3aaab7a754
+langcode: en
+status: true
+dependencies: {  }
+id: print_style
+label: 'Print Style'
+code: ".view-id-qr_codes  .views-element-container header {\n  page-break-after: always;\n}\n\n.view-id-qr_codes .node__content img {\n  margin-top: 33vh;\n  height: 50vh;\n  margin-bottom: 1vh;\n}\n\n.view-id-qr_codes .node__content .qr-image-text {\n  font-size: 4em;\n}\n\n.path-qr-codes header {\n  display: none;\n}\n\n.path-qr-codes .views-row {\n  margin-left: 10%;\n}\n\n.eu-cookie-withdraw-wrapper {\n  display: none;\n}\n"
+conditions_require_all: true
+conditions: {  }
+contexts: {  }
+media: print
+preprocess: true

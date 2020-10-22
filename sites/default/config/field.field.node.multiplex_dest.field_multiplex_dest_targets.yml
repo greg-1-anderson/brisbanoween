@@ -1,0 +1,30 @@
+uuid: 4bb7681e-2169-4e6c-8246-a5d49b6d34e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_multiplex_dest_targets
+    - node.type.multiplex_dest
+    - node.type.story_page
+_core:
+  default_config_hash: 3xbgc3Sd2B0dhY15EGZmqziMWg-yx2nbEcPx2XQ5RfA
+id: node.multiplex_dest.field_multiplex_dest_targets
+field_name: field_multiplex_dest_targets
+entity_type: node
+bundle: multiplex_dest
+label: Targets
+description: 'List the destinations to use as targets for multiplex rules'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      story_page: story_page
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

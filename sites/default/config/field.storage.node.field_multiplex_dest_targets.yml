@@ -1,0 +1,24 @@
+uuid: 20d3d74f-8e17-4853-b2d3-01fa4af3521a
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - multiplex
+  module:
+    - node
+_core:
+  default_config_hash: g2oM6vOlgKpo-fTuw4Vnm84XkTc7qnOpoGRs60VbcZ8
+id: node.field_multiplex_dest_targets
+field_name: field_multiplex_dest_targets
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
