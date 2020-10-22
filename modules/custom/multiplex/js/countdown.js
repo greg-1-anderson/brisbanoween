@@ -7,7 +7,7 @@ class CountdownDisplay {
 
 	update() {
 		if (this.i_element != null) {
-			let remSeconds = Math.ceil(((new Date()).getTime() - this.i_startTime) / 1000);
+			let remSeconds = Math.ceil((this.i_startTime - (new Date()).getTime()) / 1000);
 			let remDays = Math.floor(remSeconds / (60 * 60 * 24));
 			remSeconds-=(remDays * (60 * 60 * 24));
 			let remHours = Math.floor(remSeconds / (60 * 60));
@@ -20,13 +20,13 @@ class CountdownDisplay {
 				parts.push(remDays + " Day" + (remDays != 1 ? "s" : ""));
 			}
 			if (remHours > 0 || parts.length > 0) {
-				parts.push(remDays + " Hour" + (remHours != 1 ? "s" : ""));
+				parts.push(remHours + " Hour" + (remHours != 1 ? "s" : ""));
 			}
 			if (remMinutes > 0 || parts.length > 0) {
-				parts.push(remDays + " Minute" + (remMinutes != 1 ? "s" : ""));
+				parts.push(remMinutes + " Minute" + (remMinutes != 1 ? "s" : ""));
 			}
 			if (remSeconds > 0 || parts.length > 0) {
-				parts.push(remDays + " Second" + (remSeconds != 1 ? "s" : ""));
+				parts.push(remSeconds + " Second" + (remSeconds != 1 ? "s" : ""));
 			}
 
 			this.i_counter.innerHTML = (parts.length > 0 ? parts.join(" ") : "Now!");
