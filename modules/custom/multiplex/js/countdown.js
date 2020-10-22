@@ -7,7 +7,7 @@ class CountdownDisplay {
 
 	update() {
 		if (this.i_element != null) {
-			let remSeconds = Math.ceil((new Date()).getTime() - this.i_startTime) / 1000);
+			let remSeconds = Math.ceil(((new Date()).getTime() - this.i_startTime) / 1000);
 			let remDays = Math.floor(remSeconds / (60 * 60 * 24));
 			remSeconds-=(remDays * (60 * 60 * 24));
 			let remHours = Math.floor(remSeconds / (60 * 60));
