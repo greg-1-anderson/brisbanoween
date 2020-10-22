@@ -42,7 +42,7 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
-      '#default_value' => $this->config('multiplex.settings')->get('game_start_time') ? $this->config('multiplex.settings')->get('game_start_time') : ''
+      '#default_value' => $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp($this->config('multiplex.settings')->get('game_start_time')) : new DrupalDateTime()
     ];
     $form['cookie'] = [
       '#type' => 'textfield',
@@ -230,14 +230,13 @@ class SettingsForm extends ConfigFormBase {
   	);
 
   	foreach ($form_fields as $f) {
-  		if ($f == 'game_start_time') {
-  			error_log("Saving date: " . $form_state->getValue($f)->format("n/j/Y G:i:s"));
+  		$useValue = $form_state->getValue($f);
+  		if ($f == 'game_start_time' && $useValue !== NULL) {
+  			$useValue = intval($useValue->format("U"));
   		}
-  		else {
-			$this->config('multiplex.settings')
-				->set($f, $form_state->getValue($f))
-				->save();
-		}
+		$this->config('multiplex.settings')
+			->set($f, $useValue)
+			->save();
     }
 
     parent::submitForm($form, $form_state);
