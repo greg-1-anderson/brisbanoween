@@ -230,9 +230,14 @@ class SettingsForm extends ConfigFormBase {
   	);
 
   	foreach ($form_fields as $f) {
-      $this->config('multiplex.settings')
-        ->set($f, $form_state->getValue($f))
-        ->save();
+  		if ($f == 'game_start_time') {
+  			error_log("Saving date: " . var_export($form_state->getValue($f), true));
+  		}
+  		else {
+			$this->config('multiplex.settings')
+				->set($f, $form_state->getValue($f))
+				->save();
+		}
     }
 
     parent::submitForm($form, $form_state);
