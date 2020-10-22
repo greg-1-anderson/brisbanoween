@@ -12,6 +12,15 @@
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
 
+function multiplex_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsInterface $assets) {
+  // UPDATE THIS PATH TO YOUR MODULE'S CSS PATH
+  $path = drupal_get_path('module', 'multiplex') . '/css/reactive_theme.css';
+  if (isset($css[$path])) {
+    // Use anything greater than 100 to have it load after the theme as CSS_AGGREGATE_THEME is set to 100.
+    $css[$path]['group'] = 300;
+  }
+}
+
 /**
  * Implements hook_help().
  */

@@ -9,7 +9,7 @@ multiplex:
       css/inventory.css: {}
       css/map.css: {}
       css/multiplex.css: {}
-      css/reactive_theme.css: {group:300}
+      css/reactive_theme.css: {}
   dependencies:
     - core/drupal
     - core/drupalSettings
