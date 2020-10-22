@@ -38,6 +38,12 @@ class SettingsForm extends ConfigFormBase {
       $cookie_value = $this->config('guest_upload.settings')->get('cookie');
     }
 
+    $form['game_start_time'] = [
+      '#type' => 'date',
+      '#title' => $this->t('Game Start Time'),
+      '#description' => $this->t("When does the game officially begin?"),
+      '#default_value' => $this->config('multiplex.settings')->get('game_start_time') ? $this->config('multiplex.settings')->get('game_start_time') : ''
+    ];
     $form['cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Cookie'),
@@ -191,6 +197,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("How many seconds between inventory updates.  (0 = only update on page load)"),
       '#default_value' => $this->config('multiplex.settings')->get('inventory_update_frequency') ? $this->config('multiplex.settings')->get('inventory_update_frequency') : '0'
     ];
+    $form['counter_open_in_new_window'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Countdown Timer Opens A New Window'),
+      '#description' => $this->t("If the user visits a page before the game starts, they will get a countdown timer.  Once the game begins, should the user be redirected to the original page in the same tab, or should a new window be opened?"),
+      '#default_value' => $this->config('multiplex.settings')->get('counter_open_in_new_window') ? $this->config('multiplex.settings')->get('counter_open_in_new_window') : false
+    ];
     return parent::buildForm($form, $form_state);
   }
 
@@ -211,10 +223,10 @@ class SettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
   	$form_fields = array(
-  		'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
+  		'game_start_time', 'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
-  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency'
+  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window'
   	);
 
   	foreach ($form_fields as $f) {

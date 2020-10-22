@@ -1,6 +1,9 @@
 (function ($, Drupal) {
   Drupal.behaviors.myModuleBehavior = {
     attach: function (context, settings) {
+    	if (context == document) {
+    		console.log(settings);
+    	}
       if (context == document && settings.multiplex.inventory.enabled !== false) {
 				// Create the inventory widget
 				let inventoryBox = new InventoryBox(

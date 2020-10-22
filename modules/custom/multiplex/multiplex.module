@@ -200,7 +200,7 @@ function multiplex_page_attachments(array &$page) {
   if (strpos($current_path, "/wait") === 0) {
   	$counter_enabled = true;
   	$counter_target = substr($current_path, 6);
-  	$game_start_time = ((time() + (60 * 60  * 4)) * 1000);
+  	$game_start_time = $config->get("game_start_time");
   	$counter_new_window = $config->get("counter_open_in_new_window") ? true : false;
   }
 
