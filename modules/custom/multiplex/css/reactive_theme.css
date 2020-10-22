@@ -19,6 +19,13 @@
 		margin: 0px 0px 0px 0px;
 	}
 	
+	.InventoryBox_bar, .InventoryBox_show_wrapper {
+		transform: scale(0.7);
+		transform-origin: bottom right;
+	}
+}
+
+@media {max-width: 500px) {
 	ul.menu {
 		margin: 0px 0px 0px 0px;
 		padding: 0px 0px 0px 0px;
@@ -32,16 +39,5 @@
 	
 	#block-mainnavigation li A {
 		display: block;
-	}
-	
-	.InventoryBox_bar, .InventoryBox_show_wrapper {
-		transform: scale(0.7);
-		transform-origin: bottom right;
-	}
-}
-
-@media {min-width: 500px) and(max-width: 800px) {
-	ul.menu {
-		display: flex;
 	}
 }
