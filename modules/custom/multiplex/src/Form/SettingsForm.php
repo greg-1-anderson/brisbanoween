@@ -39,8 +39,11 @@ class SettingsForm extends ConfigFormBase {
       $cookie_value = $this->config('guest_upload.settings')->get('cookie');
     }
 
-	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DrupalDateTime::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DrupalDateTime();
-	$currentStartTime->setTimezone(new \DateTimeZone('UTC'));
+	$curTime = new DrupalDateTime();
+	$curTime->setTimezone(new \DateTimeZone('America/Los_Angeles'));
+	$timezoneOffset = intval($curTime->format("Z"));
+
+	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DrupalDateTime::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time')) + $timezoneOffset) : DrupalDateTime::createFromTimestamp(time() + $timezoneOffset);
     $form['game_start_time'] = [
       '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
