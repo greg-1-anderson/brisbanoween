@@ -50,7 +50,7 @@ class SettingsForm extends ConfigFormBase {
 		'second' => intval($dparts[6])
 	];
     $form['game_start_time'] = [
-      '#type' => 'datetime',
+      '#type' => 'date',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
       '#value' => $dateArray
