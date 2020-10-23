@@ -11,7 +11,6 @@ use Drupal\multiplex\Service\MultiplexService;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Cookie;
-use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Returns responses for Multiplex routes.
@@ -113,10 +112,9 @@ class MultiplexController extends ControllerBase {
 
     // Make sure the game has started.
     $game_start_timestamp = \Drupal::config('multiplex.settings')->get('game_start_time');
-    $current_time = intval((new DrupalDateTime())->format("U"));
-    error_log("checking game start [" . $game_start_timestamp . "] < [" . $current_time . "]");
-    if (intval($game_start_timestamp) > $current_time) {
-    	return new RedirectResponse("./wait/$path", 302);
+    error_log("checking game start [" . $game_start_timestamp . "] < [" . time() . "]");
+    if (intval($game_start_timestamp) > time()) {
+    	return new RedirectResponse("/wait/$path", 302);
     }
 
 
