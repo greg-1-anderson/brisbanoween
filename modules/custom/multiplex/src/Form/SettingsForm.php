@@ -4,7 +4,7 @@ namespace Drupal\multiplex\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Datetime\DateTimePlus;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Configure Multiplex settings for this site.
@@ -39,23 +39,14 @@ class SettingsForm extends ConfigFormBase {
       $cookie_value = $this->config('guest_upload.settings')->get('cookie');
     }
 
-	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DateTimePlus::createFromTimestamp(time());
-	$dparts = explode(' ', $currentStartTime->format("Y m d H i s"));
-	$dateArray = [
-		'year' => intval($dparts[0]),
-		'month' => intval($dparts[2]),
-		'day' => intval($dparts[3]),
-		'hour' => intval($dparts[4]),
-		'minute' => intval($dparts[5]),
-		'second' => intval($dparts[6])
-	];
+	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DrupalDateTime::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DrupalDateTime::createFromTimestamp(time());
     $form['game_start_time'] = [
-      '#type' => 'date',
+      '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
-      '#value' => $dateArray
+      '#value' => $currentStartTime
     ];
-    error_log("loading date [" . $currentStartTime->format('Y-m-d H:i:s') . "]: " . var_export($dateArray, true));
+    error_log("loading date [" . $currentStartTime->format('Y-m-d H:i:s') . "]: " . var_export($currentStartTime, true));
     $form['cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Cookie'),
