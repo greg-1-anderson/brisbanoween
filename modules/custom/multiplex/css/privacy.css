@@ -13,58 +13,10 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		background: url(../images/privacy/border_5.png);
+		/*background: url(../images/privacy/border_5.png);*/
 		padding: 20px;
 	}
-	
-	.PrivacyManager_border_0, .PrivacyManager_border_1, .PrivacyManager_border_2, .PrivacyManager_border_3, .PrivacyManager_border_4, 
-	.PrivacyManager_border_5, .PrivacyManager_border_6, .PrivacyManager_border_7, .PrivacyManager_border_8, .PrivacyManager_border_9,
-	.PrivacyManager_border_10, .PrivacyManager_border_11 {
-		display: grid;
-		grid-template-rows: 1fr;
-		grid-template-columns: 1fr;
-		background-scale: 90% 90% !important;
-	}
-	
-	.PrivacyManager_border_0 {
-		background: url(../images/privacy/border_r1.png) top left repeat-x;
-	}
-	.PrivacyManager_border_1 {
-		background: url(../images/privacy/border_r2.png) top left repeat-y;
-	}
-	.PrivacyManager_border_2 {
-		background: url(../images/privacy/border_r3.png) bottom left repeat-x;
-	}
-	.PrivacyManager_border_3 {
-		background: url(../images/privacy/border_r4.png) top right repeat-y;
-	}
-	.PrivacyManager_border_4 {
-		background: url(../images/privacy/border1.png) top left no-repeat;
-	}
-	.PrivacyManager_border_5 {
-		background: url(../images/privacy/border2.png) top center no-repeat;
-	}
-	.PrivacyManager_border_6 {
-		background: url(../images/privacy/border3.png) top right no-repeat;
-	}
-	.PrivacyManager_border_7 {
-		background: url(../images/privacy/border4.png) center left no-repeat;
-	}
-	.PrivacyManager_border_8 {
-		background: url(../images/privacy/border6.png) center right no-repeat;
-	}
-	.PrivacyManager_border_9 {
-		background: url(../images/privacy/border7.png) bottom left no-repeat;
-	}
-	.PrivacyManager_border_10 {
-		background: url(../images/privacy/border8.png) bottom center no-repeat;
-	}
-	.PrivacyManager_border_11 {
-		background: url(../images/privacy/border9.png) bottom right no-repeat;
-		justify-content: center;
-		align-items: center;
-	}
-	
+
 	
 		@keyframes fadeAway {
 			0% {
