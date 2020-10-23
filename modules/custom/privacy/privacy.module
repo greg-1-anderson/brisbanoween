@@ -19,7 +19,7 @@ function getPrivacyConfig() {
  */
 function privacy_page_attachments(array &$page) {
   $computed_settings = [
-    'privacy' => getPrivacyConfig()
+    'config' => getPrivacyConfig()
   ];
 
   $page['#attached']['library'][] = 'privacy/privacy';
