@@ -1,6 +1,8 @@
 class CountdownDisplay {
 	constructor(startTime, targetPath, openInNewWindow) {
-		this.i_startTime = startTime;
+		let localize = new Date();
+		localize.setUTCSeconds(startTime);
+		this.i_startTime = localize.getTime();
 		this.i_targetPath = targetPath;
 		this.i_openInNewWindow = openInNewWindow;
 	}
