@@ -1,0 +1,7 @@
+privacy.settings_form:
+  path: '/admin/config/system/privacy'
+  defaults:
+    _title: 'Privacy Policy Settings'
+    _form: 'Drupal\privacy\Form\SettingsForm'
+  requirements:
+    _permission: 'administer privacy configuration'

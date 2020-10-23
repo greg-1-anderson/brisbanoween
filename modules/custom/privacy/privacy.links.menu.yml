@@ -1,0 +1,6 @@
+privacy.settings_form:
+  title: 'Privacy Policy Settings'
+  description: 'Manage how the privacy policy controls the session cookie'
+  route_name: privacy.settings_form
+  parent: system.admin_config_ui
+  weight: 10
