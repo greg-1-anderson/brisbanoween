@@ -10,7 +10,7 @@ class PrivacyManager {
 
 		let cookies = this.getCookies();
 		this.i_first_open = true;
-		this.i_closed = !!cookies[this.i_cookie_name];
+		this.i_closed = !!cookies[this.i_privacy_cookie_name];
 
 		PrivacyManager.i_last_active = this;
 	}
