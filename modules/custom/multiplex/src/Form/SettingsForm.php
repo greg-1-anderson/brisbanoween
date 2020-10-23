@@ -240,7 +240,6 @@ class SettingsForm extends ConfigFormBase {
   		if ($f == 'game_start_time' && $useValue !== NULL) {
   			$useValue->setTimezone(new \DateTimeZone('America/Los_Angeles'));
   			$t = intval($useValue->format("U"));
-  			error_log('timezone offset [' . $useValue->format("U") . "]: " . $useValue->format("Z"));
   			$useValue = $t - intval($useValue->format("Z"));
   		}
 		$this->config('multiplex.settings')
