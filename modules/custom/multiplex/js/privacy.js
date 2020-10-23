@@ -1,10 +1,11 @@
 class PrivacyManager {
-	constructor(cookieName, title, message, acceptButton, rejectButton) {
+	constructor(cookieName, title, message, acceptButton, rejectButton, pageContainer) {
 		this.i_cookie_name = cookieName;
 		this.i_title_text = title;
 		this.i_message_text = message;
 		this.i_accept_button_text = acceptButton;
 		this.i_reject_button_text = rejectButton;
+		this.i_page_container = pageContainer;
 
 		let cookies = this.getCookies();
 		this.i_first_open = true;
@@ -61,6 +62,7 @@ class PrivacyManager {
 				if (this.i_visible != true) {
 					this.i_visible = true;
 					this.i_element.style.display = "";
+					this.i_page_container.style.display = "none";
 					this.i_real_wrapper.className = "PrivacyManager_wrapper" + (this.i_first_open != true ? " PrivacyManager_wrapper_open" : "");
 					this.i_notice.style.display = "none";
 					this.i_first_open = false;
@@ -70,6 +72,8 @@ class PrivacyManager {
 				if (this.i_visible == true) {
 					this.i_visible = false;
 					this.i_real_wrapper.className = "PrivacyManager_wrapper PrivacyManager_wrapper_close";
+					this.i_page_container.style.display = "";
+					window.scrollTo(0,0);
 
 					let cookies = this.getCookies();
 					this.i_notice.style.display = cookies[this.i_cookie_name] == "2" ? "none" : "";
