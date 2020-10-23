@@ -224,10 +224,10 @@ function multiplex_page_attachments(array &$page) {
 	'target' => $counter_target,
 	'openInNewWindow' => $counter_new_window,
     ],
-    'privacy' => [
-    	'enabled' => $privacy_enabled,
-    	'config' => getPrivacyConfig()
-    ],
+    //'privacy' => [
+    //	'enabled' => $privacy_enabled,
+    //	'config' => getPrivacyConfig()
+    //],
     'map' => [
 	'enabled' => $map_enabled,
 	'config' => getMapConfig()

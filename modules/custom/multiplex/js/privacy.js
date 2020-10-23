@@ -1,4 +1,4 @@
-class PrivacyManager {
+/*class PrivacyManager {
 	constructor(cookieName, title, message, acceptButton, rejectButton) {
 		this.i_cookie_name = cookieName;
 		this.i_title_text = title;
@@ -7,13 +7,6 @@ class PrivacyManager {
 		this.i_reject_button_text = rejectButton;
 	}
 
-	/**
-	 *	Get a map of cookie values
-	 *
-	 *	@private
-	 *
-	 *	@return {Object} a map of all the cookies
-	 */
 	getCookies() {
 		// Get the document's cookies
 		let existingCookies = document.cookie, cookies = {};
@@ -123,4 +116,4 @@ class PrivacyManager {
 		}
 		component.appendChild(this.i_element);
 	}
-}
+}*/
