@@ -197,9 +197,9 @@ function multiplex_page_attachments(array &$page) {
   // See if we need to show the countdown timer (/wait/*)
   $counter_target = NULL;
   $game_start_time = NULL;
-  if (strpos($current_path, "/wait") === 0) {
+  if (strpos($current_path, "/wait") === 0 && strlen($current_path) > 7) {
   	$counter_enabled = true;
-  	$counter_target = substr($current_path, 6);
+  	$counter_target = substr($current_path, 5);
   	$game_start_time = intval($config->get("game_start_time"));
   	$counter_new_window = $config->get("counter_open_in_new_window") ? true : false;
   }
