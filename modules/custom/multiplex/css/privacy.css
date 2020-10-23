@@ -39,40 +39,44 @@
 			.PrivacyManager_title {
 				font-family: 'black-widow', Arial;
 				color: #FFFFFF;
-				font-size: 22px;
+				font-size: 82px;
 				text-align: center;
 			}
 
 			.PrivacyManager_message {
-				margin-top: 20px;
-				font-size: 16px;
+				font-size: 25px;
 				color: #FFFFFF;
 				font-family: Arial;
+				text-align: justify;
+				width: 50%;
+				padding-bottom: 30px;
 			}
 
 			.PrivacyManager_button_wrapper {
 				text-align: center;
 			}
 				.PrivacyMangaer_accept {
+					font-weight: bold;
 					display: inline-block;
-					padding: 15px;
+					padding: 10px;
 					color: #000000;
 					background-color: #FFFFFF;
 					border-radius: 6px;
 					word-wrap: nowrap;
-					margin-left: 10px;
-					margin-right: 10px;
+					margin-left: 15px;
+					margin-right: 15px;
 					cursor: pointer;
 				}
 
 				.PrivacyMangaer_reject {
 					display: inline-block;
-					padding: 15px;
+					padding: 10px;
+					font-weight: bold;
 					color: #000000;
 					background-color: #FFFFFF;
 					border-radius: 6px;
 					word-wrap: nowrap;
-					margin-left: 10px;
-					margin-right: 10px;
+					margin-left: 15px;
+					margin-right: 15px;
 					cursor: pointer;
 				}
