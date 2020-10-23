@@ -1,7 +1,7 @@
 class CountdownDisplay {
 	constructor(startTime, targetPath, openInNewWindow) {
 		let localize = new Date();
-		localize.setUTCSeconds(startTime);
+		localize.setTime((startTime + ((new Date()).getTimezoneOffset() * 60)) * 1000);
 		this.i_startTime = localize.getTime();
 		this.i_targetPath = targetPath;
 		this.i_openInNewWindow = openInNewWindow;
