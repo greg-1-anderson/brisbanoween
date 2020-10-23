@@ -40,13 +40,22 @@ class SettingsForm extends ConfigFormBase {
     }
 
 	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DateTimePlus::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DateTimePlus::createFromTimestamp(time());
+	$dparts = explode(' ', $currentStartTime->format("Y m d H i s"));
+	$dateArray = [
+		'year' => intval($dparts[0]),
+		'month' => intval($dparts[2]),
+		'day' => intval($dparts[3]),
+		'hour' => intval($dparts[4]),
+		'minute' => intval($dparts[5]),
+		'second' => intval($dparts[6])
+	];
     $form['game_start_time'] = [
       '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
       '#description' => $this->t("When does the game officially begin?"),
-      '#value' => $currentStartTime
+      '#value' => $dateArray
     ];
-    error_log("loading date [" . $currentStartTime->format('Y-m-d H:i:s') . "]: " . var_export($currentStartTime, true));
+    error_log("loading date [" . $currentStartTime->format('Y-m-d H:i:s') . "]: " . var_export($dateArray, true));
     $form['cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Cookie'),
