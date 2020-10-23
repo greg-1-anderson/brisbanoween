@@ -1,5 +1,5 @@
 class PrivacyManager {
-	constructor(privacyCookieName, sessionCookieName, title, message, acceptButton, rejectButton, pageContainer) {
+	constructor(privacyCookieName, sessionCookieName, title, message, acceptButton, rejectButton, reloadAfterAccept, pageContainer) {
 		this.i_privacy_cookie_name = privacyCookieName;
 		this.i_session_cookie_name = sessionCookieName;
 		this.i_title_text = title;
@@ -7,6 +7,7 @@ class PrivacyManager {
 		this.i_accept_button_text = acceptButton;
 		this.i_reject_button_text = rejectButton;
 		this.i_page_container = pageContainer;
+		this.i_reload_after_accept = reloadAfterAccept;
 
 		// Expire all cookies after 3 days.
 		this.i_exp = new Date();
@@ -76,6 +77,12 @@ class PrivacyManager {
 		document.cookie = this.i_privacy_cookie_name + "=2; path=/; expires=" + this.i_exp.toGMTString();
 		this.issueSession(true);
 		this.update();
+
+		if (this.i_reload_after_accept) {
+			setTimeout(() => {
+				document.location.reload();
+			}, 100);
+		}
 	}
 
 	reject() {
@@ -228,6 +235,7 @@ class PrivacyManager {
 					settings.privacy.config.message,
 					settings.privacy.config.acceptButton,
 					settings.privacy.config.rejectButton,
+					settings.privacy.config.reloadAfterAccept,
 					document.getElementById('page-wrapper')
 				);
 				if (!privacy_dialog.hasAnswered() && settings.privacy.config.privacyAutoAccept) {

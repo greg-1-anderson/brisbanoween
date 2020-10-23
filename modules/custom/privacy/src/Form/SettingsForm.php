@@ -77,6 +77,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("Assume the user will allow cookies, until they explicitly say they dont want to.  The dialog will not show by default."),
       '#default_value' => $this->config('privacy.settings')->get('privacy_auto_accept') ? $this->config('privacy.settings')->get('privacy_auto_accept') : false
     ];
+    $form['privacy_reload_after_accept'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Reload After Accept'),
+      '#description' => $this->t("A session cookie is not issued until the user accepts cookies.  This means if the page the user is on, would have been different had they had a session cookie, a reload would be needed to show the correct content after dismissing the cookie dialog.  If the page is not dynamic, this is unnecessary."),
+      '#default_value' => $this->config('privacy.settings')->get('privacy_reload_after_accept') ? $this->config('privacy.settings')->get('privacy_reload_after_accept') : false
+    ];
     return parent::buildForm($form, $form_state);
   }
 
@@ -93,7 +99,7 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
   	$form_fields = array(
   		'privacy_cookie_name', 'session_cookie_name', 'session_cookie_name', 'privacy_title', 'privacy_message', 'privacy_accept_button', 'privacy_reject_button',
-  		'privacy_auto_accept', 'privacy_policy_page'
+  		'privacy_auto_accept', 'privacy_policy_page', 'privacy_reload_after_accept'
   	);
 
   	foreach ($form_fields as $f) {
