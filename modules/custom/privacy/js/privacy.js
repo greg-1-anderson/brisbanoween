@@ -105,7 +105,7 @@ class PrivacyManager {
 					window.scrollTo(0,0);
 
 					let cookies = this.getCookies();
-					this.i_notice.style.display = cookies[this.i_cookie_name] == "2" ? "none" : "";
+					this.i_notice.style.display = cookies[this.i_privacy_cookie_name] == "2" ? "none" : "";
 				}
 			}
 		}
