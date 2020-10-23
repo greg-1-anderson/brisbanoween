@@ -6,6 +6,7 @@ multiplex.to:
   requirements:
     _permission: 'access content'
   options:
+    no_cache: 'TRUE'
     parameters:
       path:
         type: string
