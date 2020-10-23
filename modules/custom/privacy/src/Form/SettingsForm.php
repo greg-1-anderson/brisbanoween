@@ -65,6 +65,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("The label text for the reject button"),
       '#default_value' => $this->config('privacy.settings')->get('privacy_reject_button') ? $this->config('privacy.settings')->get('privacy_reject_button') : 'No thanks.'
     ];
+    $form['privacy_policy_page'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Privacy Policy Page'),
+      '#description' => $this->t("The pretty printed relative URL of the privacy page (ex: /privacy-policy), where the 'Manage Privacy Settings' button will be appended.  Optionally you can add JS to whatever page you want to insert the button and leave this blank."),
+      '#default_value' => $this->config('privacy.settings')->get('privacy_policy_page') ? $this->config('privacy.settings')->get('privacy_policy_page') : '/privacy-policy'
+    ];
     $form['privacy_auto_accept'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Default Accept'),
@@ -87,7 +93,7 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
   	$form_fields = array(
   		'privacy_cookie_name', 'session_cookie_name', 'session_cookie_name', 'privacy_title', 'privacy_message', 'privacy_accept_button', 'privacy_reject_button',
-  		'privacy_auto_accept'
+  		'privacy_auto_accept', 'privacy_policy_page'
   	);
 
   	foreach ($form_fields as $f) {

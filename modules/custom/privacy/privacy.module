@@ -9,6 +9,7 @@ function getPrivacyConfig() {
     'message' => $config->get('privacy_message'),
     'acceptButton' => $config->get('privacy_accept_button'),
     'rejectButton' => $config->get('privacy_reject_button'),
+    'privacyPolicyURL' => $config->get('privacy_policy_page'),
     'privacyAutoAccept' => $config->get('privacy_auto_accept')
   ];
 }
