@@ -110,9 +110,10 @@ class MultiplexController extends ControllerBase {
        return $build;
     }
 
-    // Make sure the game has started.
+    // Make sure the game has started (or at least that it starts within the next 60 seconds, otherwise the user's going to end up in an
+    // infinite redirect loop with the client side countdown if the user's clock is slightly faster)
     $game_start_timestamp = \Drupal::config('multiplex.settings')->get('game_start_time');
-    if (intval($game_start_timestamp) > time()) {
+    if ((intval($game_start_timestamp) - 60) > time()) {
     	return new RedirectResponse("/wait/$path", 302);
     }
 
