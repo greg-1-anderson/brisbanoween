@@ -209,6 +209,39 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("If the user visits a page before the game starts, they will get a countdown timer.  Once the game begins, should the user be redirected to the original page in the same tab, or should a new window be opened?"),
       '#default_value' => $this->config('multiplex.settings')->get('counter_open_in_new_window') ? $this->config('multiplex.settings')->get('counter_open_in_new_window') : false
     ];
+
+    $form['privacy_cookie'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Privacy Cookie Name'),
+      '#description' => $this->t("The name of the cookie to store privacy preferences in.  (0 = rejected, 2 = accepted)"),
+      '#default_value' => $this->config('multiplex.settings')->get('privacy_cookie') ? $this->config('multiplex.settings')->get('privacy_cookie') : 'cookie-agreed'
+    ];
+    $form['privacy_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Privacy Title'),
+      '#description' => $this->t("The title of the cookie acceptance dialog"),
+      '#default_value' => $this->config('multiplex.settings')->get('privacy_title') ? $this->config('multiplex.settings')->get('privacy_title') : 'Privacy Policy'
+    ];
+    $form['privacy_message'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Privacy Message'),
+      '#description' => $this->t("The body of the cookie acceptance dialog"),
+      '#default_value' => $this->config('multiplex.settings')->get('privacy_message') ? $this->config('multiplex.settings')->get('privacy_message') : 'This website uses cookies.'
+    ];
+    $form['privacy_accept_button'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Privacy Accept Button Label'),
+      '#description' => $this->t("The label text for the accept button"),
+      '#default_value' => $this->config('multiplex.settings')->get('privacy_accept_button') ? $this->config('multiplex.settings')->get('privacy_accept_button') : 'I Agree!'
+    ];
+    $form['privacy_reject_button'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Privacy Reject Button Label'),
+      '#description' => $this->t("The label text for the reject button"),
+      '#default_value' => $this->config('multiplex.settings')->get('privacy_reject_button') ? $this->config('multiplex.settings')->get('privacy_reject_button') : 'No thanks.'
+    ];
+
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -232,7 +265,8 @@ class SettingsForm extends ConfigFormBase {
   		'game_start_time', 'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
-  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window'
+  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window',
+  		'privacy_title', 'privacy_message', 'privacy_accept_button', 'privacy_reject_button', 'privacy_cookie'
   	);
 
   	foreach ($form_fields as $f) {

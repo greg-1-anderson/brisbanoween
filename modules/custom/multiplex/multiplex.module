@@ -140,6 +140,17 @@ function getMapConfig() {
   ];
 }
 
+function getPrivacyConfig() {
+  $config = \Drupal::config('multiplex.settings');
+  return [
+    'cookieName' => $config->get('privacy_cookie'),
+    'title' => $config->get('privacy_title'),
+    'message' => $config->get('privacy_message'),
+    'acceptButton' => $config->get('privacy_accept_button'),
+    'rejectButton' => $config->get('privacy_reject_button')
+  ];
+}
+
 /**
  * Attach our Javascript
  */
@@ -158,6 +169,7 @@ function multiplex_page_attachments(array &$page) {
   $inventory_enabled = true;
   $map_enabled = false;
   $counter_enabled = false;
+  $privacy_enabled = true;
 
   // See if this is the map page
   $current_path = \Drupal::service('path.current')->getPath();
@@ -212,6 +224,10 @@ function multiplex_page_attachments(array &$page) {
 	'target' => $counter_target,
 	'openInNewWindow' => $counter_new_window,
     ],
+    'privacy' => {
+    	'enabled' => $privacy_enabled,
+    	'config' => getPrivacyConfig()
+    },
     'map' => [
 	'enabled' => $map_enabled,
 	'config' => getMapConfig()
