@@ -8,6 +8,10 @@ class PrivacyManager {
 		this.i_reject_button_text = rejectButton;
 		this.i_page_container = pageContainer;
 
+		// Expire all cookies after 3 days.
+		this.i_exp = new Date();
+		this.i_exp.setTime(this.i_exp.getTime() + (60 * 60 * 72 * 1000));
+
 		let cookies = this.getCookies();
 		this.i_first_open = true;
 		this.i_closed = !!cookies[this.i_privacy_cookie_name];
@@ -63,20 +67,20 @@ class PrivacyManager {
 		// Issue a session cookie if they accepted cookies and dont have a session cookie yet
 		let existingSession = this.getCookies()[this.i_session_cookie_name];
 		if ((existingSession == null || existingSession == "") && (force || this.getCookies()[this.i_privacy_cookie_name] == "2")) {
-			document.cookie = this.i_session_cookie_name + "=" + this.generateSessionId(6) + "; path=/";
+			document.cookie = this.i_session_cookie_name + "=" + this.generateSessionId(6) + "; path=/; expires=" + this.i_exp.toGMTString();
 		}
 	}
 
 	accept() {
 		this.i_closed = true;
-		document.cookie = this.i_privacy_cookie_name + "=2; path=/";
+		document.cookie = this.i_privacy_cookie_name + "=2; path=/; expires=" + this.i_exp.toGMTString();
 		this.issueSession(true);
 		this.update();
 	}
 
 	reject() {
 		this.i_closed = true;
-		document.cookie = this.i_privacy_cookie_name + "=0; path=/";
+		document.cookie = this.i_privacy_cookie_name + "=0; path=/; expires=" + this.i_exp.toGMTString();
 		document.cookie = this.i_session_cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 		this.update();
 	}
