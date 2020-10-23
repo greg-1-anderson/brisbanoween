@@ -59,9 +59,9 @@ class PrivacyManager {
 		return !!this.getCookies()[this.i_privacy_cookie_name];
 	}
 
-	issueSession() {
+	issueSession(force) {
 		// Issue a session cookie if they accepted cookies and dont have a session cookie yet
-		if (!this.getCookies()[this.i_session_cookie_name] && this.getCookies()[this.i_privacy_cookie_name] == "2") {
+		if (!this.getCookies()[this.i_session_cookie_name] && (force || this.getCookies()[this.i_privacy_cookie_name] == "2")) {
 			document.cookie = this.i_session_cookie_name + "=" + this.generateSessionId(6) + "; path=/";
 		}
 	}
@@ -69,19 +69,19 @@ class PrivacyManager {
 	accept() {
 		this.i_closed = true;
 		document.cookie = this.i_privacy_cookie_name + "=2; path=/";
-		this.issueSession();
+		this.issueSession(true);
 		this.update();
 	}
 
 	reject() {
 		this.i_closed = true;
 		document.cookie = this.i_privacy_cookie_name + "=0; path=/";
+		document.cookie = this.i_session_cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 		this.update();
 	}
 
 	update() {
 		if (this.i_element != null) {
-
 			if (this.i_closed !== true) {
 				if (this.i_visible != true) {
 					this.i_visible = true;
@@ -92,9 +92,6 @@ class PrivacyManager {
 					this.i_real_wrapper.className = "PrivacyManager_wrapper" + (this.i_first_open != true ? " PrivacyManager_wrapper_open" : "");
 					this.i_notice.style.display = "none";
 					this.i_first_open = false;
-
-					// Clear any existing session cookies, since they havent accepted yet
-					document.cookie = this.i_session_cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 				}
 			}
 			else {
@@ -225,9 +222,7 @@ class PrivacyManager {
 				if (!privacy_dialog.hasAnswered() && settings.privacy.config.privacyAutoAccept) {
 					privacy_dialog.accept();
 				}
-				if (privacy_dialog.hasAnswered()) {
-					privacy_dialog.issueSession();
-				}
+				privacy_dialog.issueSession();
 				privacy_dialog.attach(document.body);
 
 				if (settings.privacy.config.privacyPolicyURL && document.location.href.indexOf(settings.privacy.config.privacyPolicyURL) >= 0) {
