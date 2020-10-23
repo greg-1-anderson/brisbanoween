@@ -1,5 +1,5 @@
 # Custom module library for general purposes.
-brisbanoween:
+privacy:
   js:
     js/privacy.js: {}
   css:
