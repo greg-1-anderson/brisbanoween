@@ -62,9 +62,7 @@ class PrivacyManager {
 	issueSession(force) {
 		// Issue a session cookie if they accepted cookies and dont have a session cookie yet
 		let existingSession = this.getCookies()[this.i_session_cookie_name];
-		console.log('issue session [force=', force, ',existing=', existingSession, ']');
 		if ((existingSession == null || existingSession == "") && (force || this.getCookies()[this.i_privacy_cookie_name] == "2")) {
-			console.log('issuing [',  this.i_session_cookie_name, "=",  this.generateSessionId(6), "]");
 			document.cookie = this.i_session_cookie_name + "=" + this.generateSessionId(6) + "; path=/";
 		}
 	}
@@ -78,7 +76,6 @@ class PrivacyManager {
 
 	reject() {
 		this.i_closed = true;
-		console.log('clearing cookies');
 		document.cookie = this.i_privacy_cookie_name + "=0; path=/";
 		document.cookie = this.i_session_cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 		this.update();
