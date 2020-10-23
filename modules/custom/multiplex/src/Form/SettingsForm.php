@@ -40,6 +40,7 @@ class SettingsForm extends ConfigFormBase {
     }
 
 	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DrupalDateTime::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DrupalDateTime();
+	$useValue->setTimezone(new \DateTimeZone('UTC'));
     $form['game_start_time'] = [
       '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
