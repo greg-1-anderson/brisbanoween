@@ -1,50 +1,78 @@
 .PrivacyManager {
-	width: 100vw;
-	height: 100vh;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: #000000;
-	padding: 20px;
+
 }
 
-	.PrivacyManager_title {
-		font-family: 'black-widow', Arial;
-		color: #FFFFFF;
-		font-size: 22px;
-		text-align: center;
-	}
-	
-	.PrivacyManager_message {
-		margin-top: 20px;
-		font-size: 16px;
-		color: #FFFFFF;
-		font-family: Arial;
-	}
-	
-	.PrivacyManager_button_wrapper {
-		text-align: center;
-	}
-		.PrivacyMangaer_accept {
-			display: inline-block;
-			padding: 15px;
-			color: #000000;
-			background-color: #FFFFFF;
-			border-radius: 6px;
-			word-wrap: nowrap;
-			margin-left: 10px;
-			margin-right: 10px;
-			cursor: pointer;
-		}
+	.PrivacyManager_wrapper {
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-template-columns: 1fr;
+		justify-content: center;
+		align-items: center;
 		
-		.PrivacyMangaer_reject {
-			display: inline-block;
-			padding: 15px;
-			color: #000000;
-			background-color: #FFFFFF;
-			border-radius: 6px;
-			word-wrap: nowrap;
-			margin-left: 10px;
-			margin-right: 10px;
-			cursor: pointer;
+		width: 100vw;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background-color: #000000;
+		padding: 20px;
+	}
+	
+		@keyframes fadeAway {
+			0% {
+				opacity: 1;
+			}
+			100% {
+				opacity: 0;
+			}
 		}
+
+		.PrivacyManager_wrapper_close {
+			animation: fadeAway 500ms ease-in 1;
+		}
+
+		.PrivacyManager_center_wrapper {
+			display: grid;
+			grid-template-rows: auto auto auto;
+		}
+
+			.PrivacyManager_title {
+				font-family: 'black-widow', Arial;
+				color: #FFFFFF;
+				font-size: 22px;
+				text-align: center;
+			}
+
+			.PrivacyManager_message {
+				margin-top: 20px;
+				font-size: 16px;
+				color: #FFFFFF;
+				font-family: Arial;
+			}
+
+			.PrivacyManager_button_wrapper {
+				text-align: center;
+			}
+				.PrivacyMangaer_accept {
+					display: inline-block;
+					padding: 15px;
+					color: #000000;
+					background-color: #FFFFFF;
+					border-radius: 6px;
+					word-wrap: nowrap;
+					margin-left: 10px;
+					margin-right: 10px;
+					cursor: pointer;
+				}
+
+				.PrivacyMangaer_reject {
+					display: inline-block;
+					padding: 15px;
+					color: #000000;
+					background-color: #FFFFFF;
+					border-radius: 6px;
+					word-wrap: nowrap;
+					margin-left: 10px;
+					margin-right: 10px;
+					cursor: pointer;
+				}

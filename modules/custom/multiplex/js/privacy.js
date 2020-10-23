@@ -45,14 +45,15 @@ class PrivacyManager {
 	update() {
 		if (this.i_element != null) {
 			let cookies = this.getCookies();
-			if (!cookies['cookie-agreed']) {
+			if (!cookies[this.i_cookie_name]) {
 				this.i_visible = true;
 				this.i_element.style.display = "";
+				this.i_real_wrapper.className = "PrivacyManager_wrapper PrivacyManager_wrapper_open";
 			}
 			else {
 				if (this.i_visible == true) {
 					this.i_visible = false;
-					this.i_element.className = "PrivacyManager PrivacyManager_close";
+					this.i_real_wrapper.className = "PrivacyManager_wrapper PrivacyManager_wrapper_close";
 				}
 			}
 		}
@@ -62,39 +63,50 @@ class PrivacyManager {
 		if (this.i_element == null) {
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "PrivacyManager";
-			this.i_element.addEventListener("animationend", () => {
-				this.i_element.style.display = "none";
-			});
 
-				this.i_title = document.createElement('DIV');
-				this.i_title.className = "PrivacyManager_title";
-				this.i_title.innerHTML = this.i_title_text;
-				this.i_element.appendChild(this.i_title);
+				this.i_real_wrapper = document.createElement('DIV');
+				this.i_real_wrapper.className = "PrivacyManager_wrapper";
+				this.i_real_wrapper.addEventListener("animationend", () => {
+					if (this.i_visible == false) {
+						this.i_element.style.display = "none";
+					}
+					this.i_real_wrapper.className = "PrivacyManager_wrapper";
+				});
+				this.i_element.appendChild(this.i_real_wrapper);
 
-				this.i_message = document.createElement('DIV');
-				this.i_message.className = "PrivacyManager_message";
-				this.i_message.innerHTML = this.i_message_text;
-				this.i_element.appendChild(this.i_message);
+					this.i_centered_wrapper = document.createElement('DIV');
+					this.i_centered_wrapper.className = "PrivacyManager_center_wrapper";
+					this.i_real_wrapper.appendChild(this.i_centered_wrapper);
 
-				this.i_button_wrapper = document.createElement('DIV');
-				this.i_button_wrapper.className = "PrivacyManager_button_wrapper";
-				this.i_element.appendChild(this.i_button_wrapper);
+						this.i_title = document.createElement('DIV');
+						this.i_title.className = "PrivacyManager_title";
+						this.i_title.innerHTML = this.i_title_text;
+						this.i_centered_wrapper.appendChild(this.i_title);
 
-					this.i_accept_button = document.createElement('DIV');
-					this.i_accept_button.className = "PrivacyMangaer_accept";
-					this.i_accept_button.innerHTML = this.i_accept_button_text;
-					this.i_accept_button.addEventListener("click", () => {
-						this.accept();
-					});
-					this.i_button_wrapper.appendChild(this.i_accept_button);
+						this.i_message = document.createElement('DIV');
+						this.i_message.className = "PrivacyManager_message";
+						this.i_message.innerHTML = this.i_message_text;
+						this.i_centered_wrapper.appendChild(this.i_message);
 
-					this.i_reject_button = document.createElement('DIV');
-					this.i_reject_button.className = "PrivacyMangaer_reject";
-					this.i_reject_button.innerHTML = this.i_reject_button_text;
-					this.i_accept_button.addEventListener("click", () => {
-						this.reject();
-					});
-					this.i_button_wrapper.appendChild(this.i_reject_button);
+						this.i_button_wrapper = document.createElement('DIV');
+						this.i_button_wrapper.className = "PrivacyManager_button_wrapper";
+						this.i_centered_wrapper.appendChild(this.i_button_wrapper);
+
+							this.i_accept_button = document.createElement('DIV');
+							this.i_accept_button.className = "PrivacyMangaer_accept";
+							this.i_accept_button.innerHTML = this.i_accept_button_text;
+							this.i_accept_button.addEventListener("click", () => {
+								this.accept();
+							});
+							this.i_button_wrapper.appendChild(this.i_accept_button);
+
+							this.i_reject_button = document.createElement('DIV');
+							this.i_reject_button.className = "PrivacyMangaer_reject";
+							this.i_reject_button.innerHTML = this.i_reject_button_text;
+							this.i_accept_button.addEventListener("click", () => {
+								this.reject();
+							});
+							this.i_button_wrapper.appendChild(this.i_reject_button);
 
 		}
 		if (this.i_element.parentNode != null) {
