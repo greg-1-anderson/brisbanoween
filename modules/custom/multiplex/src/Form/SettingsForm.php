@@ -220,13 +220,13 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Privacy Title'),
       '#description' => $this->t("The title of the cookie acceptance dialog"),
-      '#default_value' => $this->config('multiplex.settings')->get('privacy_title') ? $this->config('multiplex.settings')->get('privacy_title') : 'Privacy Policy'
+      '#default_value' => $this->config('multiplex.settings')->get('privacy_title') ? $this->config('multiplex.settings')->get('privacy_title') : 'Welcome!'
     ];
     $form['privacy_message'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Privacy Message'),
       '#description' => $this->t("The body of the cookie acceptance dialog"),
-      '#default_value' => $this->config('multiplex.settings')->get('privacy_message') ? $this->config('multiplex.settings')->get('privacy_message') : 'This website uses cookies.'
+      '#default_value' => $this->config('multiplex.settings')->get('privacy_message') ? $this->config('multiplex.settings')->get('privacy_message') : 'This is an interactive Halloween experience!  No personal information will be stored, but we do use cookies to track your progress and location while playing.'
     ];
     $form['privacy_accept_button'] = [
       '#type' => 'textfield',
