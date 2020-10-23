@@ -35,6 +35,21 @@
 		.CountdownDisplay_counter_change_animation {
 			animation: flash 700ms ease-in 1;
 		}
+		
+		.CountdownDisplay_home_wrapper {
+			padding-top: 20px;
+			text-align: center;
+		}
+		
+		.CountdownDisplay_home_button {
+			display: inline;
+			width: 200px;
+			height: 80px;
+			background-color: #fb6205;
+			border: 1px solid #000000;
+			border-radius: 5px;
+			cursor: pointer;
+		}
 
 
 @media (max-width: 500px) {

@@ -88,6 +88,18 @@ class CountdownDisplay {
 					});
 					this.i_waiting_box.appendChild(this.i_counter);
 
+					this.i_home_wrapper = document.createElement('DIV');
+					this.i_home_wrapper.className = "CountdownDisplay_home_wrapper";
+					this.i_waiting_box.appendChild(this.i_home_wrapper);
+
+						this.i_home_button = document.createElement('DIV');
+						this.i_home_button.className = "CountdownDisplay_home_button";
+						this.i_home_button.innerHTML = "LEARN MORE";
+						this.i_home_button.addEventListener("click", () => {
+							document.location = "/";
+						});
+						this.i_home_wrapper.appendChild(this.i_home_button);
+
 				this.i_redirecting_box = document.createElement('DIV');
 				this.i_redirecting_box.className = "CountdownDisplay_redirecting";
 				this.i_redirecting_box.innerHTML = "The game has begun, one moment please...";
