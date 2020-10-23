@@ -10,45 +10,50 @@ class CountdownDisplay {
 	update() {
 		if (this.i_element != null) {
 			let remSeconds = Math.ceil((this.i_startTime - (new Date()).getTime()) / 1000);
-			let remDays = Math.floor(remSeconds / (60 * 60 * 24));
-			remSeconds-=(remDays * (60 * 60 * 24));
-			let remHours = Math.floor(remSeconds / (60 * 60));
-			remSeconds-=(remHours * (60 * 60));
-			let remMinutes = Math.floor(remSeconds / 60);
-			remSeconds-=remMinutes * 60;
+			if (remSeconds > 0) {
+				let remDays = Math.floor(remSeconds / (60 * 60 * 24));
+				remSeconds-=(remDays * (60 * 60 * 24));
+				let remHours = Math.floor(remSeconds / (60 * 60));
+				remSeconds-=(remHours * (60 * 60));
+				let remMinutes = Math.floor(remSeconds / 60);
+				remSeconds-=remMinutes * 60;
 
-			let parts = [];
-			if (remDays > 0) {
-				parts.push(remDays + " Day" + (remDays != 1 ? "s" : ""));
-			}
-			if (remHours > 0 || parts.length > 0) {
-				parts.push(remHours + " Hour" + (remHours != 1 ? "s" : ""));
-			}
-			if (remMinutes > 0 || parts.length > 0) {
-				parts.push(remMinutes + " Minute" + (remMinutes != 1 ? "s" : ""));
-			}
-			if (remSeconds > 0 || parts.length > 0) {
-				parts.push(remSeconds + " Second" + (remSeconds != 1 ? "s" : ""));
-			}
+				let parts = [];
+				if (remDays > 0) {
+					parts.push(remDays + " Day" + (remDays != 1 ? "s" : ""));
+				}
+				if (remHours > 0 || parts.length > 0) {
+					parts.push(remHours + " Hour" + (remHours != 1 ? "s" : ""));
+				}
+				if (remMinutes > 0 || parts.length > 0) {
+					parts.push(remMinutes + " Minute" + (remMinutes != 1 ? "s" : ""));
+				}
+				if (remSeconds > 0 || parts.length > 0) {
+					parts.push(remSeconds + " Second" + (remSeconds != 1 ? "s" : ""));
+				}
 
-			if (parts.length > 1) {
-				parts.splice(parts.length - 1, 0, 'and');
-			}
+				if (parts.length > 1) {
+					parts.splice(parts.length - 1, 0, 'and');
+				}
 
-			let newLabel = (parts.length > 0 ? parts.join(" ") : "Now!");
-			if (this.i_last_label != newLabel) {
-				this.i_last_label = newLabel;
-				this.i_counter.innerHTML = newLabel;
-				this.i_counter.className = "CountdownDisplay_counter CountdownDisplay_counter_change_animation";
-			}
+				let newLabel = (parts.length > 0 ? parts.join(" ") : "Now!");
+				if (this.i_last_label != newLabel) {
+					this.i_last_label = newLabel;
+					this.i_counter.innerHTML = newLabel;
+					this.i_counter.className = "CountdownDisplay_counter CountdownDisplay_counter_change_animation";
+				}
 
-			if (parts.length == 0) {
+				this.i_waiting_box.style.display = "";
+				this.i_redirecting_box.style.display = "none";
+			}
+			else {
 				this.i_waiting_box.style.display = "none";
 				this.i_redirecting_box.style.display = "";
 
 				if (this.i_update_timer != null) {
 					clearInterval(this.i_update_timer);
 					this.i_update_timer = null;
+
 					if (this.i_targetPath != null) {
 						if (this.i_openInNewWindow) {
 							window.open(this.i_targetPath);
@@ -58,10 +63,6 @@ class CountdownDisplay {
 						}
 					}
 				}
-			}
-			else {
-				this.i_waiting_box.style.display = "";
-				this.i_redirecting_box.style.display = "none";
 			}
 		}
 	}
