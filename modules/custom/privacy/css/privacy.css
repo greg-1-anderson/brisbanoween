@@ -32,15 +32,16 @@
 	
 		.PrivacyManager_notice_content {
 			border: 1px solid #FFFFFF;
-			background: url(../images/gear.png) 5px center no-repeat;
+			background: url(../images/gear.png) 10px center no-repeat;
 			background-size: 32px 32px;
-			font-size: 30px;
-			font-weight: bold;
+			font-size: 25px;
 			color: #FFFFFF;
 			font-family: Arial;
 			line-height: 37px;
-			padding-left: 45px;
+			padding-left: 50px;
 			padding-right: 10px;
+			padding-top: 7px;
+			padding-bottom: 7px;
 		}
 
 	.PrivacyManager_wrapper {
