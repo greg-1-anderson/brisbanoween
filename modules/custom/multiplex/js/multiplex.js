@@ -34,7 +34,7 @@
 					settings.multiplex.privacy.config.message,
 					settings.multiplex.privacy.config.acceptButton,
 					settings.multiplex.privacy.config.rejectButton,
-					document.getElemetnById('page-wrapper')
+					document.getElementById('page-wrapper')
 				);
 				privacy_dialog.attach(document.body);
 
