@@ -63,6 +63,7 @@ class MultiplexController extends ControllerBase {
     $page = [
       '#markup' => 'Opening map, please wait...',
     ];
+    return $page;
   }
 
   public function waitForGameToStartPage($path=NULL) {
