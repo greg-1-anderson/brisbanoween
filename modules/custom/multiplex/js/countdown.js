@@ -42,7 +42,7 @@ class CountdownDisplay {
 				this.i_title.innerHTML = "You're Early!";
 				this.i_message.innerHTML = "The game will begin in";
 
-				let newLabel = (parts.length > 0 ? parts.join(" ");
+				let newLabel = (parts.length > 0 ? parts.join(" ") : "Now");
 				if (this.i_last_label != newLabel) {
 					this.i_last_label = newLabel;
 					this.i_message.innerHTML = newLabel;
