@@ -1,4 +1,4 @@
-/*class PrivacyManager {
+class PrivacyManager {
 	constructor(cookieName, title, message, acceptButton, rejectButton) {
 		this.i_cookie_name = cookieName;
 		this.i_title_text = title;
@@ -116,4 +116,4 @@
 		}
 		component.appendChild(this.i_element);
 	}
-}*/
+}
