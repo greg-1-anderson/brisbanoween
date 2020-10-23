@@ -1,6 +1,26 @@
-/*.PrivacyManager {
+.PrivacyManager {
 
 }
+
+	.PrivacyManager_notice {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 45px;
+		height: 45px;
+		cursor: pointer;
+		background-color: #000000;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+		padding: 3px;
+	}
+	
+		.PrivacyManager_notice_content {
+			border: 1px solid #FFFFFF;
+			background: url(../images/privacy/gear.png) center center no-repeat;
+			background-size: 32px 32px;		
+		}
 
 	.PrivacyManager_wrapper {
 		display: grid;
@@ -8,9 +28,9 @@
 		grid-template-columns: 1fr;
 
 		
-		width: 100vw;
-		height: 100vh;
-		position: fixed;
+		width: 100%;
+		height: 100%;
+		position: absolute;
 		top: 0;
 		left: 0;
 		background: url(../images/privacy/border5.png);
@@ -26,96 +46,56 @@
 	
 	.PrivacyManager_border_0 {
 		background: url(../images/privacy/border_r1.png) top left repeat-x;
-		background-size: calc(74px * 0.5) calc(198px * 0.5);
+		background-size: calc(74px * 0.22) calc(198px * 0.22);
 	}
 	.PrivacyManager_border_1 {
 		background: url(../images/privacy/border_r2.png) top left repeat-y;
-		background-size: calc(204px * 0.5) calc(53px * 0.5);
+		background-size: calc(204px * 0.22) calc(53px * 0.22);
 	}
 	.PrivacyManager_border_2 {
 		background: url(../images/privacy/border_r3.png) bottom left repeat-x;
-		background-size: calc(74px * 0.5) calc(220px * 0.5);
+		background-size: calc(74px * 0.22) calc(220px * 0.22);
 	}
 	.PrivacyManager_border_3 {
 		background: url(../images/privacy/border_r4.png) top right repeat-y;
-		background-size: calc(202px * 0.5) calc(65px * 0.5);
+		background-size: calc(202px * 0.22) calc(65px * 0.22);
 	}
 	.PrivacyManager_border_4 {
 		background: url(../images/privacy/border1.png) top left no-repeat;
-		background-size: calc(204px * 0.5) calc(198px * 0.5);
+		background-size: calc(204px * 0.22) calc(198px * 0.22);
 	}
 	.PrivacyManager_border_5 {
 		background: url(../images/privacy/border2.png) top center no-repeat;
-		background-size: calc(1214px * 0.5) calc(198px * 0.5);
+		background-size: calc(1214px * 0.22) calc(198px * 0.22);
 	}
 	.PrivacyManager_border_6 {
 		background: url(../images/privacy/border3.png) top right no-repeat;
-		background-size: calc(202px * 0.5) calc(198px * 0.5);
+		background-size: calc(202px * 0.22) calc(198px * 0.22);
 	}
 	.PrivacyManager_border_7 {
 		background: url(../images/privacy/border4.png) center left no-repeat;
-		background-size: calc(204px * 0.5) calc(853px * 0.5);
+		background-size: calc(204px * 0.22) calc(853px * 0.22);
 	}
 	.PrivacyManager_border_8 {
 		background: url(../images/privacy/border6.png) center right no-repeat;
-		background-size: calc(202px * 0.5) calc(853px * 0.5);
+		background-size: calc(202px * 0.22) calc(853px * 0.22);
 	}
 	.PrivacyManager_border_9 {
 		background: url(../images/privacy/border7.png) bottom left no-repeat;
-		background-size: calc(204px * 0.5) calc(220px * 0.5);
+		background-size: calc(204px * 0.22) calc(220px * 0.22);
 	}
 	.PrivacyManager_border_10 {
 		background: url(../images/privacy/border8.png) bottom center no-repeat;
-		background-size: calc(1214px * 0.5) calc(220px * 0.5);
+		background-size: calc(1214px * 0.22) calc(220px * 0.22);
 	}
 	.PrivacyManager_border_11 {
 		background: url(../images/privacy/border9.png) bottom right no-repeat;
-		background-size: calc(202px * 0.5) calc(220px * 0.5);
-		justify-content: center;
-		align-items: center;
+		background-size: calc(202px * 0.22) calc(220px * 0.22);
 		padding: 20px;
 	}
 	
 	
-	@media (max-width: 600px) or (max-height: 600px) {
-		.PrivacyManager_border_0 {
-			background-size: calc(74px * 0.15) calc(198px * 0.15);
-		}
-		.PrivacyManager_border_1 {
-			background-size: calc(204px * 0.15) calc(53px * 0.15);
-		}
-		.PrivacyManager_border_2 {
-			background-size: calc(74px * 0.15) calc(220px * 0.15);
-		}
-		.PrivacyManager_border_3 {
-			background-size: calc(202px * 0.15) calc(65px * 0.15);
-		}
-		.PrivacyManager_border_4 {
-			background-size: calc(204px * 0.15) calc(198px * 0.15);
-		}
-		.PrivacyManager_border_5 {
-			background-size: calc(1214px * 0.15) calc(198px * 0.15);
-		}
-		.PrivacyManager_border_6 {
-			background-size: calc(202px * 0.15) calc(198px * 0.15);
-		}
-		.PrivacyManager_border_7 {
-			background-size: calc(204px * 0.15) calc(853px * 0.15);
-		}
-		.PrivacyManager_border_8 {
-			background-size: calc(202px * 0.15) calc(853px * 0.15);
-		}
-		.PrivacyManager_border_9 {
-			background-size: calc(204px * 0.15) calc(220px * 0.15);
-		}
-		.PrivacyManager_border_10 {
-			background-size: calc(1214px * 0.15) calc(220px * 0.15);
-		}
-		.PrivacyManager_border_11 {
-			background-size: calc(202px * 0.15) calc(220px * 0.15);
-		}
-	}
-	
+
 		@keyframes fadeAway {
 			0% {
 				opacity: 1;
@@ -124,14 +104,28 @@
 				opacity: 0;
 			}
 		}
+		
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+			100% {
+				opacity: 1;
+			}
+		}
 
 		.PrivacyManager_wrapper_close {
-			animation: fadeAway 500ms ease-in 1;
+			animation: fadeAway 300ms ease-in 1;
+		}
+
+		.PrivacyManager_wrapper_open {
+			animation: fadeIn 300ms ease-out 1;
 		}
 
 		.PrivacyManager_center_wrapper {
-			display: grid;
-			grid-template-rows: auto auto auto;
+			display: flex;
+			justify-content: space-around;
+			flex-direction: column;
 		}
 
 			.PrivacyManager_title {
@@ -147,20 +141,20 @@
 				font-family: "Times New Roman";
 				font-variant: small-caps;
 				text-align: center;
-				padding-bottom: 30px;
-				padding-left: 25%;
-				padding-right: 25%;
+				padding-left: 20px;
+				padding-right: 20px;
 			}
 
 			.PrivacyManager_button_wrapper {
-				text-align: center;
+				display: grid;
+				grid-template-rows: auto auto;
+				justify-content: center;
+				align-items: center;
 			}
-				.PrivacyMangaer_accept {
+				.PrivacyMangaer_accept, .PrivacyMangaer_reject {
 					font-weight: bold;
 					display: inline-block;
 					padding: 10px;
-					color: #000000;
-					background-color: #FFFFFF;
 					border-radius: 6px;
 					word-wrap: nowrap;
 					margin-left: 15px;
@@ -169,20 +163,59 @@
 					font-family: Arial;
 					padding-left: 20px;
 					padding-right: 20px;
+					text-align: center;
+				}
+				
+				.PrivacyMangaer_accept {
+					color: #000000;
+					background-color: #FFFFFF;				
 				}
 
 				.PrivacyMangaer_reject {
-					display: inline-block;
-					padding: 10px;
-					font-weight: bold;
+					margin-top: 10px;
 					color: #FFFFFF;
-					background-color: #222222;
-					border-radius: 6px;
-					word-wrap: nowrap;
-					margin-left: 15px;
-					margin-right: 15px;
-					cursor: pointer;
-					font-family: Arial;
-					padding-left: 20px;
-					padding-right: 20px;
-				}*/
+				}
+				
+	@media (min-width: 600px) and (min-height: 600px) {
+		.PrivacyManager_border_0 {
+			background-size: calc(74px * 0.4) calc(198px * 0.4);
+		}
+		.PrivacyManager_border_1 {
+			background-size: calc(204px * 0.4) calc(53px * 0.4);
+		}
+		.PrivacyManager_border_2 {
+			background-size: calc(74px * 0.4) calc(220px * 0.4);
+		}
+		.PrivacyManager_border_3 {
+			background-size: calc(202px * 0.4) calc(65px * 0.4);
+		}
+		.PrivacyManager_border_4 {
+			background-size: calc(204px * 0.4) calc(198px * 0.4);
+		}
+		.PrivacyManager_border_5 {
+			background-size: calc(1214px * 0.4) calc(198px * 0.4);
+		}
+		.PrivacyManager_border_6 {
+			background-size: calc(202px * 0.4) calc(198px * 0.4);
+		}
+		.PrivacyManager_border_7 {
+			background-size: calc(204px * 0.4) calc(853px * 0.4);
+		}
+		.PrivacyManager_border_8 {
+			background-size: calc(202px * 0.4) calc(853px * 0.4);
+		}
+		.PrivacyManager_border_9 {
+			background-size: calc(204px * 0.4) calc(220px * 0.4);
+		}
+		.PrivacyManager_border_10 {
+			background-size: calc(1214px * 0.4) calc(220px * 0.4);
+		}
+		.PrivacyManager_border_11 {
+			background-size: calc(202px * 0.4) calc(220px * 0.4);
+		}
+		
+		.PrivacyManager_message {
+			padding-left: 25%;
+			padding-right: 25%;
+		}
+	}

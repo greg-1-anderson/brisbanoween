@@ -164,8 +164,6 @@ function multiplex_page_attachments(array &$page) {
   //  return;
   //}
   
-  error_log("Running attachments");
-
   $config = \Drupal::config('multiplex.settings');
 
   $inventory_enabled = true;
@@ -179,8 +177,6 @@ function multiplex_page_attachments(array &$page) {
     // It is, so show the map, but dont show the inventory component
     $inventory_enabled = false;
     $map_enabled = true;
-    
-    error_log("Attach google maps api");
 
     // Attach the google api script
     $page['#attached']['html_head'][] = [
@@ -228,10 +224,10 @@ function multiplex_page_attachments(array &$page) {
 	'target' => $counter_target,
 	'openInNewWindow' => $counter_new_window,
     ],
-    //'privacy' => [
-    //	'enabled' => $privacy_enabled,
-    //	'config' => getPrivacyConfig()
-    //],
+    'privacy' => [
+    	'enabled' => $privacy_enabled,
+    	'config' => getPrivacyConfig()
+    ],
     'map' => [
 	'enabled' => $map_enabled,
 	'config' => getMapConfig()
@@ -242,8 +238,6 @@ function multiplex_page_attachments(array &$page) {
 	'enabled' => $inventory_enabled
     ]
   ];
-  
-  error_log("Returning attachments");
 
   $page['#attached']['library'][] = 'multiplex/multiplex';
   $page['#attached']['drupalSettings']['multiplex'] = $computed_settings;
