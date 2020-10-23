@@ -110,6 +110,13 @@ class MultiplexController extends ControllerBase {
        return $build;
     }
 
+    // Make sure the game has started.
+    $game_start_timestamp = \Drupal::config('multiplex.settings')->get('game_start_time');
+    if (intval($game_start_timestamp) > time()) {
+    	return new RedirectResponse("./wait/$path", 302);
+    }
+
+
     // Paths must start with "/", but $path from the route does not.
     $node = $this->getNodeFromPath("/$path");
     if (!$node) {
