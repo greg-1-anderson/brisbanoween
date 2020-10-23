@@ -21,8 +21,6 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		width: 45px;
-		height: 45px;
 		cursor: pointer;
 		background-color: #000000;
 		display: grid;
@@ -34,8 +32,15 @@
 	
 		.PrivacyManager_notice_content {
 			border: 1px solid #FFFFFF;
-			background: url(../images/gear.png) center center no-repeat;
-			background-size: 32px 32px;		
+			background: url(../images/gear.png) 5px center no-repeat;
+			background-size: 32px 32px;
+			font-size: 30px;
+			font-weight: bold;
+			color: #FFFFFF;
+			font-family: Arial;
+			line-height: 37px;
+			padding-left: 45px;
+			padding-right: 10px;
 		}
 
 	.PrivacyManager_wrapper {
