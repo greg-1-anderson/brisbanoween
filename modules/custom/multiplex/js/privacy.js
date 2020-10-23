@@ -100,6 +100,14 @@ class PrivacyManager {
 						this.i_button_wrapper.className = "PrivacyManager_button_wrapper";
 						this.i_centered_wrapper.appendChild(this.i_button_wrapper);
 
+							this.i_reject_button = document.createElement('DIV');
+							this.i_reject_button.className = "PrivacyMangaer_reject";
+							this.i_reject_button.innerHTML = this.i_reject_button_text;
+							this.i_accept_button.addEventListener("click", () => {
+								this.reject();
+							});
+							this.i_button_wrapper.appendChild(this.i_reject_button);
+
 							this.i_accept_button = document.createElement('DIV');
 							this.i_accept_button.className = "PrivacyMangaer_accept";
 							this.i_accept_button.innerHTML = this.i_accept_button_text;
@@ -108,13 +116,6 @@ class PrivacyManager {
 							});
 							this.i_button_wrapper.appendChild(this.i_accept_button);
 
-							this.i_reject_button = document.createElement('DIV');
-							this.i_reject_button.className = "PrivacyMangaer_reject";
-							this.i_reject_button.innerHTML = this.i_reject_button_text;
-							this.i_accept_button.addEventListener("click", () => {
-								this.reject();
-							});
-							this.i_button_wrapper.appendChild(this.i_reject_button);
 
 		}
 		if (this.i_element.parentNode != null) {
