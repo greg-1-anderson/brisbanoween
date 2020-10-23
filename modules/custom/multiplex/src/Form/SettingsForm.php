@@ -239,8 +239,8 @@ class SettingsForm extends ConfigFormBase {
 			$user_timezone = new \DateTimeZone("America/Los_Angeles");
 			$server_timezone = new \DateTimeZone("UTC");
 
-			$user_time = new DateTime("now", $user_timezone);
-			$sever_time = new DateTime("now", $server_timezone);
+			$user_time = new \DateTime("now", $user_timezone);
+			$sever_time = new \DateTime("now", $server_timezone);
 
 			$timeOffset = $user_time>getOffset($sever_time);
 			error_log("Saving [" . $t . "] with offset of [" . $timeOffset . "]");
