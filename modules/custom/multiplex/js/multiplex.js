@@ -36,6 +36,13 @@
 					settings.multiplex.privacy.config.rejectButton
 				);
 				privacy_dialog.attach(document.body);
+
+				if (settings.multiplex.privacy.addButtonToPage) {
+					let contentBoxes = Array.prototype.map.call(document.getElementsByTagName('DIV'), (i) => i).filter((i) => i.getAttribute("property") == "schema:text");
+					if (contentBoxes.length == 1) {
+						contentBoxes[0].appendChild(privacy_dialog.getButton());
+					}
+				}
 			}
 			if (context == document && settings.multiplex.countdown.enabled !== false) {
 				let counter = new CountdownDisplay(settings.multiplex.countdown.startTime, "/to" + settings.multiplex.countdown.target, settings.multiplex.countdown.openInNewWindow);

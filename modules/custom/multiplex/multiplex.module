@@ -226,7 +226,8 @@ function multiplex_page_attachments(array &$page) {
     ],
     'privacy' => [
     	'enabled' => $privacy_enabled,
-    	'config' => getPrivacyConfig()
+    	'config' => getPrivacyConfig(),
+    	'addButtonToPage' => strpos($current_path, "/privacy-policy") === 0
     ],
     'map' => [
 	'enabled' => $map_enabled,

@@ -78,6 +78,18 @@ class PrivacyManager {
 		}
 	}
 
+	getButton() {
+		if (this.i_button == null) {
+			this.i_button = document.createElement('DIV');
+			this.i_button.className = "PrivacyManager_page_button";
+			this.i_button.innerHTML = "Open Privacy Settings";
+			this.i_button.addEventListener("click", () => {
+				this.open();
+			});
+		}
+		return this.i_button;
+	}
+
 	attach(component) {
 		if (this.i_element == null) {
 			let cookies = this.getCookies();
