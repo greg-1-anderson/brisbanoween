@@ -47,10 +47,11 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config('privacy.settings')->get('privacy_title') ? $this->config('privacy.settings')->get('privacy_title') : 'Welcome!'
     ];
     $form['privacy_message'] = [
-      '#type' => 'textfield',
+      '#type' => 'text_format',
       '#title' => $this->t('Privacy Message'),
-      '#description' => $this->t("The body of the cookie acceptance dialog"),
-      '#default_value' => $this->config('privacy.settings')->get('privacy_message') ? $this->config('privacy.settings')->get('privacy_message') : 'This is an interactive Halloween experience!  No personal information will be stored, but we do use cookies to track your progress and location while playing.'
+      '#format' => 'full_html',
+      '#description' => $this->t("The body of the cookie acceptance dialog.  Keep it short, there isn't much space on a mobile screen."),
+      '#default_value' => $this->config('privacy.settings')->get('privacy_message') ? $this->config('privacy.settings')->get('privacy_message') : '<p>This is an interactive Halloween experience!  No personal information will be stored, but we do use cookies to track your progress and location while playing.</p>'
     ];
     $form['privacy_accept_button'] = [
       '#type' => 'textfield',
