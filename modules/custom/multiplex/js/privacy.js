@@ -74,9 +74,17 @@ class PrivacyManager {
 				});
 				this.i_element.appendChild(this.i_real_wrapper);
 
+				let lastElement = this.i_element;
+				for (let x = 0; x < 12; x++) {
+					let nextLayer = document.createElement('DIV');
+					nextLayer.className = "PrivacyManager_border_" + x;
+					lastElement.appendChild(nextLayer);
+					lastElement = nextLayer;
+				}
+
 					this.i_centered_wrapper = document.createElement('DIV');
 					this.i_centered_wrapper.className = "PrivacyManager_center_wrapper";
-					this.i_real_wrapper.appendChild(this.i_centered_wrapper);
+					lastElement.appendChild(this.i_centered_wrapper);
 
 						this.i_title = document.createElement('DIV');
 						this.i_title.className = "PrivacyManager_title";
