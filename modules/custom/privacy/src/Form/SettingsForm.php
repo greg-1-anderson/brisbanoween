@@ -92,6 +92,9 @@ class SettingsForm extends ConfigFormBase {
 
   	foreach ($form_fields as $f) {
   		$useValue = $form_state->getValue($f);
+  		if ($f == "privacy_message") {
+  			$useValue = $useValue['value'];
+  		}
 		$this->config('privacy.settings')
 			->set($f, $useValue)
 			->save();
