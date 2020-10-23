@@ -180,6 +180,18 @@ function multiplex_page_attachments(array &$page) {
       'hidePageUI'
     ];
   }
+  if (strpos($current_path, "/wait") === 0) {
+    // Hide the main page elements
+    $page['#attached']['html_head'][] = [
+      [
+        '#tag' => 'style',
+        '#value' => 'BODY { background-color: #000000; } .page-wrapper { display:none; }',
+        '#weight' => -1,
+      ],
+      // A key, to make it possible to recognize this HTML <HEAD> element when altering.
+      'hideCountdownPageUI'
+    ];
+  }
 
   // See if we need to show the countdown timer (/wait/*)
   $counter_target = NULL;

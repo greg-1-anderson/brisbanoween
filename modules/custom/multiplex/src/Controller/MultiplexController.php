@@ -69,7 +69,7 @@ class MultiplexController extends ControllerBase {
   public function waitForGameToStartPage($path=NULL) {
   	// We dont need to show anything, multiplex.module injects the counter on this page automatically.
     return [
-      '#markup' => '<style>.page-wrapper { display: none; }</style>',
+      '#markup' => '',
     ];
   }
 
