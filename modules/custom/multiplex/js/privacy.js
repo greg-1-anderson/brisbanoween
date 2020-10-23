@@ -74,7 +74,7 @@ class PrivacyManager {
 				});
 				this.i_element.appendChild(this.i_real_wrapper);
 
-				let lastElement = this.i_element;
+				let lastElement = this.i_real_wrapper;
 				for (let x = 0; x < 12; x++) {
 					let nextLayer = document.createElement('DIV');
 					nextLayer.className = "PrivacyManager_border_" + x;

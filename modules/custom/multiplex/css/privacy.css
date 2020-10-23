@@ -39,28 +39,28 @@
 		background: url(../images/privacy/border_r4.png) top right repeat-y;
 	}
 	.PrivacyManager_border_4 {
-		background: url(../images/privacy/border_1.png) top left no-repeat;
+		background: url(../images/privacy/border1.png) top left no-repeat;
 	}
 	.PrivacyManager_border_5 {
-		background: url(../images/privacy/border_2.png) top center no-repeat;
+		background: url(../images/privacy/border2.png) top center no-repeat;
 	}
 	.PrivacyManager_border_6 {
-		background: url(../images/privacy/border_3.png) top right no-repeat;
+		background: url(../images/privacy/border3.png) top right no-repeat;
 	}
 	.PrivacyManager_border_7 {
-		background: url(../images/privacy/border_4.png) center left no-repeat;
+		background: url(../images/privacy/border4.png) center left no-repeat;
 	}
 	.PrivacyManager_border_8 {
-		background: url(../images/privacy/border_6.png) center right no-repeat;
+		background: url(../images/privacy/border6.png) center right no-repeat;
 	}
 	.PrivacyManager_border_9 {
-		background: url(../images/privacy/border_7.png) bottom left no-repeat;
+		background: url(../images/privacy/border7.png) bottom left no-repeat;
 	}
 	.PrivacyManager_border_10 {
-		background: url(../images/privacy/border_8.png) bottom center no-repeat;
+		background: url(../images/privacy/border8.png) bottom center no-repeat;
 	}
 	.PrivacyManager_border_11 {
-		background: url(../images/privacy/border_9.png) bottom right no-repeat;
+		background: url(../images/privacy/border9.png) bottom right no-repeat;
 		justify-content: center;
 		align-items: center;
 	}
