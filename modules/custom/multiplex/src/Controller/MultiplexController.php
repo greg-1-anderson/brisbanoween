@@ -112,6 +112,7 @@ class MultiplexController extends ControllerBase {
 
     // Make sure the game has started.
     $game_start_timestamp = \Drupal::config('multiplex.settings')->get('game_start_time');
+    error_log("checking game start [" . $game_start_timestamp . "] < [" . time() . "]");
     if (intval($game_start_timestamp) > time()) {
     	return new RedirectResponse("./wait/$path", 302);
     }
