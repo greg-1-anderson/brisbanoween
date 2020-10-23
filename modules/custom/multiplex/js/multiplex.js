@@ -35,7 +35,7 @@
 					settings.multiplex.privacy.config.acceptButton,
 					settings.multiplex.privacy.config.rejectButton
 				);
-				privacy_policy.attach(document.body);
+				privacy_dialog.attach(document.body);
 			}
 			if (context == document && settings.multiplex.countdown.enabled !== false) {
 				let counter = new CountdownDisplay(settings.multiplex.countdown.startTime, "/to" + settings.multiplex.countdown.target, settings.multiplex.countdown.openInNewWindow);
