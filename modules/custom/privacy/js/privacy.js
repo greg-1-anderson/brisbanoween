@@ -86,7 +86,9 @@ class PrivacyManager {
 				if (this.i_visible != true) {
 					this.i_visible = true;
 					this.i_element.style.display = "";
-					this.i_page_container.style.display = "none";
+					if (this.i_page_container != null) {
+						this.i_page_container.style.display = "none";
+					}
 					this.i_real_wrapper.className = "PrivacyManager_wrapper" + (this.i_first_open != true ? " PrivacyManager_wrapper_open" : "");
 					this.i_notice.style.display = "none";
 					this.i_first_open = false;
@@ -99,7 +101,9 @@ class PrivacyManager {
 				if (this.i_visible == true) {
 					this.i_visible = false;
 					this.i_real_wrapper.className = "PrivacyManager_wrapper PrivacyManager_wrapper_close";
-					this.i_page_container.style.display = "";
+					if (this.i_page_container != null) {
+						this.i_page_container.style.display = "";
+					}
 					window.scrollTo(0,0);
 
 					let cookies = this.getCookies();
