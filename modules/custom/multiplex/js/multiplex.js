@@ -37,7 +37,7 @@
 				);
 				privacy_dialog.attach(document.body);
 
-				if (settings.multiplex.privacy.addButtonToPage) {
+				if (document.location.href.indexOf("/privacy-policy") >= 0) {
 					let contentBoxes = Array.prototype.map.call(document.getElementsByTagName('DIV'), (i) => i).filter((i) => i.getAttribute("property") == "schema:text");
 					if (contentBoxes.length == 1) {
 						contentBoxes[0].appendChild(privacy_dialog.getButton());

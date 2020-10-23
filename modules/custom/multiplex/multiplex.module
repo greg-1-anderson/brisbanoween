@@ -170,7 +170,6 @@ function multiplex_page_attachments(array &$page) {
   $map_enabled = false;
   $counter_enabled = false;
   $privacy_enabled = true;
-  $add_privacy_button = false;
 
   // See if this is the map page
   $current_path = \Drupal::service('path.current')->getPath();
@@ -206,10 +205,7 @@ function multiplex_page_attachments(array &$page) {
       'hidePageUI'
     ];
   }
-  if (strpos($current_path, "/privacy-policy") === 0) {
-  	$add_privacy_button = true;
-  }
-  
+
   // See if we need to show the countdown timer (/wait/*)
   $counter_target = NULL;
   $game_start_time = NULL;
@@ -231,8 +227,6 @@ function multiplex_page_attachments(array &$page) {
     'privacy' => [
     	'enabled' => $privacy_enabled,
     	'config' => getPrivacyConfig(),
-    	'addButtonToPage' => $add_privacy_button,
-    	'cpath' => $current_path
     ],
     'map' => [
 	'enabled' => $map_enabled,
