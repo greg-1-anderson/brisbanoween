@@ -208,8 +208,12 @@ class PrivacyManager {
 
 
 (function ($, Drupal) {
+	let orig = Drupal.behaviors.myModuleBehavior ? Drupal.behaviors.myModuleBehavior.attach : null;
   Drupal.behaviors.myModuleBehavior = {
     attach: function (context, settings) {
+    	if (orig) {
+    		orig(context, settings);
+    	}
     	if (context == document) {
     		console.log(settings);
 				let privacy_dialog = new PrivacyManager(
