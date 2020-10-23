@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Drupal\multiplex\Service\VisitationService;
+
 /**
  * Returns responses for Multiplex routes.
  */
@@ -27,14 +29,18 @@ class MultiplexAPIController extends ControllerBase {
   /** @var \Drupal\Core\PageCache\ResponsePolicy\KillSwitch */
   protected $pageCacheKillSwitch;
 
-  /** \Drupal\Core\Config\ConfigFactoryInterface */
+  /** @var \Drupal\Core\Config\ConfigFactoryInterface */
   protected $config;
 
-  public function __construct($pathValidator, MultiplexService $multiplexService, KillSwitch $pageCacheKillSwitch, \Drupal\Core\Config\ConfigFactoryInterface $config) {
+  /** @var \Drupal\multiplex\Service\VisitationService */
+  protected $visitationService;
+
+  public function __construct($pathValidator, MultiplexService $multiplexService, KillSwitch $pageCacheKillSwitch, \Drupal\Core\Config\ConfigFactoryInterface $config, VisitationService $visitationService) {
     $this->pathValidator = $pathValidator;
     $this->multiplexService = $multiplexService;
     $this->pageCacheKillSwitch = $pageCacheKillSwitch;
     $this->config = $config;
+    $this->visitationService = $visitationService;
   }
 
   /**
@@ -45,7 +51,8 @@ class MultiplexAPIController extends ControllerBase {
       $container->get('path.validator'),
       $container->get('multiplex.multiplex'),
       $container->get('page_cache_kill_switch'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('multiplex.visitation')
     );
   }
 
@@ -53,7 +60,9 @@ class MultiplexAPIController extends ControllerBase {
    * @return JsonResponse
    */
   public function locations() {
-    return new JsonResponse([ 'data' => $this->getLocationData(), 'method' => 'GET', 'status'=> 200]);
+    $path = \Drupal::request()->query->get('path') ?: 'default';
+
+    return new JsonResponse([ 'data' => $this->getLocationData($path), 'method' => 'GET', 'status'=> 200]);
   }
 
   /**
@@ -61,20 +70,22 @@ class MultiplexAPIController extends ControllerBase {
    *
    * @return array
    */
-  public function getLocationData() {
-    $user = \Drupal::currentUser();
-    if ($user->hasPermission('access administration menu')) {
+  public function getLocationData($path) {
+    if ($path == 'edit') {
       return $this->getEditModeLocationData();
     }
-    return $this->getVisitedLocationData();
-  }
 
-  protected function getVisitedLocationData() {
-    return [];
+    $who = multiplex_get_visitor_cookie_value();
+    return $this->visitationService->getVisitedLocationData($who);
   }
 
   protected function getEditModeLocationData() {
-    $locations=[];
+    $user = \Drupal::currentUser();
+    if (!$user->hasPermission('access administration menu')) {
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+
+    $locations = [];
     // TODO: How to add a condition on field_geolocation to test of lat/lng are populated?
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'qr_code')
@@ -118,7 +129,6 @@ class MultiplexAPIController extends ControllerBase {
     ];
 
     return [
-      'yay' => 'woo hoo',
       'legend' => $legend,
       'locations' => $locations,
     ];

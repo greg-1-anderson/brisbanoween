@@ -61,8 +61,8 @@ class MultiplexService {
     }
 
     foreach ($rule_data as $rule) {
-      $evaluator = RuleEvaluator::create($rule['rule_type'], $this->visitationService, $visit_data->who());
-      $target_node = $evaluator->evaluate($rule['parameter_node'], $rule['target_node']);
+      $evaluator = RuleEvaluator::create($rule, $this->visitationService, $visit_data->who());
+      $target_node = $evaluator->evaluate();
       if ($target_node) {
         return $target_node->Url();
       }

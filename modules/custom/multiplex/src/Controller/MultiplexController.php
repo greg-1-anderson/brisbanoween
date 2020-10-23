@@ -12,6 +12,8 @@ use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Cookie;
 
+use Drupal\multiplex\Service\VisitationService;
+
 /**
  * Returns responses for Multiplex routes.
  */
@@ -28,11 +30,15 @@ class MultiplexController extends ControllerBase {
   /** \Drupal\Core\Config\ConfigFactoryInterface */
   protected $config;
 
-  public function __construct($pathValidator, MultiplexService $multiplexService, KillSwitch $pageCacheKillSwitch, \Drupal\Core\Config\ConfigFactoryInterface $config) {
+  /** @var \Drupal\multiplex\Service\VisitationService */
+  protected $visitationService;
+
+  public function __construct($pathValidator, MultiplexService $multiplexService, KillSwitch $pageCacheKillSwitch, \Drupal\Core\Config\ConfigFactoryInterface $config, VisitationService $visitationService) {
     $this->pathValidator = $pathValidator;
     $this->multiplexService = $multiplexService;
     $this->pageCacheKillSwitch = $pageCacheKillSwitch;
     $this->config = $config;
+    $this->visitationService = $visitationService;
   }
 
   /**
@@ -43,7 +49,8 @@ class MultiplexController extends ControllerBase {
       $container->get('path.validator'),
       $container->get('multiplex.multiplex'),
       $container->get('page_cache_kill_switch'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('multiplex.visitation')
     );
   }
 
@@ -149,6 +156,9 @@ class MultiplexController extends ControllerBase {
 
         throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
       }
+
+      recordMapMarker
+
       $node = \Drupal\node\Entity\Node::load($qr_code_target[0]['target_id']);
     }
 

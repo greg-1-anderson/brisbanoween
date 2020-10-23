@@ -24,7 +24,7 @@ function multiplex_uninstall() {
  */
 function multiplex_schema() {
   $schema['multiplex_visitors'] = [
-    'description' => 'Visitor records - who has visited which pages.',
+    'description' => 'Visitor records - who has visited which story pages.',
     'fields' => [
       'id' => [
         'type' => 'serial',
@@ -45,6 +45,7 @@ function multiplex_schema() {
         'default' => '',
         'description' => 'Cookie data identifying anonymous users.',
       ],
+      // TODO: path and target should probably be nids
       'path' => [
         'type' => 'varchar_ascii',
         'length' => 64,
@@ -58,6 +59,55 @@ function multiplex_schema() {
         'not null' => TRUE,
         'default' => '',
         'description' => 'If the multiplex target is random per-visitor, then we save the target so that the same user will get consistent results.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp when the record was created.',
+      ],
+      'visited' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp when the record was most recently visited.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'uid' => ['uid'],
+      'who' => ['who'],
+    ],
+  ];
+
+  $schema['multiplex_map_markers'] = [
+    'description' => 'Map markers - location of QR codes scanned by visitors.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique record ID.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The {users}.uid of the user who created the record. Informative only.',
+      ],
+      'who' => [
+        'type' => 'varchar_ascii',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Cookie data identifying anonymous users.',
+      ],
+      'nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The {node}.nid of the QR code.',
       ],
       'created' => [
         'type' => 'int',
@@ -86,6 +136,8 @@ function multiplex_schema() {
     'indexes' => [
       'uid' => ['uid'],
       'who' => ['who'],
+      'lat' => ['lat'],
+      'lng' => ['lng'],
     ],
   ];
 
@@ -108,6 +160,74 @@ function multiplex_update_8001() {
     'description' => 'Longitude',
   ];
   db_add_field('multiplex_visitors', 'lng', $spec);
+}
+
+/**
+ * Add map markers table
+ */
+function multiplex_update_8002() {
+  $spec = [
+    'description' => 'Map markers - location of QR codes scanned by visitors.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique record ID.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The {users}.uid of the user who created the record. Informative only.',
+      ],
+      'who' => [
+        'type' => 'varchar_ascii',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Cookie data identifying anonymous users.',
+      ],
+      'nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The {node}.nid of the QR code.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp when the record was created.',
+      ],
+      'visited' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp when the record was most recently visited.',
+      ],
+      'lat' => [
+        'type' => 'float',
+        'default' => 0,
+        'description' => 'Latitude',
+      ],
+      'lng' => [
+        'type' => 'float',
+        'default' => 0,
+        'description' => 'Longitude',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'uid' => ['uid'],
+      'who' => ['who'],
+      'lat' => ['lat'],
+      'lng' => ['lng'],
+    ],
+  ];
+  $schema = Database::getConnection()->schema();
+  $schema->createTable('multiplex_map_markers', $spec);
 }
 
 /**

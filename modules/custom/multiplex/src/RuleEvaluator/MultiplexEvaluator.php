@@ -7,12 +7,16 @@ use Drupal\multiplex\Service\VisitationService;
 // The multiplex service determines the target locations for redirects
 class MultiplexEvaluator extends EvaluatorBase {
 
-  public function __construct(VisitationService $visitation_service, $who) {
+  protected $parameter_nid;
+
+  public function __construct(VisitationService $visitation_service, $who, $parameter_nid, $if_visited) {
     parent::__construct($visitation_service, $who);
+    $this->parameter_nid = $parameter_nid;
+    $this->ifVisited = $if_visited;
   }
 
-  public function evaluate($parameter_nid, $target_nid) {
-    $multiplex_data_node = \Drupal\node\Entity\Node::load($parameter_nid);
+  public function evaluate($parameter_nid) {
+    $multiplex_data_node = \Drupal\node\Entity\Node::load($this->parameter_nid);
     if (!$multiplex_data_node) {
       return null;
     }
