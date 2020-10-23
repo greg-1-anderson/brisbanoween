@@ -27,7 +27,7 @@
 
 				}, 10);
 			}
-			/*if (context == document && settings.multiplex.privacy.enabled !== false) {
+			if (context == document && settings.multiplex.privacy.enabled !== false) {
 				let privacy_dialog = new PrivacyManager(
 					settings.multiplex.privacy.config.cookieName,
 					settings.multiplex.privacy.config.title,
@@ -36,7 +36,7 @@
 					settings.multiplex.privacy.config.rejectButton
 				);
 				privacy_dialog.attach(document.body);
-			}*/
+			}
 			if (context == document && settings.multiplex.countdown.enabled !== false) {
 				let counter = new CountdownDisplay(settings.multiplex.countdown.startTime, "/to" + settings.multiplex.countdown.target, settings.multiplex.countdown.openInNewWindow);
 
