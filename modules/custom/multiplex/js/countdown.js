@@ -45,7 +45,7 @@ class CountdownDisplay {
 				let newLabel = (parts.length > 0 ? parts.join(" ") : "Now");
 				if (this.i_last_label != newLabel) {
 					this.i_last_label = newLabel;
-					this.i_message.innerHTML = newLabel;
+					this.i_counter.innerHTML = newLabel;
 					this.i_counter.className = "CountdownDisplay_counter CountdownDisplay_counter_flash";
 				}
 			}
