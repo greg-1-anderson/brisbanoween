@@ -73,10 +73,8 @@ class CountdownDisplay {
 
 	attach(component) {
 		if (this.i_element == null) {
-			let cookies = this.getCookies();
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "CountdownDisplay";
-			this.i_element.style.display = !!cookies[this.i_privacy_cookie_name] ? "none" : "";
 
 				this.i_real_wrapper = document.createElement('DIV');
 				this.i_real_wrapper.className = "CountdownDisplay_wrapper";
