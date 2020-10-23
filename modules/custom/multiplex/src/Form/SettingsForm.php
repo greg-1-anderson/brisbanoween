@@ -236,8 +236,8 @@ class SettingsForm extends ConfigFormBase {
   		if ($f == 'game_start_time' && $useValue !== NULL) {
   			$t = intval($useValue->format("U"));
 
-			$user_timezone = new DateTimeZone("America/Los_Angeles");
-			$server_timezone = new DateTimeZone("UTC");
+			$user_timezone = new \DateTimeZone("America/Los_Angeles");
+			$server_timezone = new \DateTimeZone("UTC");
 
 			$user_time = new DateTime("now", $user_timezone);
 			$sever_time = new DateTime("now", $server_timezone);
