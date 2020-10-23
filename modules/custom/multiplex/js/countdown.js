@@ -9,6 +9,8 @@ class CountdownDisplay {
 
 	update() {
 		if (this.i_element != null) {
+
+
 			let remSeconds = Math.ceil((this.i_startTime - (new Date()).getTime()) / 1000);
 			if (remSeconds > 0) {
 				let remDays = Math.floor(remSeconds / (60 * 60 * 24));
@@ -36,19 +38,21 @@ class CountdownDisplay {
 					parts.splice(parts.length - 1, 0, 'and');
 				}
 
-				let newLabel = (parts.length > 0 ? parts.join(" ") : "Now!");
+				this.i_counter.style.display = "";
+				this.i_title.innerHTML = "You're Early!";
+				this.i_message.innerHTML = "The game will begin in";
+
+				let newLabel = (parts.length > 0 ? parts.join(" ");
 				if (this.i_last_label != newLabel) {
 					this.i_last_label = newLabel;
-					this.i_counter.innerHTML = newLabel;
-					this.i_counter.className = "CountdownDisplay_counter CountdownDisplay_counter_change_animation";
+					this.i_message.innerHTML = newLabel;
+					this.i_counter.className = "CountdownDisplay_counter CountdownDisplay_counter_flash";
 				}
-
-				this.i_waiting_box.style.display = "";
-				this.i_redirecting_box.style.display = "none";
 			}
 			else {
-				this.i_waiting_box.style.display = "none";
-				this.i_redirecting_box.style.display = "";
+				this.i_counter.style.display = "none";
+				this.i_title.innerHTML = "Starting...";
+				this.i_message.innerHTML = "The game has begun.";
 
 				if (this.i_update_timer != null) {
 					clearInterval(this.i_update_timer);
@@ -69,43 +73,64 @@ class CountdownDisplay {
 
 	attach(component) {
 		if (this.i_element == null) {
+			let cookies = this.getCookies();
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "CountdownDisplay";
+			this.i_element.style.display = !!cookies[this.i_privacy_cookie_name] ? "none" : "";
 
-				this.i_waiting_box = document.createElement('DIV');
-				this.i_waiting_box.className - "CountdownDisplay_waiting";
-				this.i_element.appendChild(this.i_waiting_box);
+				this.i_real_wrapper = document.createElement('DIV');
+				this.i_real_wrapper.className = "CountdownDisplay_wrapper";
+				this.i_element.appendChild(this.i_real_wrapper);
 
-					this.i_time_pending_header = document.createElement('DIV');
-					this.i_time_pending_header.className = "CountdownDisplay_header";
-					this.i_time_pending_header.innerHTML = "The game will start in";
-					this.i_waiting_box.appendChild(this.i_time_pending_header);
+				let lastElement = this.i_real_wrapper;
+				for (let x = 0; x < 12; x++) {
+					let nextLayer = document.createElement('DIV');
+					nextLayer.className = "CountdownDisplay_border_" + x;
+					lastElement.appendChild(nextLayer);
+					lastElement = nextLayer;
+				}
 
-					this.i_counter = document.createElement('DIV');
-					this.i_counter.className = "CountdownDisplay_counter";
-					this.i_counter.addEventListener("animationend", () => {
-						this.i_counter.className = "CountdownDisplay_counter";
-					});
-					this.i_waiting_box.appendChild(this.i_counter);
+					this.i_centered_wrapper = document.createElement('DIV');
+					this.i_centered_wrapper.className = "CountdownDisplay_center_wrapper";
+					lastElement.appendChild(this.i_centered_wrapper);
 
-					this.i_home_wrapper = document.createElement('DIV');
-					this.i_home_wrapper.className = "CountdownDisplay_home_wrapper";
-					this.i_waiting_box.appendChild(this.i_home_wrapper);
+						this.i_title = document.createElement('DIV');
+						this.i_title.className = "CountdownDisplay_title";
+						this.i_title.innerHTML = "You're Early!";
+						this.i_centered_wrapper.appendChild(this.i_title);
 
-						this.i_home_button = document.createElement('DIV');
-						this.i_home_button.className = "CountdownDisplay_home_button";
-						this.i_home_button.innerHTML = "LEARN MORE";
-						this.i_home_button.addEventListener("click", () => {
-							document.location = "/";
-						});
-						this.i_home_wrapper.appendChild(this.i_home_button);
+						this.i_countdown_wrapper = document.createElement('DIV');
+						this.i_countdown_wrapper.className = "CountdownDisplay_counter_wrapper";
+						this.i_centered_wrapper.appendChild(this.i_countdown_wrapper);
 
-				this.i_redirecting_box = document.createElement('DIV');
-				this.i_redirecting_box.className = "CountdownDisplay_redirecting";
-				this.i_redirecting_box.innerHTML = "The game has begun, one moment please...";
-				this.i_redirecting_box.style.display = "none";
-				this.i_element.appendChild(this.i_redirecting_box);
+							this.i_message = document.createElement('DIV');
+							this.i_message.className = "CountdownDisplay_message";
+							this.i_message.innerHTML = "The game will begin in";
+							this.i_countdown_wrapper.appendChild(this.i_message);
 
+							this.i_counter = document.createElement('DIV');
+							this.i_counter.className = "CountdownDisplay_counter";
+							this.i_counter.addEventListener("animationend", () => {
+								this.i_counter.className = "CountdownDisplay_counter";
+							});
+							this.i_countdown_wrapper.appendChild(this.i_counter);
+
+						this.i_button_wrapper = document.createElement('DIV');
+						this.i_button_wrapper.className = "CountdownDisplay_button_wrapper";
+						this.i_centered_wrapper.appendChild(this.i_button_wrapper);
+
+							this.i_home_button = document.createElement('DIV');
+							this.i_home_button.className = "CountdownDisplay_learn_more";
+							this.i_home_button.innerHTML = "Learn More";
+							this.i_home_button.addEventListener("click", () => {
+								if (this.i_openInNewWindow) {
+									window.open("/");
+								}
+								else {
+									document.location = "/";
+								}
+							});
+							this.i_button_wrapper.appendChild(this.i_home_button);
 
 			this.i_update_timer = setInterval(() => {
 				this.update();
