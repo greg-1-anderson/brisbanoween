@@ -61,7 +61,8 @@ class PrivacyManager {
 
 	issueSession(force) {
 		// Issue a session cookie if they accepted cookies and dont have a session cookie yet
-		if (!this.getCookies()[this.i_session_cookie_name] && (force || this.getCookies()[this.i_privacy_cookie_name] == "2")) {
+		let existingSession = this.getCookies()[this.i_session_cookie_name];
+		if ((existingSession == null || existingSession == "") && (force || this.getCookies()[this.i_privacy_cookie_name] == "2")) {
 			document.cookie = this.i_session_cookie_name + "=" + this.generateSessionId(6) + "; path=/";
 		}
 	}
