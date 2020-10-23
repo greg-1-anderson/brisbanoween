@@ -220,8 +220,8 @@ class PrivacyManager {
 			if (!privacy_dialog.hasAnswered() && settings.privacy.privacyAutoAccept) {
 				privacy_dialog.accept();
 			}
-			if (privacy.hasAnswered()) {
-				privacy.issueSession();
+			if (privacy_dialog.hasAnswered()) {
+				privacy_dialog.issueSession();
 			}
 			privacy_dialog.attach(document.body);
 
