@@ -103,7 +103,7 @@ class PrivacyManager {
 							this.i_reject_button = document.createElement('DIV');
 							this.i_reject_button.className = "PrivacyMangaer_reject";
 							this.i_reject_button.innerHTML = this.i_reject_button_text;
-							this.i_accept_button.addEventListener("click", () => {
+							this.i_reject_button.addEventListener("click", () => {
 								this.reject();
 							});
 							this.i_button_wrapper.appendChild(this.i_reject_button);
