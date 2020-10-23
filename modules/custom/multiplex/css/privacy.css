@@ -22,7 +22,6 @@
 		display: grid;
 		grid-template-rows: 1fr;
 		grid-template-columns: 1fr;
-		background-scale: 90% 90% !important;
 	}
 	
 	.PrivacyManager_border_0 {
@@ -78,6 +77,45 @@
 	}
 	
 	
+	@media (max-width: 600px) or (max-height: 600px) {
+		.PrivacyManager_border_0 {
+			background-size: calc(74px * 0.15) calc(198px * 0.15);
+		}
+		.PrivacyManager_border_1 {
+			background-size: calc(204px * 0.15) calc(53px * 0.15);
+		}
+		.PrivacyManager_border_2 {
+			background-size: calc(74px * 0.15) calc(220px * 0.15);
+		}
+		.PrivacyManager_border_3 {
+			background-size: calc(202px * 0.15) calc(65px * 0.15);
+		}
+		.PrivacyManager_border_4 {
+			background-size: calc(204px * 0.15) calc(198px * 0.15);
+		}
+		.PrivacyManager_border_5 {
+			background-size: calc(1214px * 0.15) calc(198px * 0.15);
+		}
+		.PrivacyManager_border_6 {
+			background-size: calc(202px * 0.15) calc(198px * 0.15);
+		}
+		.PrivacyManager_border_7 {
+			background-size: calc(204px * 0.15) calc(853px * 0.15);
+		}
+		.PrivacyManager_border_8 {
+			background-size: calc(202px * 0.15) calc(853px * 0.15);
+		}
+		.PrivacyManager_border_9 {
+			background-size: calc(204px * 0.15) calc(220px * 0.15);
+		}
+		.PrivacyManager_border_10 {
+			background-size: calc(1214px * 0.15) calc(220px * 0.15);
+		}
+		.PrivacyManager_border_11 {
+			background-size: calc(202px * 0.15) calc(220px * 0.15);
+		}
+	}
+	
 		@keyframes fadeAway {
 			0% {
 				opacity: 1;
@@ -106,10 +144,12 @@
 			.PrivacyManager_message {
 				font-size: 25px;
 				color: #FFFFFF;
-				font-family: Arial;
+				font-family: "Times New Roman";
+				font-variant: small-caps;
 				text-align: center;
-				width: 50%;
 				padding-bottom: 30px;
+				padding-left: 25%;
+				padding-right: 25%;
 			}
 
 			.PrivacyManager_button_wrapper {
@@ -126,17 +166,23 @@
 					margin-left: 15px;
 					margin-right: 15px;
 					cursor: pointer;
+					font-family: Arial;
+					padding-left: 20px;
+					padding-right: 20px;
 				}
 
 				.PrivacyMangaer_reject {
 					display: inline-block;
 					padding: 10px;
 					font-weight: bold;
-					color: #000000;
-					background-color: #FFFFFF;
+					color: #FFFFFF;
+					background-color: #222222;
 					border-radius: 6px;
 					word-wrap: nowrap;
 					margin-left: 15px;
 					margin-right: 15px;
 					cursor: pointer;
+					font-family: Arial;
+					padding-left: 20px;
+					padding-right: 20px;
 				}
