@@ -40,7 +40,6 @@ class SettingsForm extends ConfigFormBase {
     }
 
 	$currentStartTime = $this->config('multiplex.settings')->get('game_start_time') ? DrupalDateTime::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_start_time'))) : DrupalDateTime();
-  	$currentStartTime->setTimezone(new \DateTimeZone('America/Los_Angeles'));
     $form['game_start_time'] = [
       '#type' => 'datetime',
       '#title' => $this->t('Game Start Time'),
@@ -235,9 +234,18 @@ class SettingsForm extends ConfigFormBase {
   	foreach ($form_fields as $f) {
   		$useValue = $form_state->getValue($f);
   		if ($f == 'game_start_time' && $useValue !== NULL) {
-  			$useValue->setTimezone(new \DateTimeZone('America/Los_Angeles'));
   			$t = intval($useValue->format("U"));
-  			$useValue = $t;
+
+			$user_timezone = new DateTimeZone("America/Los_Angeles");
+			$server_timezone = new DateTimeZone("UTC");
+
+			$user_time = new DateTime("now", $user_timezone);
+			$sever_time = new DateTime("now", $server_timezone);
+
+			$timeOffset = $user_time>getOffset($sever_time);
+			error_log("Saving [" . $t . "] with offset of [" . $timeOffset . "]");
+
+  			$useValue = $t + $timeOffset;
   		}
 		$this->config('multiplex.settings')
 			->set($f, $useValue)
