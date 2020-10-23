@@ -19,6 +19,7 @@ multiplex.wait:
   requirements:
     _permission: 'access content'
   options:
+    no_cache: 'TRUE'
     parameters:
       target:
         type: string
