@@ -237,7 +237,7 @@ class SettingsForm extends ConfigFormBase {
   			$useValue->setTimezone(new \DateTimeZone('America/Los_Angeles'));
   			$t = intval($useValue->format("U"));
   			error_log('timezone offset [' . $useValue->format("U") . "]: " . $useValue->format("Z"));
-  			$useValue = $t;
+  			$useValue = $t - intval($useValue->format("Z"));
   		}
 		$this->config('multiplex.settings')
 			->set($f, $useValue)
