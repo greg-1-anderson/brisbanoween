@@ -5,12 +5,14 @@ multiplex:
     js/map.js: {}
     js/multiplex.js: {}
     js/countdown.js: {}
+    js/privacy.js: {}
   css:
     component:
       css/inventory.css: {}
       css/map.css: {}
       css/multiplex.css: {}
       css/countdown.css: {}
+      css/privacy.css: {}
       css/reactive_theme.css: {}
   dependencies:
     - core/drupal
