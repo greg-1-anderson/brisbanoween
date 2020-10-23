@@ -1,8 +1,6 @@
 # Set a cookie identifying anonymous users.
 visitor_cookie:
   version: 1.x
-  js:
-    js/visitor_cookie.js: { preprocess: false }
   dependencies:
     - core/drupal
     - core/drupalSettings

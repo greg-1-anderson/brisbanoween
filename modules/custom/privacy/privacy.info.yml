@@ -1,0 +1,6 @@
+name: Privacy
+type: module
+description: Adds a privacy policy and session tracking cookie controller to the site
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9

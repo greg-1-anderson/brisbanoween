@@ -14,29 +14,6 @@ use Drupal\node\Entity\Node;
 use Drupal\path_alias\Entity\PathAlias;
 
 /**
- * Attach our Javascript
- */
-function guest_upload_page_attachments(array &$page) {
-  //if (!\Drupal::currentUser()->hasPermission('some permission not yet defined')) {
-  //  return;
-  //}
-
-  $config = \Drupal::config('guest_upload.settings');
-
-  if (!$config->get('automatic_visitor_id')) {
-    return;
-  }
-
-  $computed_settings = [
-    'cookie_name' => $config->get('cookie'),
-    'use_eu_cookie_compliance_module' => $config->get('use_eu_cookie_compliance_module'),
-  ];
-
-  $page['#attached']['library'][] = 'guest_upload/visitor_cookie';
-  $page['#attached']['drupalSettings']['guest_upload'] = $computed_settings;
-}
-
-/**
  * Customize behavior of block_upload module.
  */
 function guest_upload_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -54,7 +31,7 @@ function _guest_upload_post_submit($form, FormStateInterface $form_state) {
   $nid = $form_state->getValue('block_upload_nid');
 
   // Get a reference to the visitor
-  $cookie = \Drupal::config('guest_upload.settings')->get('cookie');
+  $cookie = \Drupal::config('privacy.settings')->get('session_cookie_name');
   $who = $_COOKIE[$cookie] ?? '';
   $account = \Drupal::currentUser();
 

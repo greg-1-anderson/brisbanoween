@@ -1,6 +1,7 @@
 class PrivacyManager {
-	constructor(cookieName, title, message, acceptButton, rejectButton, pageContainer) {
-		this.i_cookie_name = cookieName;
+	constructor(privacyCookieName, sessionCookieName, title, message, acceptButton, rejectButton, pageContainer) {
+		this.i_privacy_cookie_name = privacyCookieName;
+		this.i_session_cookie_name = sessionCookieName;
 		this.i_title_text = title;
 		this.i_message_text = message;
 		this.i_accept_button_text = acceptButton;
@@ -43,15 +44,38 @@ class PrivacyManager {
 		this.update();
 	}
 
+	generateSessionId(length) {
+		 var result           = '';
+		 var characters       = 'abcdefghjkmnpqrtuvwxyz234689';
+		 var charactersLength = characters.length;
+		 for ( var i = 0; i < length; i++ ) {
+				result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		 }
+		 return result;
+	}
+
+	hasAnswered() {
+		// See if the user has accepted or rejected the cookie dialog (at least once)
+		return !!this.getCookies()[this.i_privacy_cookie_name];
+	}
+
+	issueSession() {
+		// Issue a session cookie if they accepted cookies and dont have a session cookie yet
+		if (!this.getCookies()[this.i_session_cookie_name] && this.getCookies()[this.i_privacy_cookie_name] == "2") {
+			document.cookie = this.i_session_cookie_name + "=" + this.generateSessionId(6) + "; path=/";
+		}
+	}
+
 	accept() {
 		this.i_closed = true;
-		document.cookie = this.i_cookie_name + "=2; path=/";
+		document.cookie = this.i_privacy_cookie_name + "=2; path=/";
+		this.issueSession();
 		this.update();
 	}
 
 	reject() {
 		this.i_closed = true;
-		document.cookie = this.i_cookie_name + "=0; path=/";
+		document.cookie = this.i_privacy_cookie_name + "=0; path=/";
 		this.update();
 	}
 
@@ -66,6 +90,9 @@ class PrivacyManager {
 					this.i_real_wrapper.className = "PrivacyManager_wrapper" + (this.i_first_open != true ? " PrivacyManager_wrapper_open" : "");
 					this.i_notice.style.display = "none";
 					this.i_first_open = false;
+
+					// Clear any existing session cookies, since they havent accepted yet
+					document.cookie = this.i_session_cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 				}
 			}
 			else {
@@ -99,11 +126,11 @@ class PrivacyManager {
 			let cookies = this.getCookies();
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "PrivacyManager";
-			this.i_element.style.display = !!cookies[this.i_cookie_name] ? "none" : "";
+			this.i_element.style.display = !!cookies[this.i_privacy_cookie_name] ? "none" : "";
 
 				this.i_notice = document.createElement('DIV');
 				this.i_notice.className = "PrivacyManager_notice";
-				this.i_notice.style.display = cookies[this.i_cookie_name] == "0" ? "" : "none";
+				this.i_notice.style.display = cookies[this.i_privacy_cookie_name] == "0" ? "" : "none";
 				this.i_notice.title = "Privacy Settings";
 				this.i_notice.addEventListener("click", () => {
 					this.open();
@@ -176,3 +203,35 @@ class PrivacyManager {
 		component.appendChild(this.i_element);
 	}
 }
+
+
+(function ($, Drupal) {
+  Drupal.behaviors.myModuleBehavior = {
+    attach: function (context, settings) {
+			let privacy_dialog = new PrivacyManager(
+				settings.privacy.cookieName,
+				settings.privacy.sessionCookieName,
+				settings.privacy.title,
+				settings.privacy.message,
+				settings.privacy.acceptButton,
+				settings.privacy.rejectButton,
+				document.getElementById('page-wrapper')
+			);
+			if (!privacy_dialog.hasAnswered() && settings.privacy.privacyAutoAccept) {
+				privacy_dialog.accept();
+			}
+			if (privacy.hasAnswered()) {
+				privacy.issueSession();
+			}
+			privacy_dialog.attach(document.body);
+
+			if (document.location.href.indexOf("/privacy-policy") >= 0) {
+				let contentBoxes = Array.prototype.map.call(document.getElementsByTagName('DIV'), (i) => i).filter((i) => i.getAttribute("property") == "schema:text");
+				if (contentBoxes.length == 1) {
+					contentBoxes[0].appendChild(privacy_dialog.getButton());
+				}
+			}
+		}
+	}
+})(jQuery, Drupal);
+

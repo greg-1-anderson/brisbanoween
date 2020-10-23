@@ -1,7 +1,13 @@
 function visitorCookieCheckAndSet() {
-  if (!visitorCookieExists(drupalSettings.guest_upload.cookie_name) && (!drupalSettings.guest_upload.use_eu_cookie_compliance_module || (visitorCookieGetValue('cookie-agreed') > 0))) {
+  // Set the cookie if they dont already have it, but have accepted the privacy policy
+  if (!visitorCookieExists(drupalSettings.guest_upload.cookie_name) && visitorCookieGetValue('cookie-agreed') == "2") {
     document.cookie = drupalSettings.guest_upload.cookie_name + "=" + randomId(6) + "; path=/";
-  }  
+  }
+
+  // Revoke the cookie if they rejected the privacy policy and we have one.
+  else if (visitorCookieExists(drupalSettings.guest_upload.cookie_name) && visitorCookieGetValue('cookie-agreed') != "2") {
+  	document.cookie = drupalSettings.guest_upload.cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+  }
 }
 
 function visitorCookieExists(cookie_name) {

@@ -1,0 +1,4 @@
+administer privacy configuration:
+  title: 'Administer privacy configuration'
+  description: 'Permission for possible furture use.'
+  restrict access: true

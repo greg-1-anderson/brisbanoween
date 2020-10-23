@@ -1,0 +1,9 @@
+# Custom module library for general purposes.
+brisbanoween:
+  js:
+    js/privacy.js: {}
+  css:
+    component:
+      css/privacy.css: {}
+  dependencies:
+    - core/drupalSettings

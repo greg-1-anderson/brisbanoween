@@ -1,0 +1,26 @@
+<?php
+
+function getPrivacyConfig() {
+  $config = \Drupal::config('privacy.settings');
+  return [
+    'cookieName' => $config->get('privacy_cookie_name'),
+    'sessionCookieName' => $config->get('session_cookie_name'),
+    'title' => $config->get('privacy_title'),
+    'message' => $config->get('privacy_message'),
+    'acceptButton' => $config->get('privacy_accept_button'),
+    'rejectButton' => $config->get('privacy_reject_button'),
+    'privacyAutoAccept' => $config->get('privacy_auto_accept')
+  ];
+}
+
+/**
+ * Attach our Javascript
+ */
+function privacy_page_attachments(array &$page) {
+  $computed_settings = [
+    'privacy' => getPrivacyConfig()
+  ];
+
+  $page['#attached']['library'][] = 'privacy/privacy';
+  $page['#attached']['drupalSettings']['privacy'] = $computed_settings;
+}

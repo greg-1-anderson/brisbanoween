@@ -29,16 +29,6 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
-    // TODO: Inject service into form
-    $moduleHandler = \Drupal::service('module_handler');
-    $has_guest_upload_module = $moduleHandler->moduleExists('guest_upload');
-
-    $cookie_value = $this->config('multiplex.settings')->get('cookie');
-    if ($has_guest_upload_module) {
-      $cookie_value = $this->config('guest_upload.settings')->get('cookie');
-    }
-
 	$curTime = new DrupalDateTime();
 	$curTime->setTimezone(new \DateTimeZone('America/Los_Angeles'));
 	$timezoneOffset = intval($curTime->format("Z"));
@@ -50,13 +40,7 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("When does the game officially begin?"),
       '#default_value' => $currentStartTime
     ];
-    $form['cookie'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Cookie'),
-      '#description' => $this->t("ID of cookie that identifies visitor's identity. If guest_upload module is enabled, its cookie will always be used."),
-      '#default_value' => $cookie_value,
-      '#disabled' => $has_guest_upload_module,
-    ];
+
     $form['unidentified_user_path'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Unidentified User Path'),
@@ -210,38 +194,6 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config('multiplex.settings')->get('counter_open_in_new_window') ? $this->config('multiplex.settings')->get('counter_open_in_new_window') : false
     ];
 
-    $form['privacy_cookie'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Privacy Cookie Name'),
-      '#description' => $this->t("The name of the cookie to store privacy preferences in.  (0 = rejected, 2 = accepted)"),
-      '#default_value' => $this->config('multiplex.settings')->get('privacy_cookie') ? $this->config('multiplex.settings')->get('privacy_cookie') : 'cookie-agreed'
-    ];
-    $form['privacy_title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Privacy Title'),
-      '#description' => $this->t("The title of the cookie acceptance dialog"),
-      '#default_value' => $this->config('multiplex.settings')->get('privacy_title') ? $this->config('multiplex.settings')->get('privacy_title') : 'Welcome!'
-    ];
-    $form['privacy_message'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Privacy Message'),
-      '#description' => $this->t("The body of the cookie acceptance dialog"),
-      '#default_value' => $this->config('multiplex.settings')->get('privacy_message') ? $this->config('multiplex.settings')->get('privacy_message') : 'This is an interactive Halloween experience!  No personal information will be stored, but we do use cookies to track your progress and location while playing.'
-    ];
-    $form['privacy_accept_button'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Privacy Accept Button Label'),
-      '#description' => $this->t("The label text for the accept button"),
-      '#default_value' => $this->config('multiplex.settings')->get('privacy_accept_button') ? $this->config('multiplex.settings')->get('privacy_accept_button') : 'I Agree!'
-    ];
-    $form['privacy_reject_button'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Privacy Reject Button Label'),
-      '#description' => $this->t("The label text for the reject button"),
-      '#default_value' => $this->config('multiplex.settings')->get('privacy_reject_button') ? $this->config('multiplex.settings')->get('privacy_reject_button') : 'No thanks.'
-    ];
-
-
     return parent::buildForm($form, $form_state);
   }
 
@@ -262,11 +214,10 @@ class SettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
   	$form_fields = array(
-  		'game_start_time', 'cookie', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
+  		'game_start_time', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
-  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window',
-  		'privacy_title', 'privacy_message', 'privacy_accept_button', 'privacy_reject_button', 'privacy_cookie'
+  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window'
   	);
 
   	foreach ($form_fields as $f) {
