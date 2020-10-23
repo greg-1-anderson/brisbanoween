@@ -34,7 +34,7 @@
 	
 		.PrivacyManager_notice_content {
 			border: 1px solid #FFFFFF;
-			background: url(../images/privacy/gear.png) center center no-repeat;
+			background: url(../images/gear.png) center center no-repeat;
 			background-size: 32px 32px;		
 		}
 
@@ -62,51 +62,51 @@
 	}
 	
 	.PrivacyManager_border_0 {
-		background: url(../images/privacy/border_r1.png) top left repeat-x;
+		background: url(../images/border_r1.png) top left repeat-x;
 		background-size: calc(74px * 0.22) calc(198px * 0.22);
 	}
 	.PrivacyManager_border_1 {
-		background: url(../images/privacy/border_r2.png) top left repeat-y;
+		background: url(../images/border_r2.png) top left repeat-y;
 		background-size: calc(204px * 0.22) calc(53px * 0.22);
 	}
 	.PrivacyManager_border_2 {
-		background: url(../images/privacy/border_r3.png) bottom left repeat-x;
+		background: url(../images/border_r3.png) bottom left repeat-x;
 		background-size: calc(74px * 0.22) calc(220px * 0.22);
 	}
 	.PrivacyManager_border_3 {
-		background: url(../images/privacy/border_r4.png) top right repeat-y;
+		background: url(../images/border_r4.png) top right repeat-y;
 		background-size: calc(202px * 0.22) calc(65px * 0.22);
 	}
 	.PrivacyManager_border_4 {
-		background: url(../images/privacy/border1.png) top left no-repeat;
+		background: url(../images/border1.png) top left no-repeat;
 		background-size: calc(204px * 0.22) calc(198px * 0.22);
 	}
 	.PrivacyManager_border_5 {
-		background: url(../images/privacy/border2.png) top center no-repeat;
+		background: url(../images/border2.png) top center no-repeat;
 		background-size: calc(1214px * 0.22) calc(198px * 0.22);
 	}
 	.PrivacyManager_border_6 {
-		background: url(../images/privacy/border3.png) top right no-repeat;
+		background: url(../images/border3.png) top right no-repeat;
 		background-size: calc(202px * 0.22) calc(198px * 0.22);
 	}
 	.PrivacyManager_border_7 {
-		background: url(../images/privacy/border4.png) center left no-repeat;
+		background: url(../images/border4.png) center left no-repeat;
 		background-size: calc(204px * 0.22) calc(853px * 0.22);
 	}
 	.PrivacyManager_border_8 {
-		background: url(../images/privacy/border6.png) center right no-repeat;
+		background: url(../images/border6.png) center right no-repeat;
 		background-size: calc(202px * 0.22) calc(853px * 0.22);
 	}
 	.PrivacyManager_border_9 {
-		background: url(../images/privacy/border7.png) bottom left no-repeat;
+		background: url(../images/border7.png) bottom left no-repeat;
 		background-size: calc(204px * 0.22) calc(220px * 0.22);
 	}
 	.PrivacyManager_border_10 {
-		background: url(../images/privacy/border8.png) bottom center no-repeat;
+		background: url(../images/border8.png) bottom center no-repeat;
 		background-size: calc(1214px * 0.22) calc(220px * 0.22);
 	}
 	.PrivacyManager_border_11 {
-		background: url(../images/privacy/border9.png) bottom right no-repeat;
+		background: url(../images/border9.png) bottom right no-repeat;
 		background-size: calc(202px * 0.22) calc(220px * 0.22);
 		padding: 20px;
 	}
