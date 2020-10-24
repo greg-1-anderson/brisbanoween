@@ -9,9 +9,9 @@ class PrivacyManager {
 		this.i_page_container = pageContainer;
 		this.i_reload_after_accept = reloadAfterAccept;
 
-		// Expire all cookies after 3 days.
+		// Expire all cookies after 12 days.
 		this.i_exp = new Date();
-		this.i_exp.setTime(this.i_exp.getTime() + (60 * 60 * 72 * 1000));
+		this.i_exp.setTime(this.i_exp.getTime() + (60 * 60 * 24 * 12 * 1000));
 
 		let cookies = this.getCookies();
 		this.i_first_open = true;
