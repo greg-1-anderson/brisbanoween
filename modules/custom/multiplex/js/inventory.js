@@ -267,7 +267,9 @@ class InventoryBox {
 		this.i_item_cache = [];	// Array that will contain DOM elements for each item
 
 		// See if the user has a tracking session
-		if (this.i_config.hasSession != true) {
+		let cookies = this.getCookies()
+		let sessionCookie = cookies[this.i_config.session_cookie_name];
+		if (sessionCookie == null || sessionCookie == "") {
 			// They do not, so see if they have an inventory cookie
 			let inv = cookies[this.i_config.cookie_name];
 			if (inv != null && inv != "") {
