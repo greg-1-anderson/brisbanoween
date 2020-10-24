@@ -204,10 +204,7 @@ class TipManager {
 				}
 			}
 			else if (currentInstruction == null) {
-				this.i_element.style.display = "none";
-				if (this.i_siteContainer != null) {
-					this.i_siteContainer.style.display = "inherit";
-				}
+				this.i_element.className = "TipManager_hide";
 			}
 		}
 	}
@@ -217,6 +214,10 @@ class TipManager {
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "TipManager";
 			this.i_element.addEventListener("animationend", () => {
+				if (this.i_element.className.indexOf("hide") >= 0) {
+					this.i_element.style.display = "none";
+					this.i_siteContainer.style.display = "inherit";
+				}
 				this.i_element.className = "TipManager";
 			});
 

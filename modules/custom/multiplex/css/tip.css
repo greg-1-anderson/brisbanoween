@@ -21,7 +21,11 @@
 	}
 
 	.TipManager_opening {
-		animation: fadeIn 300ms ease-out 1;
+		animation: fadeIn 700ms ease-out 1;
+	}
+	
+	.TipManager_hide {
+		animation: fadeAway 700ms ease-in 1;
 	}
 
 	.TipManagerPanel_wrapper {
