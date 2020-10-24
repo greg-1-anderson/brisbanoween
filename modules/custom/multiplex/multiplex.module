@@ -147,6 +147,7 @@ function multiplex_page_attachments(array &$page) {
   $inventory_enabled = true;
   $map_enabled = false;
   $counter_enabled = false;
+  $tips_enabled = $config->get("oracle_enabled") ? true : false;
 
   // See if this is the map page
   $current_path = \Drupal::service('path.current')->getPath();
@@ -215,6 +216,10 @@ function multiplex_page_attachments(array &$page) {
 	'targetURL' => $counter_target_url,
 	'openInNewWindow' => $counter_new_window,
     ],
+    'tips' => {
+    	'enabled' => $tips_enabled,
+    	'apiEndpoint' => "/" . drupal_get_path('module', 'multiplex') . "/fake_api_instructions.js"
+    },
     'map' => [
 	'enabled' => $map_enabled,
 	'config' => getMapConfig()

@@ -28,6 +28,14 @@
 
 				}, 10);
 			}
+			if (context == document && settings.multiplex.tips.enabled !== false) {
+				let tips = new TipManager();
+				tips.attach(document.body);
+
+				fetch(settings.multiplex.tips.apiEndpoint).then(response => response.text()).then(data => {
+					tips.addInstructions(JSON.parse(data).data.instructions);
+				});
+			}
 			if (context == document && settings.multiplex.countdown.enabled !== false) {
 				let counter = new CountdownDisplay(settings.multiplex.countdown.startTime, "/to" + settings.multiplex.countdown.target, settings.multiplex.countdown.openInNewWindow, settings.multiplex.countdown.targetURL);
 

@@ -200,6 +200,13 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config('multiplex.settings')->get('counter_target_url') ? $this->config('multiplex.settings')->get('counter_target_url') : '/'
     ];
 
+    $form['oracle_enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Oracle Show Tips'),
+      '#description' => $this->t("Show tips to help the user out"),
+      '#default_value' => $this->config('multiplex.settings')->get('oracle_enabled') ? $this->config('multiplex.settings')->get('oracle_enabled') : false
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -223,7 +230,8 @@ class SettingsForm extends ConfigFormBase {
   		'game_start_time', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
-  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window', 'counter_target_url'
+  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window', 'counter_target_url',
+  		'oracle_enabled'
   	);
 
   	foreach ($form_fields as $f) {
