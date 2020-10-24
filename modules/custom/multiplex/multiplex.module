@@ -141,7 +141,7 @@ function multiplex_getMapConfig() {
 function multiplex_getTipConfig() {
   $tip_enabled = true;
   $current_path = \Drupal::service('path.current')->getPath();
-  $node = _tip_get_node_from_path($current_path);
+  $node = _multiplex_get_node_from_path($current_path);
   if (!_multiplex_is_node_of_content_type($node, array('story_page'))) {
     $tip_enabled = false;
   }
