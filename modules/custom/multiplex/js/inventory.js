@@ -277,6 +277,8 @@ class InventoryBox {
 				document.cookie = this.i_config.cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 				document.cookie = this.i_config.last_item_added_cookie_name + "=0; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
 			}
+
+			this.i_disabled = true;
 		}
 
 		// Update the inventory when a link is assigned to one of the items
@@ -316,6 +318,11 @@ class InventoryBox {
 	 *	@return {String[]} an array of object ID's, empty if no items in inventory
 	 */
 	getInventory() {
+		// Dont return anything if the user hasn't allowed us to track
+		if (this.i_disabled) {
+			return [];
+		}
+
 		// Get all the cookies
 		let cookies = this.getCookies();
 
