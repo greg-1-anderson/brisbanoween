@@ -2,6 +2,28 @@
 
 }
 
+	@keyframes fadeAway {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	.TipManager_opening {
+		animation: fadeIn 300ms ease-out 1;
+	}
+
 	.TipManagerPanel_wrapper {
 		display: grid;
 		grid-template-rows: 1fr;
@@ -79,24 +101,6 @@
 	}
 
 
-
-		@keyframes fadeAway {
-			0% {
-				opacity: 1;
-			}
-			100% {
-				opacity: 0;
-			}
-		}
-
-		@keyframes fadeIn {
-			0% {
-				opacity: 0;
-			}
-			100% {
-				opacity: 1;
-			}
-		}
 
 		.TipManagerPanel_wrapper_close {
 			animation: fadeAway 300ms ease-in 1;
