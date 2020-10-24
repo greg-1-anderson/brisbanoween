@@ -185,7 +185,7 @@ function multiplex_page_attachments(array &$page) {
     $page['#attached']['html_head'][] = [
       [
         '#tag' => 'style',
-        '#value' => 'BODY { background-color: #000000; } .page-wrapper { display:none; }',
+        '#value' => 'BODY { background-color: #000000; } #page-wrapper { display:none; }',
         '#weight' => -1,
       ],
       // A key, to make it possible to recognize this HTML <HEAD> element when altering.
