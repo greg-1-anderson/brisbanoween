@@ -216,10 +216,10 @@ function multiplex_page_attachments(array &$page) {
 	'targetURL' => $counter_target_url,
 	'openInNewWindow' => $counter_new_window,
     ],
-    'tips' => {
+    'tips' => [
     	'enabled' => $tips_enabled,
     	'apiEndpoint' => "/" . drupal_get_path('module', 'multiplex') . "/fake_api_instructions.js"
-    },
+    ],
     'map' => [
 	'enabled' => $map_enabled,
 	'config' => getMapConfig()
