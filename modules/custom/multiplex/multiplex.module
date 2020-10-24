@@ -114,7 +114,7 @@ function getMapConfig() {
   $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
   $config = \Drupal::config('multiplex.settings');
   return [
-    'backgroundImage' => $base_path . 'images/map_background.jpg',    // A repeating background image, or one that is the exact size of the map
+    'backgroundImage' => $base_path . 'images/map_background2.gif',    // A repeating background image, or one that is the exact size of the map
     'linkPrefix' => $config->get('map_link_prefix'),                                // The URL to prefix codes with when creating links
     'iconPrefix' => $base_path . "images/",					// The URL to prefix icon paths with
     'visitedName' => $config->get('map_visited_label'),                                       // What to call unvisited locations in the legend
