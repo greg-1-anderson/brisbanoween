@@ -200,13 +200,20 @@ class TipManager {
 				this.i_panels[usePanel].i_attached = true;
 				this.i_element.style.display = "";
 				if (this.i_siteContainer != null) {
-					this.i_siteContainer.style.display = "none";
+					let classes = this.i_page_container.className.split(" ");
+					classes = classes.filter((i) => i != "TipManager_hide_body");
+					classes.push("TipManager_hide_body");
+					this.i_siteContainer.className = classes.join(" ");
+
 					window.scrollTo(0,0);
 				}
 			}
 			else if (currentInstruction == null) {
 				this.i_element.className = "TipManager_hide";
-				this.i_siteContainer.style.display = "inherit";
+
+				let classes = this.i_page_container.className.split(" ");
+				classes = classes.filter((i) => i != "TipManager_hide_body");
+				this.i_siteContainer.className = classes.join(" ");
 			}
 		}
 	}
