@@ -37,7 +37,7 @@ function multiplex_help($route_name, RouteMatchInterface $route_match) {
 }
 
 function multiplex_get_visitor_cookie_value() {
-  $cookie = \Drupal::config('privacy.settings')->get('sesson_cookie_name');
+  $cookie = \Drupal::config('privacy.settings')->get('session_cookie_name');
   $who = $_COOKIE[$cookie] ?? '';
   return $who;
 }
