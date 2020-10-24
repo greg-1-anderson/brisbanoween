@@ -131,7 +131,7 @@ class TipManager {
 		this.i_ptr = 0;
 		for (let x = 0; x < this.i_instructions.length; x++) {
 			if (this.i_instructions[x].read == true) {
-				this.i_ptr = x;
+				this.i_ptr = x + 1;
 			}
 		}
 	}
@@ -150,6 +150,8 @@ class TipManager {
 	}
 
 	next() {
+		this.i_instructions[this.i_ptr].read = true;
+		localStorage.setItem("instructions", JSON.stringify(this.i_instructions));
 		this.i_ptr++;
 		this.update();
 	}
@@ -184,8 +186,6 @@ class TipManager {
 				}
 
 				this.i_panels[usePanel].setConfig(currentInstruction.title, currentInstruction.image, currentInstruction.message, this.i_ptr == 0 ? 'first' : this.i_ptr == this.i_instructions.length - 1 ? 'last' : 'normal', this.next.bind(this), this.back.bind(this));
-				currentInstruction.read = true;
-				localStorage.setItem("instructions", JSON.stringify(this.i_instructions));
 				if (this.i_panels[(usePanel + 1) % 2].i_attached) {
 					this.i_element.insertBefore(this.i_panels[usePanel].getElement(), this.i_panels[(usePanel + 1) % 2].getElement());
 				}
