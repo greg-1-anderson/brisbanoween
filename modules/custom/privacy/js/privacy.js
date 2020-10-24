@@ -227,7 +227,6 @@ class PrivacyManager {
     		orig(context, settings);
     	}
     	if (context == document) {
-    		console.log(settings);
 				let privacy_dialog = new PrivacyManager(
 					settings.privacy.config.cookieName,
 					settings.privacy.config.sessionCookieName,
