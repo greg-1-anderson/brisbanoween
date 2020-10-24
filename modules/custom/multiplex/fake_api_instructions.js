@@ -15,7 +15,7 @@
 					"id":"3",
 					"title":"Third Slide",
 					"message":"Third Message"
-				},
+				}
 		]
 	}
 }
