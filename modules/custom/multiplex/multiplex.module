@@ -128,6 +128,7 @@ function multiplex_getMapConfig() {
   if (!_multiplex_is_node_of_content_type($node, array('story_page'))) {
     $map_button_enabled = true;
   }
+  error_log("NODE TYPE: " . ($node ? $node->bundle() : "NO NODE"));
 
   $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
   $priv_config = \Drupal::config('privacy.settings');
