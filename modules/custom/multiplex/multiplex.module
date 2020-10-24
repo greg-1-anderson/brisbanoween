@@ -56,7 +56,7 @@ function multiplex_get_user_inventory() {
 /**
  * Get the display configuration for the inventory component
  */
-function getInventoryConfig() {
+function multiplex_getInventoryConfig() {
   $priv_config = \Drupal::config('privacy.settings');
   $config = \Drupal::config('multiplex.settings');
   return [
@@ -83,7 +83,7 @@ function getInventoryConfig() {
 /**
  * Get a collection of all the possible inventory items and their associated display configuration
  */
-function getInventoryItems() {
+function multiplex_getInventoryItems() {
   $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
   return [
     'lantern' => [
@@ -112,7 +112,7 @@ function getInventoryItems() {
 /**
  * Get the map display configuration
  */
-function getMapConfig() {
+function multiplex_getMapConfig() {
   $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
   $config = \Drupal::config('multiplex.settings');
   return [
@@ -232,15 +232,15 @@ function multiplex_page_attachments(array &$page) {
 	'openInNewWindow' => $counter_new_window,
     ],
     'tips' => [
-    	'config' => getTipConfig()
+    	'config' => multiplex_getTipConfig()
     ],
     'map' => [
 	'enabled' => $map_enabled,
-	'config' => getMapConfig()
+	'config' => multiplex_getMapConfig()
     ],
     'inventory' => [
-	'items' => getInventoryItems(),
-	'config' => getInventoryConfig(),
+	'items' => multiplex_getInventoryItems(),
+	'config' => multiplex_getInventoryConfig(),
 	'enabled' => $inventory_enabled
     ]
   ];
