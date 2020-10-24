@@ -306,6 +306,20 @@ class InventoryBox {
 		// Get all the cookies
 		let cookies = this.getCookies();
 
+		// See if the user has a tracking session
+		if (this.i_config.hasSession != true) {
+			// They do not, so see if they have an inventory cookie
+			let inv = cookies[this.i_config.cookie_name];
+			if (inv != null && inv != "") {
+				// They do, so clear it
+				document.cookie = this.i_config.cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+				document.cookie = this.i_config.last_item_added_cookie_name + "=0; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+			}
+
+			// Pretend the inventory is always empty, no matter what.
+			return [];
+		}
+
 		// Parse out the inventory cookie if we have one
 		let currentInventory = [];
 		if (cookies[this.i_config.cookie_name] != null) {
