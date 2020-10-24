@@ -125,7 +125,8 @@ class TipManagerPanel {
 
 
 class TipManager {
-	constructor() {
+	constructor(siteContainer) {
+		this.i_siteContainer = siteContainer;
 		let prevInstructions = JSON.parse(localStorage.getItem("instructions"));
 		this.i_instructions = prevInstructions ? prevInstructions : [];
 		this.i_ptr = 0;
@@ -194,9 +195,15 @@ class TipManager {
 				}
 				this.i_panels[usePanel].i_attached = true;
 				this.i_element.style.display = "";
+				if (this.i_siteContainer != null) {
+					this.i_siteContainer.style.display = "none";
+				}
 			}
 			else if (currentInstruction == null) {
 				this.i_element.style.display = "none";
+				if (this.i_siteContainer != null) {
+					this.i_siteContainer.style.display = "inherit";
+				}
 			}
 		}
 	}

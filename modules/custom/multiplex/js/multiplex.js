@@ -29,7 +29,7 @@
 				}, 10);
 			}
 			if (context == document && settings.multiplex.tips.enabled !== false) {
-				let tips = new TipManager();
+				let tips = new TipManager(document.getElementById('page-wrapper'));
 				tips.attach(document.body);
 
 				fetch(settings.multiplex.tips.apiEndpoint).then(response => response.text()).then(data => {
