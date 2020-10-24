@@ -27,7 +27,7 @@
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr;
 		padding: 3px;
-		z-index: 999;
+		z-index: 10000;
 	}
 	
 		.PrivacyManager_notice_content {
