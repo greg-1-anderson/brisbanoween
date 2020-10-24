@@ -75,7 +75,7 @@
 		display: grid;
 		grid-template-rows: 1fr;
 		
-		background-size: stretch !important;
+		background-size: cover !important;
 		
 		/*animation: slideUpAndLeft 15s linear infinite;*/
 	}
