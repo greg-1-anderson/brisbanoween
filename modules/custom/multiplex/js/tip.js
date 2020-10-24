@@ -200,7 +200,7 @@ class TipManager {
 				this.i_panels[usePanel].i_attached = true;
 				this.i_element.style.display = "";
 				if (this.i_siteContainer != null) {
-					let classes = this.i_page_container.className.split(" ");
+					let classes = this.i_siteContainer.className.split(" ");
 					classes = classes.filter((i) => i != "TipManager_hide_body");
 					classes.push("TipManager_hide_body");
 					this.i_siteContainer.className = classes.join(" ");
@@ -211,7 +211,7 @@ class TipManager {
 			else if (currentInstruction == null) {
 				this.i_element.className = "TipManager_hide";
 
-				let classes = this.i_page_container.className.split(" ");
+				let classes = this.i_siteContainer.className.split(" ");
 				classes = classes.filter((i) => i != "TipManager_hide_body");
 				this.i_siteContainer.className = classes.join(" ");
 			}
