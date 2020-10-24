@@ -193,6 +193,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("If the user visits a page before the game starts, they will get a countdown timer.  Once the game begins, should the user be redirected to the original page in the same tab, or should a new window be opened?"),
       '#default_value' => $this->config('multiplex.settings')->get('counter_open_in_new_window') ? $this->config('multiplex.settings')->get('counter_open_in_new_window') : false
     ];
+    $form['counter_target_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Countdown Target URL'),
+      '#description' => $this->t("The URL to open when the user clicks 'LEARN MORE'"),
+      '#default_value' => $this->config('multiplex.settings')->get('counter_target_url') ? $this->config('multiplex.settings')->get('counter_target_url') : '/'
+    ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -217,7 +223,7 @@ class SettingsForm extends ConfigFormBase {
   		'game_start_time', 'unidentified_user_path', 'inventory_cookie', 'inventory_added_cookie', 'inventory_fixed_order', 'inventory_links_in_new_window',
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
-  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window'
+  		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window', 'counter_target_url'
   	);
 
   	foreach ($form_fields as $f) {

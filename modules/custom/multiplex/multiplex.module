@@ -200,6 +200,7 @@ function multiplex_page_attachments(array &$page) {
   $game_start_time = NULL;
   $game_start_time = intval($config->get("game_start_time"));
   $counter_new_window = $config->get("counter_open_in_new_window") ? true : false;
+  $counter_target_url = $config->get("counter_target_url");
   if (strpos($current_path, "/wait") === 0 && strlen($current_path) > 7) {
   	$counter_enabled = true;
   	$counter_target = substr($current_path, 5);
@@ -211,6 +212,7 @@ function multiplex_page_attachments(array &$page) {
 	'enabled' => $counter_enabled,
 	'startTime' => $game_start_time,
 	'target' => $counter_target,
+	'targetURL' => $counter_target_url,
 	'openInNewWindow' => $counter_new_window,
     ],
     'map' => [

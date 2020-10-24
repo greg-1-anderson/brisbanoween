@@ -29,7 +29,7 @@
 				}, 10);
 			}
 			if (context == document && settings.multiplex.countdown.enabled !== false) {
-				let counter = new CountdownDisplay(settings.multiplex.countdown.startTime, "/to" + settings.multiplex.countdown.target, settings.multiplex.countdown.openInNewWindow);
+				let counter = new CountdownDisplay(settings.multiplex.countdown.startTime, "/to" + settings.multiplex.countdown.target, settings.multiplex.countdown.openInNewWindow, settings.multiplex.countdown.targetURL);
 
 				// Give the document a second to load so our target DIV exists
 				setTimeout(() => {

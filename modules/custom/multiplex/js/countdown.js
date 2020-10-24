@@ -1,9 +1,10 @@
 class CountdownDisplay {
-	constructor(startTime, targetPath, openInNewWindow) {
+	constructor(startTime, targetPath, openInNewWindow, targetURL) {
 		let localize = new Date();
 		localize.setTime(startTime * 1000);
 		this.i_startTime = localize.getTime();
 		this.i_targetPath = targetPath;
+		this.i_targetURL = targetURL;
 		this.i_openInNewWindow = openInNewWindow;
 	}
 
@@ -122,10 +123,10 @@ class CountdownDisplay {
 							this.i_home_button.innerHTML = "Learn More";
 							this.i_home_button.addEventListener("click", () => {
 								if (this.i_openInNewWindow) {
-									window.open("/");
+									window.open(this.i_targetURL);
 								}
 								else {
-									document.location = "/";
+									document.location = this.i_targetURL;
 								}
 							});
 							this.i_button_wrapper.appendChild(this.i_home_button);
