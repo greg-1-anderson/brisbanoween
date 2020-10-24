@@ -28,11 +28,11 @@
 
 				}, 10);
 			}
-			if (context == document && settings.multiplex.tips.enabled !== false) {
+			if (context == document && settings.multiplex.tips.config.enabled !== false) {
 				let tips = new TipManager(document.getElementById('page-wrapper'));
 				tips.attach(document.body);
 
-				fetch(settings.multiplex.tips.apiEndpoint).then(response => response.text()).then(data => {
+				fetch(settings.multiplex.tips.config.apiEndpoint).then(response => response.text()).then(data => {
 					tips.addInstructions(JSON.parse(data).data.instructions);
 				});
 			}

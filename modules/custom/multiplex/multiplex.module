@@ -138,6 +138,22 @@ function getMapConfig() {
   ];
 }
 
+function multiplex_getTipConfig() {
+  $tip_enabled = true;
+  $current_path = \Drupal::service('path.current')->getPath();
+  $node = _tip_get_node_from_path($current_path);
+  if (!_multiplex_is_node_of_content_type($node, array('story_page'))) {
+    $tip_enabled = false;
+  }
+  
+  $base_path = drupal_get_path('module', 'multiplex');
+  $config = \Drupal::config('multiplex.settings');
+  return [
+  	'enabled' => $config->get("oracle_enabled") ? $tip_enabled : false,
+  	'apiEndpoint' => "/" . $base_path . "/fake_api_instructions.js"
+  ];
+}
+
 /**
  * Attach our Javascript
  */
@@ -147,7 +163,6 @@ function multiplex_page_attachments(array &$page) {
   $inventory_enabled = true;
   $map_enabled = false;
   $counter_enabled = false;
-  $tips_enabled = $config->get("oracle_enabled") ? true : false;
 
   // See if this is the map page
   $current_path = \Drupal::service('path.current')->getPath();
@@ -217,8 +232,7 @@ function multiplex_page_attachments(array &$page) {
 	'openInNewWindow' => $counter_new_window,
     ],
     'tips' => [
-    	'enabled' => $tips_enabled,
-    	'apiEndpoint' => "/" . drupal_get_path('module', 'multiplex') . "/fake_api_instructions.js"
+    	'config' => getTipConfig()
     ],
     'map' => [
 	'enabled' => $map_enabled,
@@ -233,4 +247,31 @@ function multiplex_page_attachments(array &$page) {
 
   $page['#attached']['library'][] = 'multiplex/multiplex';
   $page['#attached']['drupalSettings']['multiplex'] = $computed_settings;
+}
+
+function _multiplex_get_node_from_path($path) {
+  try {
+    $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
+    if (isset($params['node'])) {
+      return \Drupal\node\Entity\Node::load($params['node']);
+    }
+
+  } catch(\Exception $e) {}
+
+  return null;
+}
+
+function _multiplex_is_node_of_content_type($node, $types) {
+  // If there is no node, then the content does not apply.
+  if (!$node) {
+    return false;
+  }
+  // Note that admin pages related to nodes (e.g. node edit pages)
+  // will return the $node object they operate on, so we want to
+  // go ahead and exclude all admin routes before checking the
+  // content type.
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return false;
+  }
+  return in_array($node->bundle(), $types);
 }
