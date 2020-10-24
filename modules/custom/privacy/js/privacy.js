@@ -99,7 +99,7 @@ class PrivacyManager {
 				if (this.i_visible != true) {
 					this.i_visible = true;
 					this.i_element.style.display = this.i_enabled ? "" : "none";
-					if (this.i_page_container != null) {
+					if (this.i_page_container != null && this.i_enabled) {
 						this.i_page_container.style.display = "none";
 					}
 					this.i_real_wrapper.className = "PrivacyManager_wrapper" + (this.i_first_open != true ? " PrivacyManager_wrapper_open" : "");
@@ -111,8 +111,8 @@ class PrivacyManager {
 				if (this.i_visible == true) {
 					this.i_visible = false;
 					this.i_real_wrapper.className = "PrivacyManager_wrapper PrivacyManager_wrapper_close";
-					if (this.i_page_container != null) {
-						this.i_page_container.style.display = "";
+					if (this.i_page_container != null && this.i_enabled) {
+						this.i_page_container.style.display = "inherit";
 					}
 					window.scrollTo(0,0);
 

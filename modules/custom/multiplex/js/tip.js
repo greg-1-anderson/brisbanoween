@@ -167,7 +167,6 @@ class TipManager {
 	update() {
 		if (this.i_element != null) {
 			let currentInstruction = this.i_instructions[this.i_ptr];
-			console.log(this, currentInstruction);
 			if (currentInstruction != null && currentInstruction.id != this.i_last_instruction_id) {
 				this.i_last_instruction_id = currentInstruction.id;
 
