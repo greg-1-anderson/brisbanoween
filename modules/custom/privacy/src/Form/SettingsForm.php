@@ -28,6 +28,12 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form['privacy_disabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Disable Session Tracking'),
+      '#description' => $this->t("Don't show the privacy policy, and dont issue any new sessions."),
+      '#default_value' => $this->config('privacy.settings')->get('privacy_disabled') ? $this->config('privacy.settings')->get('privacy_disabled') : false
+    ];
     $form['privacy_cookie_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Privacy Preference Cookie Name'),
@@ -99,7 +105,7 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
   	$form_fields = array(
   		'privacy_cookie_name', 'session_cookie_name', 'session_cookie_name', 'privacy_title', 'privacy_message', 'privacy_accept_button', 'privacy_reject_button',
-  		'privacy_auto_accept', 'privacy_policy_page', 'privacy_reload_after_accept'
+  		'privacy_auto_accept', 'privacy_policy_page', 'privacy_reload_after_accept', 'privacy_disabled'
   	);
 
   	foreach ($form_fields as $f) {

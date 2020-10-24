@@ -227,29 +227,31 @@ class PrivacyManager {
     		orig(context, settings);
     	}
     	if (context == document) {
-				let privacy_dialog = new PrivacyManager(
-					settings.privacy.config.cookieName,
-					settings.privacy.config.sessionCookieName,
-					settings.privacy.config.title,
-					settings.privacy.config.message,
-					settings.privacy.config.acceptButton,
-					settings.privacy.config.rejectButton,
-					settings.privacy.config.reloadAfterAccept,
-					document.getElementById('page-wrapper')
-				);
-				if (!privacy_dialog.hasAnswered() && settings.privacy.config.privacyAutoAccept) {
-					privacy_dialog.accept();
-				}
-				privacy_dialog.issueSession();
-				privacy_dialog.attach(document.body);
-
-				if (settings.privacy.config.privacyPolicyURL && document.location.href.indexOf(settings.privacy.config.privacyPolicyURL) >= 0) {
-					let contentBoxes = Array.prototype.map.call(document.getElementsByTagName('DIV'), (i) => i).filter((i) => i.getAttribute("property") == "schema:text");
-					if (contentBoxes.length == 1) {
-						contentBoxes[0].appendChild(privacy_dialog.getButton());
+    		if (settings.privacy.config.enabled !== false) {
+					let privacy_dialog = new PrivacyManager(
+						settings.privacy.config.cookieName,
+						settings.privacy.config.sessionCookieName,
+						settings.privacy.config.title,
+						settings.privacy.config.message,
+						settings.privacy.config.acceptButton,
+						settings.privacy.config.rejectButton,
+						settings.privacy.config.reloadAfterAccept,
+						document.getElementById('page-wrapper')
+					);
+					if (!privacy_dialog.hasAnswered() && settings.privacy.config.privacyAutoAccept) {
+						privacy_dialog.accept();
 					}
-					else {
-						console.error("Privacy policy button injection failed because the content body could not be found");
+					privacy_dialog.issueSession();
+					privacy_dialog.attach(document.body);
+
+					if (settings.privacy.config.privacyPolicyURL && document.location.href.indexOf(settings.privacy.config.privacyPolicyURL) >= 0) {
+						let contentBoxes = Array.prototype.map.call(document.getElementsByTagName('DIV'), (i) => i).filter((i) => i.getAttribute("property") == "schema:text");
+						if (contentBoxes.length == 1) {
+							contentBoxes[0].appendChild(privacy_dialog.getButton());
+						}
+						else {
+							console.error("Privacy policy button injection failed because the content body could not be found");
+						}
 					}
 				}
 			}

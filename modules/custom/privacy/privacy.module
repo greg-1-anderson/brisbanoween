@@ -11,7 +11,8 @@ function getPrivacyConfig() {
     'rejectButton' => $config->get('privacy_reject_button'),
     'privacyPolicyURL' => $config->get('privacy_policy_page'),
     'privacyAutoAccept' => $config->get('privacy_auto_accept'),
-    'reloadAfterAccept' => $config->get('privacy_reload_after_accept')
+    'reloadAfterAccept' => $config->get('privacy_reload_after_accept'),
+    'enabled' => $config->get('privacy_disabled') ? false : true
   ];
 }
 
