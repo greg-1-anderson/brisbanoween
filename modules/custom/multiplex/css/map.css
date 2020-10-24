@@ -17,7 +17,7 @@
 	.SpookyMapLegendItem_label {
 		white-space: nowrap;
 		font-weight: bold;
-		color: #FFFFFF;
+		color: #000000;
 		font-family: Arial;
 		font-size: 16px;
 		padding-right: 14px;
@@ -38,7 +38,7 @@
 		min-height: 20px;
 		padding: 10px;
 		padding-right: 0px;
-		background: url(../images/window/border5.png);
+		background-color: #fb6205;
 
 		grid-template-columns: 80px 1fr;
 		grid-gap: 5px;
@@ -56,12 +56,10 @@
 			background-image: url(../images/back.png);
 			background-position: center center;
 			background-repeat: no-repeat;
-			background-color: #DDDDDD;
-			border-radius: 4px;
 		}
 		
 	/* Make the background scroll up and to the left */
-	@keyframes slideUpAndLeft {
+	@keyframes giggle {
 		0% {
 			background-position: 300px 300px;
 		}
@@ -75,7 +73,7 @@
 		display: grid;
 		grid-template-rows: 1fr;
 		
-		background-size: cover !important;
+		background-size: 300px 300px !important;
 		
-		/*animation: slideUpAndLeft 15s linear infinite;*/
+		animation: giggle 15s linear infinite;
 	}
