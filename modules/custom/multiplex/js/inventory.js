@@ -266,6 +266,17 @@ class InventoryBox {
 
 		this.i_item_cache = [];	// Array that will contain DOM elements for each item
 
+		// See if the user has a tracking session
+		if (this.i_config.hasSession != true) {
+			// They do not, so see if they have an inventory cookie
+			let inv = cookies[this.i_config.cookie_name];
+			if (inv != null && inv != "") {
+				// They do, so clear it
+				document.cookie = this.i_config.cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+				document.cookie = this.i_config.last_item_added_cookie_name + "=0; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+			}
+		}
+
 		// Update the inventory when a link is assigned to one of the items
 		InventoryBox.addLinkChangeHandler(this.updateInventoryWidget.bind(this));
 	}
@@ -305,20 +316,6 @@ class InventoryBox {
 	getInventory() {
 		// Get all the cookies
 		let cookies = this.getCookies();
-
-		// See if the user has a tracking session
-		if (this.i_config.hasSession != true) {
-			// They do not, so see if they have an inventory cookie
-			let inv = cookies[this.i_config.cookie_name];
-			if (inv != null && inv != "") {
-				// They do, so clear it
-				document.cookie = this.i_config.cookie_name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
-				document.cookie = this.i_config.last_item_added_cookie_name + "=0; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
-			}
-
-			// Pretend the inventory is always empty, no matter what.
-			return [];
-		}
 
 		// Parse out the inventory cookie if we have one
 		let currentInventory = [];
