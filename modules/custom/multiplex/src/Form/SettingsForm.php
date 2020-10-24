@@ -132,7 +132,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("Invert the color scheme of the map, making it much darker."),
       '#default_value' => $this->config('multiplex.settings')->get('map_night_mode') ? $this->config('multiplex.settings')->get('map_night_mode') : false
     ];
-
+    $form['inventory_enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Inventory Enabled'),
+      '#description' => $this->t("Whether to show the inventory box when appropriate"),
+      '#default_value' => $this->config('multiplex.settings')->get('inventory_enabled') ? $this->config('multiplex.settings')->get('inventory_enabled') : false
+    ];
     $form['inventory_cookie'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Inventory Cookie Name'),
@@ -231,7 +236,7 @@ class SettingsForm extends ConfigFormBase {
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window', 'counter_target_url',
-  		'oracle_enabled'
+  		'oracle_enabled', 'inventory_enabled'
   	);
 
   	foreach ($form_fields as $f) {

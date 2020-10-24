@@ -57,9 +57,18 @@ function multiplex_get_user_inventory() {
  * Get the display configuration for the inventory component
  */
 function multiplex_getInventoryConfig() {
+  $inv_enabled = true;
+  $current_path = \Drupal::service('path.current')->getPath();
+  $node = _multiplex_get_node_from_path($current_path);
+  if (!_multiplex_is_node_of_content_type($node, array('qr_code', 'story_page'))) {
+    $inv_enabled = false;
+  }
+  
+
   $priv_config = \Drupal::config('privacy.settings');
   $config = \Drupal::config('multiplex.settings');
   return [
+    'enabled' => ($inv_enabled && $config->get('inventory_enabled')) ? true : false,
     'cookie_name' => $config->get('inventory_cookie'),                           // The name of the cookie to store the inventory in
     'session_cookie_name' => $priv_config->get('session_cookie_name'),	// the name of the session cookie
     'last_item_added_cookie_name' => $config->get('inventory_added_cookie'),     // The name of the cookie to store hte last added timestamp in
