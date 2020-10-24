@@ -20,10 +20,44 @@ function getPrivacyConfig() {
  * Attach our Javascript
  */
 function privacy_page_attachments(array &$page) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $node = _privacy_get_node_from_path($current_path);
+  if (!_privacy_policy_applies_to_content_type($node)) {
+    return;
+  }
+
   $computed_settings = [
     'config' => getPrivacyConfig()
   ];
 
   $page['#attached']['library'][] = 'privacy/privacy';
   $page['#attached']['drupalSettings']['privacy'] = $computed_settings;
+}
+
+function _privacy_get_node_from_path($path) {
+  try {
+    $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
+    if (isset($params['node'])) {
+      return \Drupal\node\Entity\Node::load($params['node']);
+    }
+
+  } catch(\Exception $e) {}
+
+  return null;
+}
+
+function _privacy_policy_applies_to_content_type($node) {
+  // If there is no node, then the privacy policy does not apply.
+  if (!$node) {
+    return false;
+  }
+  // Note that admin pages related to nodes (e.g. node edit pages)
+  // will return the $node object they operate on, so we want to
+  // go ahead and exclude all admin routes before checking the
+  // content type.
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return false;
+  }
+  $content_type = $node->bundle();
+  return (($content_type == 'qr_code') || ($content_type == 'story_page'));
 }
