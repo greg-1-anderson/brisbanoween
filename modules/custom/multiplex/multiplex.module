@@ -122,13 +122,12 @@ function multiplex_getInventoryItems() {
  * Get the map display configuration
  */
 function multiplex_getMapConfig() {
-  $map_button_enabled = false;
+  $map_button_enabled = true;
   $current_path = \Drupal::service('path.current')->getPath();
   $node = _multiplex_get_node_from_path($current_path);
   if (!_multiplex_is_node_of_content_type($node, array('story_page'))) {
-    $map_button_enabled = true;
+    $map_button_enabled = false;
   }
-  error_log("NODE TYPE: " . ($node ? $node->bundle() : "NO NODE"));
 
   $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
   $priv_config = \Drupal::config('privacy.settings');
