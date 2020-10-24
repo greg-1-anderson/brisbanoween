@@ -191,7 +191,6 @@ class TipManager {
 				}
 
 				this.i_panels[usePanel].setConfig(currentInstruction.title, currentInstruction.image, currentInstruction.message, this.i_ptr == 0 ? 'first' : this.i_ptr == this.i_instructions.length - 1 ? 'last' : 'normal', this.next.bind(this), this.back.bind(this));
-				this.i_panels[usePanel].open();
 				if (this.i_panels[(usePanel + 1) % 2].i_attached) {
 					this.i_element.insertBefore(this.i_panels[usePanel].getElement(), this.i_panels[(usePanel + 1) % 2].getElement());
 				}
