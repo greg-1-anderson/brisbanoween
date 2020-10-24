@@ -142,11 +142,11 @@ class PrivacyManager {
 			let cookies = this.getCookies();
 			this.i_element = document.createElement('DIV');
 			this.i_element.className = "PrivacyManager";
-			this.i_element.style.display = !!cookies[this.i_privacy_cookie_name] ? "none" : "";
+			this.i_element.style.display = (!this.i_enabled || !!cookies[this.i_privacy_cookie_name]) ? "none" : "";
 
 				this.i_notice = document.createElement('DIV');
 				this.i_notice.className = "PrivacyManager_notice";
-				this.i_notice.style.display = cookies[this.i_privacy_cookie_name] == "0" ? "" : "none";
+				this.i_notice.style.display = (this.i_enabled && cookies[this.i_privacy_cookie_name] == "0") ? "" : "none";
 				this.i_notice.title = "Privacy Settings";
 				this.i_notice.addEventListener("click", () => {
 					this.open();
