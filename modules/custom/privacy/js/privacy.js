@@ -1,5 +1,6 @@
 class PrivacyManager {
-	constructor(privacyCookieName, sessionCookieName, title, message, acceptButton, rejectButton, reloadAfterAccept, pageContainer) {
+	constructor(enabled, privacyCookieName, sessionCookieName, title, message, acceptButton, rejectButton, reloadAfterAccept, pageContainer) {
+		this.i_enabled = enabled;
 		this.i_privacy_cookie_name = privacyCookieName;
 		this.i_session_cookie_name = sessionCookieName;
 		this.i_title_text = title;
@@ -97,7 +98,7 @@ class PrivacyManager {
 			if (this.i_closed !== true) {
 				if (this.i_visible != true) {
 					this.i_visible = true;
-					this.i_element.style.display = "";
+					this.i_element.style.display = this.i_enabled ? "" : "none";
 					if (this.i_page_container != null) {
 						this.i_page_container.style.display = "none";
 					}
@@ -116,7 +117,7 @@ class PrivacyManager {
 					window.scrollTo(0,0);
 
 					let cookies = this.getCookies();
-					this.i_notice.style.display = cookies[this.i_privacy_cookie_name] == "2" ? "none" : "";
+					this.i_notice.style.display = (!this.i_enabled || cookies[this.i_privacy_cookie_name] == "2") ? "none" : "";
 				}
 			}
 		}
@@ -128,6 +129,7 @@ class PrivacyManager {
 			this.i_button.className = "PrivacyManager_page_button";
 			this.i_button.innerHTML = "Open Privacy Settings";
 			this.i_button.addEventListener("click", () => {
+				this.i_enabled = true;
 				this.open();
 			});
 		}
@@ -227,31 +229,30 @@ class PrivacyManager {
     		orig(context, settings);
     	}
     	if (context == document) {
-    		if (settings.privacy.config.enabled !== false) {
-					let privacy_dialog = new PrivacyManager(
-						settings.privacy.config.cookieName,
-						settings.privacy.config.sessionCookieName,
-						settings.privacy.config.title,
-						settings.privacy.config.message,
-						settings.privacy.config.acceptButton,
-						settings.privacy.config.rejectButton,
-						settings.privacy.config.reloadAfterAccept,
-						document.getElementById('page-wrapper')
-					);
-					if (!privacy_dialog.hasAnswered() && settings.privacy.config.privacyAutoAccept) {
-						privacy_dialog.accept();
-					}
-					privacy_dialog.issueSession();
-					privacy_dialog.attach(document.body);
+				let privacy_dialog = new PrivacyManager(
+					settings.privacy.config.enabled !== false,
+					settings.privacy.config.cookieName,
+					settings.privacy.config.sessionCookieName,
+					settings.privacy.config.title,
+					settings.privacy.config.message,
+					settings.privacy.config.acceptButton,
+					settings.privacy.config.rejectButton,
+					settings.privacy.config.reloadAfterAccept,
+					document.getElementById('page-wrapper')
+				);
+				if (!privacy_dialog.hasAnswered() && settings.privacy.config.privacyAutoAccept) {
+					privacy_dialog.accept();
+				}
+				privacy_dialog.issueSession();
+				privacy_dialog.attach(document.body);
 
-					if (settings.privacy.config.privacyPolicyURL && document.location.href.indexOf(settings.privacy.config.privacyPolicyURL) >= 0) {
-						let contentBoxes = Array.prototype.map.call(document.getElementsByTagName('DIV'), (i) => i).filter((i) => i.getAttribute("property") == "schema:text");
-						if (contentBoxes.length == 1) {
-							contentBoxes[0].appendChild(privacy_dialog.getButton());
-						}
-						else {
-							console.error("Privacy policy button injection failed because the content body could not be found");
-						}
+				if (settings.privacy.config.privacyPolicyURL && document.location.href.indexOf(settings.privacy.config.privacyPolicyURL) >= 0) {
+					let contentBoxes = Array.prototype.map.call(document.getElementsByTagName('DIV'), (i) => i).filter((i) => i.getAttribute("property") == "schema:text");
+					if (contentBoxes.length == 1) {
+						contentBoxes[0].appendChild(privacy_dialog.getButton());
+					}
+					else {
+						console.error("Privacy policy button injection failed because the content body could not be found");
 					}
 				}
 			}
