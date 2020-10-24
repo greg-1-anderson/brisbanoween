@@ -151,7 +151,7 @@ class PrivacyManager {
 
 					this.i_notice_content = document.createElement('DIV');
 					this.i_notice_content.className = "PrivacyManager_notice_content";
-					this.i_notice_content.innerHTML = "Privacy";
+					this.i_notice_content.innerHTML = "OPT-IN TO PLAY";
 					this.i_notice.appendChild(this.i_notice_content);
 
 				this.i_real_wrapper = document.createElement('DIV');
