@@ -130,6 +130,7 @@ class PrivacyManager {
 			this.i_button.innerHTML = "Open Privacy Settings";
 			this.i_button.addEventListener("click", () => {
 				this.i_enabled = true;
+				this.i_visible = false;
 				this.open();
 			});
 		}
