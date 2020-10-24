@@ -1,3 +1,16 @@
+/* The button inserted on all story pages to link to the map */
+.SpookyMap_link {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 10px;
+	margin-top: 10px;
+	width: 64px;
+	height: 64px;
+	background: url(../images/map_icon.png) center center no-repeat;
+	cursor: pointer;
+}
+
 /* The container for 1 legend item */
 .SpookyMapLegendItem {
 	display: inline-grid;

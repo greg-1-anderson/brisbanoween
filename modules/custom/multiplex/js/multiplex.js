@@ -46,6 +46,14 @@
 					counter.attach(document.body);
 				}, 100);
 			}
+			// Attach the map link (if they have a session)
+			if (context == document && settings.multiplex.map.config.mapButtonEnabled == true) {
+				let sessionCookie = SpookyMap.getCookies()[settings.multiplex.map.config.sessionCookieName];
+				if (sessionCookie != null && sessionCookie != "") {
+					let button = SpookyMap.getMapButton(settings.multiplex.map.config.openMapInNewWindow, settings.multiplex.map.config.url);
+					document.body.appendChild(button);
+				}
+			}
 			if (context == document && settings.multiplex.map.enabled !== false) {
 				// Create the map
 				let myMap = new SpookyMap({

@@ -53,6 +53,38 @@ class SpookyMap {
 		this.i_legend_cache = [];
 	}
 
+	static getCookies() {
+		// Get the document's cookies
+		let existingCookies = document.cookie, cookies = {};
+		if (existingCookies) {
+			// Parse the cookies into each name/value pair
+			existingCookies = existingCookies.split(";");
+
+			// For each pair, map the cookies name to it's value in the cookies collection
+			for (let x = 0; x < existingCookies.length; x++) {
+				let cookieParts = existingCookies[x].trim().split("=");
+				cookies[cookieParts.shift()] = decodeURIComponent(cookieParts.join("="));
+			}
+		}
+
+		// Return the cookies collection
+		return cookies;
+	}
+
+	static getMapButton(openLinksInNewWindow, url) {
+		let button = document.createElement('DIV');
+		button.className = "SpookyMap_link";
+		button.addEventListener(() => {
+			if (openLinksInNewWindow) {
+				window.open(url);
+			}
+			else {
+				document.location = url;
+			}
+		});
+		return button
+	}
+
 	/**
 	 *	Update the legend
 	 *

@@ -122,7 +122,15 @@ function multiplex_getInventoryItems() {
  * Get the map display configuration
  */
 function multiplex_getMapConfig() {
+  $map_button_enabled = false;
+  $current_path = \Drupal::service('path.current')->getPath();
+  $node = _multiplex_get_node_from_path($current_path);
+  if (!_multiplex_is_node_of_content_type($node, array('story_page'))) {
+    $map_button_enabled = true;
+  }
+
   $base_path = "/" . drupal_get_path('module', 'multiplex') . "/";
+  $priv_config = \Drupal::config('privacy.settings');
   $config = \Drupal::config('multiplex.settings');
   return [
     'backgroundImage' => $base_path . 'images/map_background.jpg',    // A repeating background image, or one that is the exact size of the map
@@ -144,6 +152,10 @@ function multiplex_getMapConfig() {
     'showUserLocation' => $config->get('map_show_user_location') ? true : false,
     'updateFrequency' => intval($config->get('map_update_frequency')),
     'apiEndpoint' => 'multiplex/api/locations', // $base_path . "fake_api_response.json"
+    'sessionCookieName' => $priv_config->get("session_cookie_name"),
+    'openMapInNewWindow' => $config->get('map_open_in_new_window'),
+    'mapButtonEnabled' => ($map_button_enabled && $config->get("map_button_enabled")) ? true : false,
+    'url':'/map'	// The page to open when the user clicks on a map link button
   ];
 }
 
