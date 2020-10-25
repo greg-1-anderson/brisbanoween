@@ -116,7 +116,7 @@ class VisitationService {
     // If the record does not alread exist, then create a new one.
     $last_insert_id = $this->connection->insert('multiplex_visitors')
       ->fields([
-        'path_nid' => $node->id,
+        'path_nid' => $node->id(),
         'target_nid' => 0,
         'uid' => \Drupal::currentUser()->id(),
         'who' => $who,
@@ -197,7 +197,7 @@ class VisitationService {
           $is_visited = $is_admin || ($row['visited'] > 0);
           $visited[] = [
             'id' => $row['id'],
-            'code' => $row['code'],
+            'code' => trim($row['code'], '/'),
             'position' => [$row['lat'], $row['lng']],
             'legendId' => $is_visited ? 'visited' : 'unvisited',
             'visited' => $is_visited,

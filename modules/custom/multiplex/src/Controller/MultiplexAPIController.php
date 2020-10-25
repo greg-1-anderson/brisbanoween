@@ -76,7 +76,25 @@ class MultiplexAPIController extends ControllerBase {
     }
 
     $who = multiplex_get_visitor_cookie_value();
-    return $this->visitationService->getVisitedLocationData($who);
+
+    // TODO: Get this from configuration or something.
+    $legend = [
+      [
+        'id' => 'visited',
+        'name' => 'Visited',
+        'icon' => 'visited.png',
+      ],
+      [
+        'id' => 'unvisited',
+        'name' => 'Unvisited',
+        'icon' => 'unvisited.png',
+      ],
+    ];
+
+    return [
+      'legend' => $legend,
+      'locations' => $this->visitationService->getVisitedLocationData($who),
+    ];
   }
 
   protected function getEditModeLocationData() {
