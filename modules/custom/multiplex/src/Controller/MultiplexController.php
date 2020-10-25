@@ -130,6 +130,11 @@ class MultiplexController extends ControllerBase {
     }
 
     $target_node = $this->findTargetNode($who, $node);
+    // TODO: Fix hack that works around bug.
+    // Refactor of findTargetNode not great, need to re-do it later.
+    if ($target_node instanceof RedirectResponse) {
+      return $target_node;
+    }
     $redirect_url = $this->redirectUrl($who, $target_node);
 
     // Redirect to the target.
