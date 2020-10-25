@@ -30,16 +30,16 @@ class MultiplexEvaluator extends EvaluatorBase {
     $targets = $this->loadTargetNodes($multiplex_data_node, 'field_multiplex_dest_targets');
 
     if (!empty($targets)) {
-      $target_paths = array_map(
+      $target_nids = array_map(
         function ($node) {
-          return $node->Url();
+          return $node->id();
         },
         $targets
       );
 
       // Remove from consideration any target that already appears as a
       // recorded visited location for the specified user.
-      $visited = $this->visitationService->findVisitedTargets($this->who, $target_paths);
+      $visited = $this->visitationService->findVisitedTargets($this->who, $target_nids);
       $targets = array_filter(
         $targets,
         function ($node) use($visited) {
@@ -60,6 +60,9 @@ class MultiplexEvaluator extends EvaluatorBase {
   }
 
   protected function loadTargetNodes($multiplex_data_node, $field) {
+    if (empty($this->who)) {
+      return [];
+    }
     $field_data = $multiplex_data_node->get($field)->getValue();
     if (empty($field_data)) {
       return [];

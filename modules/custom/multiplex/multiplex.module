@@ -63,7 +63,7 @@ function multiplex_getInventoryConfig() {
   if (!_multiplex_is_node_of_content_type($node, array('qr_code', 'story_page'))) {
     $inv_enabled = false;
   }
-  
+
 
   $priv_config = \Drupal::config('privacy.settings');
   $config = \Drupal::config('multiplex.settings');
@@ -154,7 +154,7 @@ function multiplex_getTipConfig() {
   if (!_multiplex_is_node_of_content_type($node, array('story_page'))) {
     $tip_enabled = false;
   }
-  
+
   $base_path = drupal_get_path('module', 'multiplex');
   $config = \Drupal::config('multiplex.settings');
   return [

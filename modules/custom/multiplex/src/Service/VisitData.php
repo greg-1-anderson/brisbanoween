@@ -10,20 +10,35 @@ class VisitData {
 
   protected $target;
 
-  public function __construct($who, $id, $target) {
+  public function __construct($who, $id, $target_nid) {
     $this->who = $who;
     $this->id = $id;
-    $this->target = $target;
+    $this->target = $target_nid;
   }
 
+  /**
+   * Database id for row in visitation table
+   *
+   * @return int
+   */
   public function id() {
     return $this->id;
   }
 
+  /**
+   * Node ID of target for this visited location
+   *
+   * @return int $nid
+   */
   public function target() {
     return $this->target;
   }
 
+  /**
+   * Determine whether or not this location has been visited
+   *
+   * @return bool
+   */
   public function visited() {
     return !empty($this->target);
   }

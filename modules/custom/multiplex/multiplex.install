@@ -5,6 +5,8 @@
  * Install, update and uninstall functions for the Multiplex module.
  */
 
+use Drupal\Core\Database\Database;
+
 /**
  * Implements hook_install().
  */
@@ -45,20 +47,19 @@ function multiplex_schema() {
         'default' => '',
         'description' => 'Cookie data identifying anonymous users.',
       ],
-      // TODO: path and target should probably be nids
-      'path' => [
-        'type' => 'varchar_ascii',
-        'length' => 64,
+      'path_nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
         'not null' => TRUE,
-        'default' => '',
-        'description' => 'Path that was visited.',
+        'default' => 0,
+        'description' => 'The {node}.nid of the QR code or story node that was visited.',
       ],
-      'target' => [
-        'type' => 'varchar_ascii',
-        'length' => 64,
+      'target_nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
         'not null' => TRUE,
-        'default' => '',
-        'description' => 'If the multiplex target is random per-visitor, then we save the target so that the same user will get consistent results.',
+        'default' => 0,
+        'description' => 'The {node}.nid of the story node returned from the multiplex evaluation.',
       ],
       'created' => [
         'type' => 'int',
@@ -109,6 +110,13 @@ function multiplex_schema() {
         'default' => 0,
         'description' => 'The {node}.nid of the QR code.',
       ],
+      'code' => [
+        'type' => 'varchar_ascii',
+        'length' => 256,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The path to the QR code.',
+      ],
       'created' => [
         'type' => 'int',
         'not null' => TRUE,
@@ -148,24 +156,63 @@ function multiplex_schema() {
  * Add latitude and longitude columns to multiplex_visitors
  */
 function multiplex_update_8001() {
+  $schema = Database::getConnection()->schema();
   $spec = [
     'type' => 'float',
     'default' => 0,
     'description' => 'Latitude',
   ];
-  db_add_field('multiplex_visitors', 'lat', $spec);
+  $schema->addField('multiplex_visitors', 'lat', $spec);
   $spec = [
     'type' => 'float',
     'default' => 0,
     'description' => 'Longitude',
   ];
-  db_add_field('multiplex_visitors', 'lng', $spec);
+  $schema->addField('multiplex_visitors', 'lng', $spec);
+}
+
+/**
+ * Remove latitude and logitude columns from multiplex_visitors (undo 8001)
+ */
+function multiplex_update_8002() {
+  $schema = Database::getConnection()->schema();
+  $schema->dropField('multiplex_visitors', 'lat');
+  $schema->dropField('multiplex_visitors', 'lng');
+}
+
+/**
+ * Replace 'path' and 'target' columns from multiplex_visitors with columns that store node nids.
+ */
+function multiplex_update_8003() {
+  $schema = Database::getConnection()->schema();
+  $schema->dropField('multiplex_visitors', 'path');
+  $schema->dropField('multiplex_visitors', 'target');
+  $spec = [
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => TRUE,
+    'default' => 0,
+    'description' => 'The {node}.nid of the QR code or story node that was visited.',
+  ];
+  $schema->addField('multiplex_visitors', 'path_nid', $spec);
+  $spec = [
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => TRUE,
+    'default' => 0,
+    'description' => 'The {node}.nid of the story node returned from the multiplex evaluation.',
+  ];
+  $schema->addField('multiplex_visitors', 'target_nid', $spec);
+
+  // Delete all content from the visitors table
+  $connection = \Drupal::database();
+  $connection->delete('multiplex_visitors')->execute();
 }
 
 /**
  * Add map markers table
  */
-function multiplex_update_8002() {
+function multiplex_update_8004() {
   $spec = [
     'description' => 'Map markers - location of QR codes scanned by visitors.',
     'fields' => [
@@ -194,6 +241,13 @@ function multiplex_update_8002() {
         'not null' => TRUE,
         'default' => 0,
         'description' => 'The {node}.nid of the QR code.',
+      ],
+      'code' => [
+        'type' => 'varchar_ascii',
+        'length' => 256,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The path to the QR code.',
       ],
       'created' => [
         'type' => 'int',

@@ -129,25 +129,14 @@ class MultiplexController extends ControllerBase {
       throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
 
-    $lat = 0;
-    $lng = 0;
-
     // TODO: What's the best way to identify qr_code nodes?
     if ($node->bundle() == 'qr_code') {
+      $qr_node = $node;
 
-      // Look up the latitude and longitude of the QR code, if available
-      $geo = $node->get('field_geolocation')->getValue();
-      if (!empty($geo[0])) {
-        $lat = floatval($geo[0]['lat']);
-        $lng = floatval($geo[0]['lng']);
-      }
-
-      // Otherwise we will evaluate the target of the QR Code.
-      // We will return a 404 if there is no story page.
+      // Return a 404 if there is no story page.
       $qr_code_target = $node->get('field_story_page')->getValue();
       if (empty($qr_code_target[0]['target_id'])) {
-
-        // If the user is an admin (TODO: define custom permission?), go to edit page
+        // If the user is an admin, go to edit page instead
         $user = \Drupal::currentUser();
         if ($user->hasPermission('access administration menu')) {
           $nid = $node->id();
@@ -157,23 +146,17 @@ class MultiplexController extends ControllerBase {
         throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
       }
 
-      recordMapMarker
-
+      $this->visitationService->recordMapMarker($who, $qr_node);
       $node = \Drupal\node\Entity\Node::load($qr_code_target[0]['target_id']);
     }
 
     // Look for redirection rules attached to the entity at "$node".
     // If there are any that match, then redirect to the multiplexed location.
-    $target = $this->multiplexService->findMultiplexLocation($who, $node, $lat, $lng);
-
-    // It is also an error if the target does not exist; we return page not found.
-    $target_node = $this->getNodeFromPath($target);
-    if (!$target_node) {
-      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
-    }
+    $target_node = $this->multiplexService->findMultiplexLocation($who, $node);
+    $redirect_url = $this->redirectUrl($who, $target_node);
 
     // Redirect to the target.
-    $response = new RedirectResponse($target_node->Url(), 302);
+    $response = new RedirectResponse($redirect_url, 302);
 
 	// See if the destination is going to give the user an object
     $object = $this->checkObject($target_node);
@@ -199,6 +182,25 @@ class MultiplexController extends ControllerBase {
     return $response;
   }
 
+  protected function redirectUrl($who, $target_node) {
+    // If we found a target, return its URL
+    if ($target_node) {
+      return $target_node->Url();
+    }
+
+    // If we did not find a target, go to the configured
+    // "sorry, you must accept the privacy policy to play" page
+    if (empty($who)) {
+      $unidentified_user_path = $this->config->get('multiplex.settings')->get('unidentified_user_path');
+      if (!empty($unidentified_user_path)) {
+        return $unidentified_user_path;
+      }
+    }
+
+    // If we have neither a target nor a configured "sorry" page, then just 404.
+    throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+  }
+
   protected function getNodeFromPath($path) {
     try {
       $params = \Drupal\Core\Url::fromUserInput($path)->getRouteParameters();
@@ -212,6 +214,10 @@ class MultiplexController extends ControllerBase {
   }
 
   protected function checkObject($node) {
+    if (!$node) {
+      return '';
+    }
+
     if (!$node->hasField('field_object')) {
       return '';
     }

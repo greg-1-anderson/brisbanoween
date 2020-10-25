@@ -13,28 +13,37 @@ class VisitationService {
     $this->connection = $connection;
   }
 
-
   /**
    * Record a map marker for the QR code that was just scanned
    *
    * @param string $who
    *   Representation of visiting user
-   * @param string $path
-   *   Path visited
+   * @param Node $qr_node
+   *   QR code scanned
+   * @param bool $visited
+   *   'true' if code was visited, 'false' if adding this as a hint.
    */
-  public function recordMapMarker($who, $qr_node, $lat = 0, $lng = 0) {
-
+  public function recordMapMarker($who, $qr_node, $visited = true) {
     // No user info, no tracking.
     if (empty($who)) {
       return;
     }
 
+    // Look up the latitude and longitude of the QR code, if available
+    $geo = $qr_node->get('field_geolocation')->getValue();
+    if (empty($geo[0])) {
+      return;
+    }
+
+    $lat = floatval($geo[0]['lat']);
+    $lng = floatval($geo[0]['lng']);
+
     $now = \Drupal::time()->getRequestTime();
 
     // If there is already a record for this user and lat / lng,
     // then update its 'visited' time
-    $result = $this->connection->query("SELECT id,target FROM {multiplex_map_markers} WHERE path = :path AND who = :who", [
-      ':path' => $path,
+    $result = $this->connection->query("SELECT id FROM {multiplex_map_markers} WHERE nid = :nid AND who = :who", [
+      ':nid' => $qr_node->id(),
       ':who' => $who,
     ]);
 
@@ -47,51 +56,47 @@ class VisitationService {
           ])
           ->condition('id', $row['id'], '=')
           ->execute();
-        return new VisitData($who, $row['id'], $row['target']);
+        return;
       }
     }
 
     // If the record does not alread exist, then create a new one.
     $last_insert_id = $this->connection->insert('multiplex_map_markers')
       ->fields([
-        'path' => $path,
-        'target' => '',
-        'uid' => 0,
+        'nid' => $qr_node->id(),
+        'code' => $qr_node->Url(),
+        'uid' => \Drupal::currentUser()->id(),
         'who' => $who,
         'created' => $now,
-        'visited' => $now,
+        'visited' => $visited ? $now : 0,
         'lat' => $lat,
         'lng' => $lng,
       ])
       ->execute();
-
-    return new VisitData($who, $last_insert_id, '');
   }
-
 
   /**
    * Record a record of the specified path being visited.
    *
    * @param string $who
    *   Representation of visiting user
-   * @param string $path
-   *   Path visited
+   * @param Node $node
+   *   Node visited
    * @return VisitData
    *   Visitation data including record id and cached target path
    */
-  public function recordVisit($who, $path, $lat = 0, $lng = 0) {
-
+  public function recordVisit($who, $node) {
     // No user info, no tracking.
     if (empty($who)) {
-      return;
+      return new VisitData($who, 0, 0);
     }
 
     $now = \Drupal::time()->getRequestTime();
 
-    // If there is already a record for this user and target location,
+    // If there is already a record for this user and visited location,
     // then update its 'visited' time
-    $result = $this->connection->query("SELECT id,target FROM {multiplex_visitors} WHERE path = :path AND who = :who", [
-      ':path' => $path,
+    $result = $this->connection->query("SELECT id,target_nid FROM {multiplex_visitors} WHERE path_nid = :nid AND who = :who", [
+      ':nid' => $node->id(),
       ':who' => $who,
     ]);
 
@@ -104,25 +109,23 @@ class VisitationService {
           ])
           ->condition('id', $row['id'], '=')
           ->execute();
-        return new VisitData($who, $row['id'], $row['target']);
+        return new VisitData($who, $row['id'], $row['target_nid']);
       }
     }
 
     // If the record does not alread exist, then create a new one.
     $last_insert_id = $this->connection->insert('multiplex_visitors')
       ->fields([
-        'path' => $path,
-        'target' => '',
-        'uid' => 0,
+        'path_nid' => $node->id,
+        'target_nid' => 0,
+        'uid' => \Drupal::currentUser()->id(),
         'who' => $who,
         'created' => $now,
         'visited' => $now,
-        'lat' => $lat,
-        'lng' => $lng,
       ])
       ->execute();
 
-    return new VisitData($who, $last_insert_id, '');
+    return new VisitData($who, $last_insert_id, 0);
   }
 
   /**
@@ -130,12 +133,16 @@ class VisitationService {
    * to the same path will result in the same redirection for the same user(s).
    *
    * @param VisitData $visit_data
-   * @param string $target
+   * @param Node $target
    */
   public function recordTarget(VisitData $visit_data, $target) {
+    // If there's no user, then there's no reason to record the target.
+    if (empty($visit_data->who())) {
+      return;
+    }
     $this->connection->update('multiplex_visitors')
       ->fields([
-        'target' => $target,
+        'target_nid' => $target->id(),
       ])
       ->condition('id', $visit_data->id(), '=')
       ->execute();
@@ -149,47 +156,53 @@ class VisitationService {
    *
    * @param string $who
    *   Representation of visiting user
-   * @param array $targets
+   * @param array $target_nids
    * @return array
    */
-  public function findVisitedTargets($who, array $targets) {
+  public function findVisitedTargets($who, array $target_nids) {
     return $this->findVisited($who, $targets, 'target');
   }
 
-  public function findVisitedPaths($who, array $paths) {
-    return $this->findVisited($who, $paths, 'path');
+  public function findVisitedPaths($who, array $path_nids) {
+    return $this->findVisited($who, $path_nids, 'path');
   }
 
-  public function getVisitedLocationData($who) {
-    $result = $this->connection->query("SELECT id, path, lat, lng FROM {multiplex_visitors} WHERE who = :who", [':who' => $who]);
-
-    $visited = [];
-    if ($result) {
-      while ($row = $result->fetchAssoc()) {
-        if (!empty($row['lat'])) {
-          $visited[] = [
-            'id' => $row['id'],
-            'code' => $row['path'],
-            'position' => [$row['lat'], $row['lng']],
-            'legendId' => 'visited',
-            'visited' => true,
-          ];
-        }
-      }
-    }
-    return $visited;
-  }
-
-  protected function findVisited($who, array $args, $field) {
-    if (empty($args)) {
+  protected function findVisited($who, array $nids, $field) {
+    if (empty($nids) || empty($who)) {
       return [];
     }
-    $result = $this->connection->query("SELECT $field FROM {multiplex_visitors} WHERE who = :who AND $field IN (:args[])", [':who' => $who, ':args[]' => $args]);
+    $result = $this->connection->query("SELECT $field FROM {multiplex_visitors} WHERE who = :who AND $field IN (:args[])", [':who' => $who, ':args[]' => $nids]);
 
     $visited = [];
     if ($result) {
       while ($row = $result->fetchAssoc()) {
         $visited[] = $row[$field];
+      }
+    }
+    return $visited;
+  }
+
+  public function getVisitedLocationData($who) {
+    // Admins always get to play
+    $user = \Drupal::currentUser();
+    $is_admin = $user->hasPermission('access administration menu');
+
+    $result = $this->connection->query("SELECT id, code, lat, lng, visited FROM {multiplex_map_markers} WHERE who = :who", [':who' => $who]);
+
+    $visited = [];
+    if ($result) {
+      while ($row = $result->fetchAssoc()) {
+        if (!empty($row['lat'])) {
+          // Admins get to click on unvisited locations
+          $is_visited = $is_admin || ($row['visited'] > 0);
+          $visited[] = [
+            'id' => $row['id'],
+            'code' => $row['code'],
+            'position' => [$row['lat'], $row['lng']],
+            'legendId' => $is_visited ? 'visited' : 'unvisited',
+            'visited' => $is_visited,
+          ];
+        }
       }
     }
     return $visited;

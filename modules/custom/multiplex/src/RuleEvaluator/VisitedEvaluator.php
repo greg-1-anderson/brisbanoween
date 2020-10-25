@@ -24,9 +24,8 @@ class VisitedEvaluator extends EvaluatorBase {
       return null;
     }
 
-    $visitation_path = $visitation_test_node->Url();
-
-    $visited = $this->visitationService->findVisitedPaths($this->who, [$visitation_path]);
+    $visitation_nid = $visitation_test_node->id();
+    $visited = $this->visitationService->findVisitedPaths($this->who, [$visitation_nid]);
 
     $was_visited = !empty($visited);
 

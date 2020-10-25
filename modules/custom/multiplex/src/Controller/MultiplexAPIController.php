@@ -86,7 +86,7 @@ class MultiplexAPIController extends ControllerBase {
     }
 
     $locations = [];
-    // TODO: How to add a condition on field_geolocation to test of lat/lng are populated?
+    // TODO: How to add a search condition on field_geolocation to test of lat/lng are populated?
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'qr_code')
       ->sort('title', 'DESC');

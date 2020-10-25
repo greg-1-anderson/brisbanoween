@@ -18,36 +18,26 @@ class MultiplexService {
     $this->config = $config;
   }
 
-  public function findMultiplexLocation($who, $node, $lat, $lng) {
+  public function findMultiplexLocation($who, $node) {
     $path = $node->Url();
 
-    // We can perform no service unless we have a visitor identifier.
-    if (empty($who)) {
-      $unidentified_user_path = $this->config->get('multiplex.settings')->get('unidentified_user_path');
-      if (!empty($unidentified_user_path)) {
-        return $unidentified_user_path;
-      }
-      return $path;
-    }
-
     // Record that "$path" was visited, regardless of where it resolves to.
-    $visit_data = $this->visitationService->recordVisit($who, $path, $lat, $lng);
+    $visit_data = $this->visitationService->recordVisit($who, $node);
 
-    $multiplex_result = $this->resolveMultiplexRules($visit_data, $node);
-    if ($multiplex_result) {
-      $this->visitationService->recordTarget($visit_data, $multiplex_result);
-      return $multiplex_result;
+    $multiplex_result_node = $this->resolveMultiplexRules($visit_data, $node);
+    if ($multiplex_result_node) {
+      $this->visitationService->recordTarget($visit_data, $multiplex_result_node);
+      return $multiplex_result_node;
     }
 
-    return $path;
+    return $node;
   }
 
   protected function resolveMultiplexRules(VisitData $visit_data, $node) {
-
     // If the path has been visited before, and if a specific target
     // was recorded, then be consistent and return the same target every time.
     if ($visit_data->visited()) {
-      return $visit_data->target();
+      return \Drupal\node\Entity\Node::load($visit_data->target());
     }
 
     // TODO: Find the first multiplex rule field of any name.
@@ -64,11 +54,10 @@ class MultiplexService {
       $evaluator = RuleEvaluator::create($rule, $this->visitationService, $visit_data->who());
       $target_node = $evaluator->evaluate();
       if ($target_node) {
-        return $target_node->Url();
+        return $target_node;
       }
     }
 
     return null;
   }
-
 }
