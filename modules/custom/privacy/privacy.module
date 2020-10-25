@@ -3,10 +3,11 @@
 function getPrivacyConfig() {
   $privacy_enabled = true;
   $current_path = \Drupal::service('path.current')->getPath();
-  error_log("current path " . $current_path);
-  $node = _privacy_get_node_from_path($current_path);
-  if (!_privacy_policy_applies_to_content_type($node)) {
-    $privacy_enabled = false;
+  if (strpos($current_path, "/to/") !== 0) {
+  	$node = _privacy_get_node_from_path($current_path);
+  	if (!_privacy_policy_applies_to_content_type($node)) {
+  	  $privacy_enabled = false;
+  	}
   }
 
   $config = \Drupal::config('privacy.settings');
@@ -61,7 +62,6 @@ function _privacy_policy_applies_to_content_type($node) {
     return false;
   }
   
-  error_log("page type " . $content_type);
   $content_type = $node->bundle();
   return (($content_type == 'qr_code') || ($content_type == 'story_page'));
 }
