@@ -153,6 +153,7 @@ class MultiplexController extends ControllerBase {
     // Look for redirection rules attached to the entity at "$node".
     // If there are any that match, then redirect to the multiplexed location.
     $target_node = $this->multiplexService->findMultiplexLocation($who, $node);
+    $this->addMapHints($who, $target_node, $qr_node);
     $redirect_url = $this->redirectUrl($who, $target_node);
 
     // Redirect to the target.
@@ -180,6 +181,59 @@ class MultiplexController extends ControllerBase {
     }
 
     return $response;
+  }
+
+  protected function addMapHints($who, $target_node, $qr_node) {
+    // Ignore the node if it has no hints; also skip if we did not get here from a scan
+    if (!$qr_node || !$target_node || !$target_node->hasField('field_story_hints')) {
+      return ;
+    }
+
+    $hints = $this->loadHints($target_node, 'field_story_hints', $qr_node);
+    $new_hint = false;
+    foreach ($hints as $hint_node) {
+      $new_hint |= $this->visitationService->recordMapMarker($who, $hint_node, false);
+    }
+
+    if ($new_hint) {
+      \Drupal::messenger()->addStatus('Check your map; new hints were added!');
+    }
+  }
+
+  protected function loadHints($target_node, $field, $scanned_qr_node) {
+    $field_data = $target_node->get($field)->getValue();
+    if (empty($field_data)) {
+      return [];
+    }
+
+    $targets = array_filter(
+      array_map(
+        function ($item) {
+          $story_page_id = $item['target_id'];
+
+          $query = \Drupal::entityQuery('node')
+            ->condition('type', 'qr_code')
+            ->condition('field_story_page', $story_page_id);
+          $results = $query->execute();
+
+          // TODO: If there is no qr_code pointing to the
+          // hinted story node, then look for a multiplex node
+          // and do some magic
+          if (empty($results)) {
+            return null;
+          }
+
+          // TODO: If there are multiple results, then
+          // return the one that is CLOSEST to $scanned_qr_node
+          $hint_qr_code_id = array_pop($results);
+
+          return \Drupal\node\Entity\Node::load($hint_qr_code_id);
+        },
+        $field_data
+      )
+    );
+
+    return $targets;
   }
 
   protected function redirectUrl($who, $target_node) {
