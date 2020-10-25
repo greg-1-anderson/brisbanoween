@@ -82,12 +82,12 @@ class MultiplexAPIController extends ControllerBase {
       [
         'id' => 'visited',
         'name' => 'Visited',
-        'icon' => 'visited.png',
+        'icon' => 'halloween-ghost-48.png',
       ],
       [
         'id' => 'unvisited',
         'name' => 'Unvisited',
-        'icon' => 'unvisited.png',
+        'icon' => 'question-48.png',
       ],
     ];
 
