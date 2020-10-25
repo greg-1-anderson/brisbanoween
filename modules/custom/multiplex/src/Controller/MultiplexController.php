@@ -113,7 +113,7 @@ class MultiplexController extends ControllerBase {
     if ($path == "debug") {
        $build['content'] = [
          '#type' => 'item',
-         '#markup' => 'Cookie: ' . $cookie . ' Who: ' . $who,
+         '#markup' => 'Visitor: ' . $who,
        ];
        return $build;
     }

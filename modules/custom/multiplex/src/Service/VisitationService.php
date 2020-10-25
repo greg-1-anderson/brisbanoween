@@ -26,6 +26,7 @@ class VisitationService {
   public function recordMapMarker($who, $qr_node, $visited = true) {
     // No user info, no tracking.
     if (empty($who)) {
+      \Drupal::messenger()->addStatus('No visitor, skip map marker');
       return;
     }
 
@@ -73,6 +74,8 @@ class VisitationService {
         'lng' => $lng,
       ])
       ->execute();
+
+    \Drupal::messenger()->addStatus('Add visitor ' . $who . ' map marker for node ' . $qr_node->id());
   }
 
   /**
@@ -88,6 +91,7 @@ class VisitationService {
   public function recordVisit($who, $node) {
     // No user info, no tracking.
     if (empty($who)) {
+      \Drupal::messenger()->addStatus('No visitor, skip adding to visited');
       return new VisitData($who, 0, 0);
     }
 
@@ -109,11 +113,14 @@ class VisitationService {
           ])
           ->condition('id', $row['id'], '=')
           ->execute();
+
+        \Drupal::messenger()->addStatus('Update visitor ' . $who . ' visited for row ' . $row['id']);
+
         return new VisitData($who, $row['id'], $row['target_nid']);
       }
     }
 
-    // If the record does not alread exist, then create a new one.
+    // If the record does not already exist, then create a new one.
     $last_insert_id = $this->connection->insert('multiplex_visitors')
       ->fields([
         'path_nid' => $node->id(),
@@ -124,6 +131,8 @@ class VisitationService {
         'visited' => $now,
       ])
       ->execute();
+
+    \Drupal::messenger()->addStatus('Add visitor ' . $who . ' visited for node ' . $node->id());
 
     return new VisitData($who, $last_insert_id, 0);
   }
