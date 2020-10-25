@@ -40,6 +40,13 @@ class VisitationService {
     $lat = floatval($geo[0]['lat']);
     $lng = floatval($geo[0]['lng']);
 
+/*
+    // TODO: There's also no point in saving a marker with no location (except testing)
+    if (!$lat || !$lng) {
+      return false;
+    }
+*/
+
     $now = \Drupal::time()->getRequestTime();
 
     // If there is already a record for this user and lat / lng,
@@ -52,9 +59,10 @@ class VisitationService {
     if ($result) {
       // There should only be one
       while ($row = $result->fetchAssoc()) {
+        $key_to_update = $visited ? 'visited' : 'hinted';
         $num_updated = $this->connection->update('multiplex_map_markers')
           ->fields([
-            'visited' => $now,
+            $key_to_update => $now,
           ])
           ->condition('id', $row['id'], '=')
           ->execute();
@@ -71,6 +79,7 @@ class VisitationService {
         'who' => $who,
         'created' => $now,
         'visited' => $visited ? $now : 0,
+        'hinted' => $visited ? 0 : $now,
         'lat' => $lat,
         'lng' => $lng,
       ])
@@ -192,7 +201,7 @@ class VisitationService {
     $user = \Drupal::currentUser();
     $is_admin = $user->hasPermission('access administration menu');
 
-    $result = $this->connection->query("SELECT id, code, lat, lng, visited FROM {multiplex_map_markers} WHERE who = :who", [':who' => $who]);
+    $result = $this->connection->query("SELECT id, code, lat, lng, visited, hinted FROM {multiplex_map_markers} WHERE who = :who", [':who' => $who]);
 
     $visited = [];
     if ($result) {
@@ -206,6 +215,7 @@ class VisitationService {
             'position' => [$row['lat'], $row['lng']],
             'legendId' => $is_visited ? 'visited' : 'unvisited',
             'visited' => $is_visited,
+            'time' => $row['hinted'] > $row['visited'] ? $row['hinted'] * 1000 : 0,
           ];
         }
       }

@@ -129,6 +129,12 @@ function multiplex_schema() {
         'default' => 0,
         'description' => 'Timestamp when the record was most recently visited.',
       ],
+      'hinted' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp when the record was provided as a hint.',
+      ],
       'lat' => [
         'type' => 'float',
         'default' => 0,
@@ -282,6 +288,20 @@ function multiplex_update_8004() {
   ];
   $schema = Database::getConnection()->schema();
   $schema->createTable('multiplex_map_markers', $spec);
+}
+
+/**
+ * Add 'hinted' timestamp to multiplex_map_markers
+ */
+function multiplex_update_8005() {
+  $schema = Database::getConnection()->schema();
+  $spec = [
+    'type' => 'int',
+    'not null' => TRUE,
+    'default' => 0,
+    'description' => 'Timestamp when the record was provided as a hint.',
+  ];
+  $schema->addField('multiplex_map_markers', 'hinted', $spec);
 }
 
 /**
