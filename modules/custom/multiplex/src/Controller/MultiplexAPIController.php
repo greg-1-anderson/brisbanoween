@@ -125,7 +125,7 @@ class MultiplexAPIController extends ControllerBase {
               floatval($geo[0]['lat']),
               floatval($geo[0]['lng']),
             ],
-            "legendId" => empty($story) ? "unvisited" : "visited",
+            "legendId" => empty($story) ? "unassigned" : "assigned",
             "visited" => true,
           ];
         }
@@ -135,14 +135,14 @@ class MultiplexAPIController extends ControllerBase {
     // TODO: Get this from configuration or something.
     $legend = [
       [
-        'id' => 'visited',
-        'name' => 'Visited',
-        'icon' => 'visited.png',
+        'id' => 'assigned',
+        'name' => 'Assigned',
+        'icon' => 'code-green.png',
       ],
       [
-        'id' => 'unvisited',
-        'name' => 'Unvisited',
-        'icon' => 'unvisited.png',
+        'id' => 'unassigned',
+        'name' => 'Unassigned',
+        'icon' => 'code-red.png',
       ],
     ];
 
