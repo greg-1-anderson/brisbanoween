@@ -109,6 +109,23 @@ class MultiplexController extends ControllerBase {
     // Get identifier for visiting user.
     $who = multiplex_get_visitor_cookie_value();
 
+    // Make sure the game has started before continuing
+    if (!$this->gameInProgress()) {
+    	return new RedirectResponse("/wait/$path", 302);
+    }
+
+    // If the user doesnt have the session cookie yet, we need to return a placeholder page so that the redirect doesnt happen and the user
+    // has a chance to accept the privacy policy.  Once they do, the page will reload with the session cookie and this conditional
+    // will be skipped allowing the original redirect to occur.  Note however, that if the user rejects the privacy policy, whatever is returned
+    // here, is what they will see.
+    if (!$who) {
+       $build['content'] = [
+         '#type' => 'item',
+         '#markup' => 'Please accept the privacy policy to continue...',
+       ];
+       return $build;
+    }
+
     // Debug code for inspection
     if ($path == "debug") {
        $build['content'] = [
@@ -116,11 +133,6 @@ class MultiplexController extends ControllerBase {
          '#markup' => 'Visitor: ' . $who,
        ];
        return $build;
-    }
-
-    // Make sure the game has started before continuing
-    if (!$this->gameInProgress()) {
-    	return new RedirectResponse("/wait/$path", 302);
     }
 
     // Paths must start with "/", but $path from the route does not.
