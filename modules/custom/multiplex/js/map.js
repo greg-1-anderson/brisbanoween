@@ -158,7 +158,7 @@ class SpookyMap {
 					// We do not, so create one now
 					this.i_marker_cache[x] = {};
 					this.i_marker_cache[x].marker = new google.maps.Marker({
-						position: { lat: parseFloat(locations[x].position[0]), lng: parseFloat(locations[x].position[1]) },
+						position: new google.maps.LatLng(parseFloat(locations[x].position[0]), parseFloat(locations[x].position[1])),
 						map: this.i_map,
 						icon: locations[x].icon ? this.i_config.iconBaseURL + locations[x].icon : (legendMap[locations[x].legendId] ? this.i_config.iconBaseURL + legendMap[locations[x].legendId].icon : null)
 					});
