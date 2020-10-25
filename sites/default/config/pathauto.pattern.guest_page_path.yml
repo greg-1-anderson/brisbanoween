@@ -1,0 +1,22 @@
+uuid: 888220ac-4b0b-42ad-ab8c-aa50860c7faa
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: guest_page_path
+label: 'Guest page path'
+type: 'canonical_entities:node'
+pattern: '/guest/[node:title]'
+selection_criteria:
+  36827450-9ed5-48b9-af82-05a6b8349e37:
+    id: node_type
+    bundles:
+      guest_page: guest_page
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 36827450-9ed5-48b9-af82-05a6b8349e37
+selection_logic: and
+weight: -5
+relationships: {  }

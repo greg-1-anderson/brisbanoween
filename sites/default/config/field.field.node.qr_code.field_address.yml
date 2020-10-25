@@ -24,7 +24,7 @@ default_value:
     dependent_locality: null
     postal_code: '94005'
     sorting_code: null
-    address_line1: ''
+    address_line1: '1 San Bruno Ave.'
     address_line2: null
     organization: null
     given_name: null

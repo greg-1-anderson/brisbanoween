@@ -1,0 +1,19 @@
+uuid: d27c9b4b-de48-43f5-9ba3-062f46749ed1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_story_hints
+field_name: field_story_hints
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

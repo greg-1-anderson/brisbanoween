@@ -59,34 +59,18 @@ content:
           weight: 0
           enable: false
           map_center_id: client_location
-        fixed_boundaries:
+        ipstack:
           settings:
-            north: ''
-            east: ''
-            south: ''
-            west: ''
+            access_key: ''
+            location_option_id: ipstack
           weight: 0
           enable: false
-          map_center_id: fixed_boundaries
-        fit_bounds:
-          enable: true
-          settings:
-            min_zoom: null
-            reset_zoom: false
-          weight: 0
-          map_center_id: fit_bounds
+          map_center_id: location_plugins
         fixed_value:
           settings:
             latitude: null
             longitude: null
             location_option_id: fixed_value
-          weight: 0
-          enable: false
-          map_center_id: location_plugins
-        ipstack:
-          settings:
-            access_key: ''
-            location_option_id: ipstack
           weight: 0
           enable: false
           map_center_id: location_plugins
@@ -96,7 +80,22 @@ content:
           map_center_id: location_plugins
           settings:
             location_option_id: freeogeoip
-      auto_client_location_marker: '1'
+        fit_bounds:
+          enable: true
+          settings:
+            min_zoom: null
+            reset_zoom: false
+          weight: 0
+          map_center_id: fit_bounds
+        fixed_boundaries:
+          settings:
+            north: ''
+            east: ''
+            south: ''
+            west: ''
+          weight: 0
+          enable: false
+          map_center_id: fixed_boundaries
       google_map_settings:
         height: 400px
         width: 100%
@@ -327,6 +326,7 @@ content:
           google_maps_layer_transit:
             weight: 0
             enabled: false
+      auto_client_location_marker: '0'
       allow_override_map_settings: 0
       hide_textfield_form: false
       auto_client_location: ''
@@ -350,7 +350,7 @@ content:
             west: ''
             north: ''
             east: ''
-        sync_mode: auto
+        sync_mode: manual
         button_position: LEFT_TOP
         direction: one_way
         ignore:

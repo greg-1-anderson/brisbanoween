@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.story_page.field_image
     - field.field.node.story_page.field_object
     - field.field.node.story_page.field_rules
+    - field.field.node.story_page.field_story_hints
     - node.type.story_page
   module:
     - text
@@ -31,4 +32,5 @@ hidden:
   field_image: true
   field_object: true
   field_rules: true
+  field_story_hints: true
   links: true
