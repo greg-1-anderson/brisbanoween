@@ -152,7 +152,14 @@ class SpookyMap {
 
 			// For each visible locations
 			let x = 0;
+			let lastBounceEnds = 0;
 			for (x; x < locations.length; x++) {
+				let remBounceTime = ((new Date()).getTime() - locations[x].time);
+				let shouldBounce = locations[x].time > 0 && remBounceTime < this.i_config.animate_hint_duration;
+				if (shouldBounce && remBounceTime > lastBounceEnds) {
+					lastBounceEnds = remBounceTime;
+				}
+
 				// See if we have a marker to use for it from a previous update
 				if (this.i_marker_cache[x] == null) {
 					// We do not, so create one now
@@ -160,6 +167,7 @@ class SpookyMap {
 					this.i_marker_cache[x].marker = new google.maps.Marker({
 						position: new google.maps.LatLng(parseFloat(locations[x].position[0]), parseFloat(locations[x].position[1])),
 						map: this.i_map,
+						animation: shouldBounce ? google.maps.Animation.BOUNCE : null,
 						icon: locations[x].icon ? this.i_config.iconBaseURL + locations[x].icon : (legendMap[locations[x].legendId] ? this.i_config.iconBaseURL + legendMap[locations[x].legendId].icon : null)
 					});
 
@@ -180,8 +188,19 @@ class SpookyMap {
 					// We already had a marker, so move it to the new location
 					this.i_marker_cache[x].marker.setPosition(new google.maps.LatLng(parseFloat(locations[x].position[0]), parseFloat(locations[x].position[1])));
 					this.i_marker_cache[x].marker.setIcon(locations[x].icon ? this.i_config.iconBaseURL + locations[x].icon : (legendMap[locations[x].legendId] ? this.i_config.iconBaseURL + legendMap[locations[x].legendId].icon : null));
+					this.i_marker_cache[x].marker.setAnimation(shouldBounce ? google.maps.Animation.BOUNCE : null);
 					this.i_marker_cache[x].marker.setMap(this.i_map);
 				}
+			}
+
+			if (this.i_refresh_timer != null) {
+				clearTimeout(this.i_refresh_timer);
+				this.i_refresh_timer = null;
+			}
+			if (lastBounceEnds > 0) {
+				setTimeout(() => {
+					this.updateLocations();
+				}, lastBounceEnds + 100);
 			}
 
 			// Remove any unused markers from previous renders
