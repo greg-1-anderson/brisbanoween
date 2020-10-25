@@ -91,7 +91,10 @@
 							myMap.setLocations(JSON.parse(data).data.locations);
 						});
 					};
-					updateMap();
+					// Give the map a moment to load
+					setTimeout(() => {
+						updateMap();
+					}, 500);
 					if (settings.multiplex.map.config.updateFrequency > 0) {
 						setInterval(() => {
 							updateMap();
