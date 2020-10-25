@@ -155,7 +155,8 @@ function multiplex_getMapConfig() {
     'sessionCookieName' => $priv_config->get("session_cookie_name"),
     'openMapInNewWindow' => $config->get('map_open_in_new_window'),
     'mapButtonEnabled' => ($map_button_enabled && $config->get("map_button_enabled")) ? true : false,
-    'url' => '/map'	// The page to open when the user clicks on a map link button
+    'url' => '/map',	// The page to open when the user clicks on a map link button
+    'animateHintDuration' => $config->get('map_animate_hint_duration')
   ];
 }
 

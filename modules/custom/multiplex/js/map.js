@@ -155,7 +155,7 @@ class SpookyMap {
 			let lastBounceEnds = 0;
 			for (x; x < locations.length; x++) {
 				let remBounceTime = ((new Date()).getTime() - locations[x].time);
-				let shouldBounce = locations[x].time > 0 && remBounceTime < this.i_config.animate_hint_duration;
+				let shouldBounce = locations[x].time > 0 && remBounceTime < this.i_config.animateHintDuration;
 				if (shouldBounce && remBounceTime > lastBounceEnds) {
 					lastBounceEnds = remBounceTime;
 				}

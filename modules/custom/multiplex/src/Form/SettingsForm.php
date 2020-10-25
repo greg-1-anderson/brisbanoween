@@ -132,6 +132,13 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("Invert the color scheme of the map, making it much darker."),
       '#default_value' => $this->config('multiplex.settings')->get('map_night_mode') ? $this->config('multiplex.settings')->get('map_night_mode') : false
     ];
+    $form['map_animate_hint_duration'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Hint Animation Duration'),
+      '#description' => $this->t("When a location is hinted at, how many milliseconds should it bounce for on the map"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_animate_hint_duration') ? $this->config('multiplex.settings')->get('map_animate_hint_duration') : 120000
+    ];
+
     $form['map_button_enabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Map Button Enabled'),
@@ -248,7 +255,7 @@ class SettingsForm extends ConfigFormBase {
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window', 'counter_target_url',
-  		'oracle_enabled', 'inventory_enabled', 'map_open_in_new_window', 'map_button_enabled'
+  		'oracle_enabled', 'inventory_enabled', 'map_open_in_new_window', 'map_button_enabled', 'map_animate_hint_duration'
   	);
 
   	foreach ($form_fields as $f) {
