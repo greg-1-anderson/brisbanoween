@@ -129,31 +129,7 @@ class MultiplexController extends ControllerBase {
       throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
 
-    // TODO: What's the best way to identify qr_code nodes?
-    if ($node->bundle() == 'qr_code') {
-      $qr_node = $node;
-
-      // Return a 404 if there is no story page.
-      $qr_code_target = $node->get('field_story_page')->getValue();
-      if (empty($qr_code_target[0]['target_id'])) {
-        // If the user is an admin, go to edit page instead
-        $user = \Drupal::currentUser();
-        if ($user->hasPermission('access administration menu')) {
-          $nid = $node->id();
-          return new RedirectResponse("/node/$nid/edit");
-        }
-
-        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
-      }
-
-      $this->visitationService->recordMapMarker($who, $qr_node);
-      $node = \Drupal\node\Entity\Node::load($qr_code_target[0]['target_id']);
-    }
-
-    // Look for redirection rules attached to the entity at "$node".
-    // If there are any that match, then redirect to the multiplexed location.
-    $target_node = $this->multiplexService->findMultiplexLocation($who, $node);
-    $this->addMapHints($who, $target_node, $qr_node);
+    $target_node = $this->findTargetNode($who, $node);
     $redirect_url = $this->redirectUrl($who, $target_node);
 
     // Redirect to the target.
@@ -182,6 +158,49 @@ class MultiplexController extends ControllerBase {
 
     return $response;
   }
+
+  protected function findTargetNode($who, $node) {
+    // If the requested node is not a QR node, then evaluate it directly.
+    // TODO: What's the best way to identify qr_code nodes?
+    if ($node->bundle() != 'qr_code') {
+      // TODO: Maybe we should only allow admins to do this. Not sure
+      // if a player will ever follow this code path. Maybe from the map.
+      return $this->multiplexService->findMultiplexLocationFromRules($who, $node);
+    }
+
+    $qr_node = $node;
+
+    // Return a 404 if there is no story page.
+    $qr_code_target = $qr_node->get('field_story_page')->getValue();
+    if (empty($qr_code_target[0]['target_id'])) {
+      // If the user is an admin, go to edit page instead
+      $user = \Drupal::currentUser();
+      if ($user->hasPermission('access administration menu')) {
+        $nid = $qr_node->id();
+        return new RedirectResponse("/node/$nid/edit");
+      }
+
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+
+    $this->visitationService->recordMapMarker($who, $qr_node);
+    $node = \Drupal\node\Entity\Node::load($qr_code_target[0]['target_id']);
+
+    // What's the best way to identify a multiplex destinations node?
+    if ($node->bundle() == 'multiplex_dest') {
+      $target_node = $this->multiplexService->findMultiplexLocation($who, $qr_node, $node);
+    }
+    else {
+      // Look for redirection rules attached to the entity at "$node".
+      // If there are any that match, then redirect to the multiplexed location.
+      $target_node = $this->multiplexService->findMultiplexLocationFromRules($who, $node);
+    }
+
+    $this->addMapHints($who, $target_node, $qr_node);
+
+    return $target_node;
+  }
+
 
   protected function addMapHints($who, $target_node, $qr_node) {
     // Ignore the node if it has no hints; also skip if we did not get here from a scan

@@ -165,11 +165,11 @@ class VisitationService {
    * @return array
    */
   public function findVisitedTargets($who, array $target_nids) {
-    return $this->findVisited($who, $targets, 'target');
+    return $this->findVisited($who, $target_nids, 'target_nid');
   }
 
   public function findVisitedPaths($who, array $path_nids) {
-    return $this->findVisited($who, $path_nids, 'path');
+    return $this->findVisited($who, $path_nids, 'path_nid');
   }
 
   protected function findVisited($who, array $nids, $field) {

@@ -7,27 +7,21 @@ use Drupal\multiplex\Service\VisitationService;
 // The multiplex service determines the target locations for redirects
 class MultiplexEvaluator extends EvaluatorBase {
 
-  protected $parameter_nid;
+  protected $multiplex_data_node;
 
-  public function __construct(VisitationService $visitation_service, $who, $parameter_nid, $if_visited) {
+  public function __construct(VisitationService $visitation_service, $who, $multiplex_data_node) {
     parent::__construct($visitation_service, $who);
-    $this->parameter_nid = $parameter_nid;
-    $this->ifVisited = $if_visited;
+    $this->multiplex_data_node = $multiplex_data_node;
   }
 
-  public function evaluate($parameter_nid) {
-    $multiplex_data_node = \Drupal\node\Entity\Node::load($this->parameter_nid);
-    if (!$multiplex_data_node) {
-      return null;
-    }
-
+  public function evaluate() {
     // Sanity check. In the future perhaps we limit our content type to
     // multiplex_dest so that we can be assured that the fields we need exist.
-    if (!$multiplex_data_node->hasField('field_multiplex_dest_targets')) {
+    if (!$this->multiplex_data_node->hasField('field_multiplex_dest_targets')) {
       return null;
     }
 
-    $targets = $this->loadTargetNodes($multiplex_data_node, 'field_multiplex_dest_targets');
+    $targets = $this->loadTargetNodes($this->multiplex_data_node, 'field_multiplex_dest_targets');
 
     if (!empty($targets)) {
       $target_nids = array_map(
@@ -47,13 +41,13 @@ class MultiplexEvaluator extends EvaluatorBase {
         }
       );
 
-      if ($this->isRandom($multiplex_data_node)) {
+      if ($this->isRandom($this->multiplex_data_node)) {
         shuffle($targets);
       }
     }
 
     if (empty($targets)) {
-      $targets = $this->fallbackLocation($multiplex_data_node);
+      $targets = $this->fallbackLocation($this->multiplex_data_node);
     }
 
     return array_pop($targets);

@@ -14,7 +14,8 @@ class RuleEvaluator {
       case 'not-visited':
         return new VisitedEvaluator($visitation_service, $who, $rule['visited_node'], $rule['target_node'], false);
       case 'multiplex':
-        return new MultiplexEvaluator($visitation_service, $who, $rule['parameter_node'], $rule['target_node']);
+        $multiplex_data_node = \Drupal\node\Entity\Node::load($rule['parameter_node']);
+        return new MultiplexEvaluator($visitation_service, $who, $multiplex_data_node);
     }
     throw new \Exception('Invalid rule type');
 	}
