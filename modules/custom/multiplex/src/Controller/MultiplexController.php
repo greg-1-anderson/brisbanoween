@@ -144,6 +144,7 @@ class MultiplexController extends ControllerBase {
     $target_node = $this->findTargetNode($who, $node);
     // TODO: Fix hack that works around bug.
     // Refactor of findTargetNode not great, need to re-do it later.
+    // $target_node should always be a Node.
     if ($target_node instanceof RedirectResponse) {
       return $target_node;
     }
@@ -180,9 +181,18 @@ class MultiplexController extends ControllerBase {
     // If the requested node is not a QR node, then evaluate it directly.
     // TODO: What's the best way to identify qr_code nodes?
     if ($node->bundle() != 'qr_code') {
-      // TODO: Maybe we should only allow admins to do this. Not sure
-      // if a player will ever follow this code path. Maybe from the map.
-      return $this->multiplexService->findMultiplexLocationFromRules($who, $node);
+      // We might get use this code path when using objects in the inventory, etc.
+      // We also get here when travelling through a series of pages that
+      // the user navigates through via links rather than scans, e.g.
+      // the landing page links to each event's intro page.
+      $node = $this->multiplexService->findMultiplexLocationFromRules($who, $node);
+      // If the target node is a QR code (e.g. if $node is /recent), then
+      // we will continue with the ordinary logic; otherwise, we will use
+      // it as our final destination and return here.
+      if ($node->bundle() != 'qr_code') {
+        $this->addMapHints($who, $node);
+        return $node;
+      }
     }
 
     $qr_node = $node;
@@ -213,15 +223,25 @@ class MultiplexController extends ControllerBase {
       $target_node = $this->multiplexService->findMultiplexLocationFromRules($who, $node);
     }
 
+    // Remember our most recent scan. If the user has never
+    // scanned before, then go to the initial page instead.
+    $is_first_scan = $this->visitationService->recordRecent($who, $qr_node);
+    if ($is_first_scan) {
+      // TODO: Perhaps we should store the nid of the welcome page in
+      // settings or something. For now we will use the well-known-path
+      // '/landing' instead.
+      return $this->getNodeFromPath("/landing");
+    }
+
     $this->addMapHints($who, $target_node, $qr_node);
 
     return $target_node;
   }
 
 
-  protected function addMapHints($who, $target_node, $qr_node) {
-    // Ignore the node if it has no hints; also skip if we did not get here from a scan
-    if (!$qr_node || !$target_node || !$target_node->hasField('field_story_hints')) {
+  protected function addMapHints($who, $target_node, $qr_node = null) {
+    // Ignore the node if it has no hints
+    if (!$target_node || !$target_node->hasField('field_story_hints')) {
       return ;
     }
 
@@ -260,7 +280,13 @@ class MultiplexController extends ControllerBase {
           }
 
           // TODO: If there are multiple results, then
-          // return the one that is CLOSEST to $scanned_qr_node
+          // return the one that is CLOSEST to $scanned_qr_node.
+          // Note that in some instances $scanned_qr_node
+          // might be null. This can happen on pages not reached
+          // via scan, e.g. the intro pages linked from the
+          // landing page. Maybe we can recover the scanned
+          // qr code node from the most recent scan. The nid
+          // of /recent will be the most recent qr code.
           $hint_qr_code_id = array_pop($results);
 
           return \Drupal\node\Entity\Node::load($hint_qr_code_id);

@@ -146,6 +146,11 @@ class VisitationService {
    * Record the redirect target in the visitation record so that future visits
    * to the same path will result in the same redirection for the same user(s).
    *
+   * Note that during the normal flow, this method will only be called when
+   * the target entry for the specified visitation record is empty. However,
+   * this method is also used by 'recordRecent' to rewrite the target for
+   * the recent pointer on every scan.
+   *
    * @param VisitData $visit_data
    * @param Node $target
    */
@@ -163,6 +168,48 @@ class VisitationService {
 
     // Also record that the target was visited
     $this->recordVisit($visit_data->who(), $target);
+  }
+
+  /**
+   * Update the visitation data for the path '/to/recent' to
+   * point to the most recently scanned node
+   *
+   * @param string $who
+   *   Representation of visiting user
+   * @param Node $recent_node
+   *   Most recently scanned node
+   * @return bool
+   *   'true' if this is the very first scan the user has done
+   */
+  public function recordRecent($who, $recent_node) {
+    // No user info, no tracking.
+    $pointer_to_recent = $this->getPointerToRecent();
+    if (empty($who) || !$pointer_to_recent) {
+      return false;
+    }
+    $visit_data = $this->recordVisit($who, $pointer_to_recent);
+    $first_time_scan = !$visit_data->visited();
+    $this->recordTarget($visit_data, $recent_node);
+
+    return $first_time_scan;
+  }
+
+  /**
+   * Look up the node used to store the pointer to the most recent scan.
+   */
+  protected function getPointerToRecent() {
+    try {
+      // TODO: Maybe we should store the nid of the recent node pointer
+      // in settings or something. For now we assume the well-known
+      // path "/recent".
+      $params = \Drupal\Core\Url::fromUserInput('/recent')->getRouteParameters();
+      if (isset($params['node'])) {
+        return \Drupal\node\Entity\Node::load($params['node']);
+      }
+
+    } catch(\Exception $e) {}
+
+    return null;
   }
 
   /**
