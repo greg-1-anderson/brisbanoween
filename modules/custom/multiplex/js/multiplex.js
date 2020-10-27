@@ -5,6 +5,21 @@
     	if (orig) {
     		orig(context, settings);
     	}
+
+    	if (context == document) {
+    		let docHeader = document.getElementById("header");
+    		if (docHeader) {
+    			docHeader.addEventListener("click", () => {
+    				let sessionCookie = SpookyMap.getCookies()[settings.multiplex.map.config.sessionCookieName];
+    				if (sessionCookie) {
+    					document.location = "/landing";
+    				}
+    				else {
+    					document.location = "/";
+    				}
+    			});
+    		}
+    	}
       if (context == document && settings.multiplex.inventory.enabled !== false) {
 				// Create the inventory widget
 				let inventoryBox = new InventoryBox(
