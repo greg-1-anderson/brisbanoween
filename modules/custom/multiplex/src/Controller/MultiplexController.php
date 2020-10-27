@@ -190,7 +190,10 @@ class MultiplexController extends ControllerBase {
       // we will continue with the ordinary logic; otherwise, we will use
       // it as our final destination and return here.
       if ($node->bundle() != 'qr_code') {
-        $this->addMapHints($who, $node);
+        // Since we do not have reference to any QR code not associated
+        // with $node, we will instead use the most recently scanned
+        // QR code node for the purpose of placing hints.
+        $this->addMapHints($who, $node, $this->visitationService->mostRecent($who));
         return $node;
       }
     }
