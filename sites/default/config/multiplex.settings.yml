@@ -21,7 +21,7 @@ map_use_roadmap: 1
 map_allow_street_view: 0
 map_opacity: '0.9'
 map_update_frequency: '10'
-game_start_time: 1604098800
+game_start_time: 1603234800
 map_night_mode: 1
 counter_open_in_new_window: 0
 counter_target_url: /about-brisbanoween
@@ -30,3 +30,5 @@ inventory_enabled: 0
 map_open_in_new_window: 0
 map_button_enabled: 1
 map_animate_hint_duration: '120000'
+game_end_time: 1635313060
+game_end_url: ''

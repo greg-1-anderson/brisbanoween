@@ -40,6 +40,6 @@ hidden:
   field_guest_photos: true
   field_object: true
   field_rules: true
-  field_story_line: true
   field_story_hints: true
+  field_story_line: true
   links: true

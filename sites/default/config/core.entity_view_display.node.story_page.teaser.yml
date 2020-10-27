@@ -33,6 +33,6 @@ hidden:
   field_image: true
   field_object: true
   field_rules: true
-  field_story_line: true
   field_story_hints: true
+  field_story_line: true
   links: true
