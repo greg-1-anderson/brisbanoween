@@ -139,7 +139,7 @@ class VisitationService {
       ])
       ->execute();
 
-    return new VisitData($who, $last_insert_id, 0);
+    return new VisitData($who, $last_insert_id, NULL);
   }
 
   /**
