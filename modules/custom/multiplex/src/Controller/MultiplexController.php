@@ -367,7 +367,7 @@ class MultiplexController extends ControllerBase {
     	return GAME_NOT_STARTED;
     }
     $game_end_timestamp = $this->config('multiplex.settings')->get('game_end_time');
-    if (intval($game_end_timestamp) + 60) < time()) {
+    if ((intval($game_end_timestamp) + 60) < time()) {
     	return GAME_OVER;
     }
     return GAME_IN_PROGRESS;
