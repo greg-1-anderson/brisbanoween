@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.qr_code.field_address
     - field.field.node.qr_code.field_geolocation
     - field.field.node.qr_code.field_qr_code
+    - field.field.node.qr_code.field_story_line
     - field.field.node.qr_code.field_story_page
     - node.type.qr_code
   module:
@@ -371,6 +372,16 @@ content:
         height: 100
     third_party_settings: {  }
     type: qrfield_widget
+    region: content
+  field_story_line:
+    weight: 13
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   field_story_page:
     weight: 10

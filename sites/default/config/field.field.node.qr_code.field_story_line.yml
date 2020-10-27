@@ -1,0 +1,29 @@
+uuid: 1b19a70b-3644-47bf-8233-1ce9afb1bff0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_story_line
+    - node.type.qr_code
+    - taxonomy.vocabulary.story_line
+id: node.qr_code.field_story_line
+field_name: field_story_line
+entity_type: node
+bundle: qr_code
+label: 'Story line'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      story_line: story_line
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

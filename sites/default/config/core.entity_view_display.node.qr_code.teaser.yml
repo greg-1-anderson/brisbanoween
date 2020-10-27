@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.qr_code.field_address
     - field.field.node.qr_code.field_geolocation
     - field.field.node.qr_code.field_qr_code
+    - field.field.node.qr_code.field_story_line
     - field.field.node.qr_code.field_story_page
     - node.type.qr_code
   module:
@@ -35,5 +36,6 @@ hidden:
   field_accepted_guidelines: true
   field_address: true
   field_geolocation: true
+  field_story_line: true
   field_story_page: true
   links: true

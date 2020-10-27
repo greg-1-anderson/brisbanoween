@@ -1,0 +1,8 @@
+uuid: 4250edae-0f37-4c38-8630-b1f4fd196728
+langcode: en
+status: true
+dependencies: {  }
+name: 'Story line'
+vid: story_line
+description: 'A story line is a collection of story pages that as a whole form a complete story.'
+weight: 0

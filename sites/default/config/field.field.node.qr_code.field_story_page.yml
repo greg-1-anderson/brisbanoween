@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_story_page
     - node.type.multiplex_dest
+    - node.type.page
     - node.type.qr_code
     - node.type.story_page
 id: node.qr_code.field_story_page
@@ -22,9 +23,10 @@ settings:
   handler_settings:
     target_bundles:
       multiplex_dest: multiplex_dest
+      page: page
       story_page: story_page
     sort:
       field: _none
     auto_create: false
-    auto_create_bundle: multiplex_dest
+    auto_create_bundle: page
 field_type: entity_reference
