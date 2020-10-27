@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 use Drupal\multiplex\Service\VisitationService;
 
+define("GAME_NOT_STARTED", 0);
+define("GAME_IN_PROGRESS", 1);
+define("GAME_OVER", 2);
+
 /**
  * Returns responses for Multiplex routes.
  */
@@ -110,8 +114,13 @@ class MultiplexController extends ControllerBase {
     $who = multiplex_get_visitor_cookie_value();
 
     // Make sure the game has started before continuing
-    if (!$this->gameInProgress()) {
+    $gameState = $this->gameInProgress();
+    if ($gameState == GAME_NOT_STARTED) {
     	return new RedirectResponse("/wait/$path", 302);
+    }
+    else if ($gameState == GAME_OVER) {
+    	$end_url = \Drupal::config('multiplex.settings')->get('game_end_url');
+    	return new RedirectResponse($end_url, 302);
     }
 
     // If the user doesnt have the session cookie yet, we need to return a placeholder page so that the redirect doesnt happen and the user
@@ -349,14 +358,18 @@ class MultiplexController extends ControllerBase {
     // Admins always get to play
     $user = \Drupal::currentUser();
     if ($user->hasPermission('access administration menu')) {
-      return true;
+      return GAME_IN_PROGRESS;
     }
 
     // If the game start time hasn't arrived yet, the game has not started.
     $game_start_timestamp = $this->config('multiplex.settings')->get('game_start_time');
     if ((intval($game_start_timestamp) - 60) > time()) {
-      return false;
+    	return GAME_NOT_STARTED;
     }
-    return true;
+    $game_end_timestamp = $this->config('multiplex.settings')->get('game_end_time');
+    if (intval($game_end_timestamp) + 60) < time()) {
+    	return GAME_OVER;
+    }
+    return GAME_IN_PROGRESS;
   }
 }

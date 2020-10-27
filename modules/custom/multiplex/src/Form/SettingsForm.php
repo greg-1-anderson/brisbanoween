@@ -41,6 +41,21 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $currentStartTime
     ];
 
+	$currentEndTime = $this->config('multiplex.settings')->get('game_end_time') ? DrupalDateTime::createFromTimestamp(intval($this->config('multiplex.settings')->get('game_end_time')) + $timezoneOffset) : DrupalDateTime::createFromTimestamp(time() + $timezoneOffset);
+    $form['game_end_time'] = [
+      '#type' => 'datetime',
+      '#title' => $this->t('Game End Time'),
+      '#description' => $this->t("When does the game officially end?"),
+      '#default_value' => $currentEndTime
+    ];
+    $form['game_end_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Game End URL'),
+      '#description' => $this->t("The URL to redirect the user to if they scan a QR code after the game ends"),
+      '#default_value' => $this->config('multiplex.settings')->get('game_end_url') ? $this->config('multiplex.settings')->get('game_end_url') : ''
+    ];
+
+
     $form['unidentified_user_path'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Unidentified User Path'),
@@ -255,12 +270,12 @@ class SettingsForm extends ConfigFormBase {
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window', 'counter_target_url',
-  		'oracle_enabled', 'inventory_enabled', 'map_open_in_new_window', 'map_button_enabled', 'map_animate_hint_duration'
+  		'oracle_enabled', 'inventory_enabled', 'map_open_in_new_window', 'map_button_enabled', 'map_animate_hint_duration', 'game_end_time', 'game_end_url'
   	);
 
   	foreach ($form_fields as $f) {
   		$useValue = $form_state->getValue($f);
-  		if ($f == 'game_start_time' && $useValue !== NULL) {
+  		if (($f == 'game_start_time' || $f == 'game_end_time') && $useValue !== NULL) {
   			$useValue->setTimezone(new \DateTimeZone('America/Los_Angeles'));
   			$t = intval($useValue->format("U"));
   			$useValue = $t - intval($useValue->format("Z"));
