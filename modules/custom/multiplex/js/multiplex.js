@@ -9,6 +9,7 @@
     	if (context == document) {
     		let docHeader = document.getElementById("header");
     		if (docHeader) {
+    			docHeader.style.cursor = "pointer";
     			docHeader.addEventListener("click", () => {
     				let sessionCookie = SpookyMap.getCookies()[settings.multiplex.map.config.sessionCookieName];
     				if (sessionCookie) {
