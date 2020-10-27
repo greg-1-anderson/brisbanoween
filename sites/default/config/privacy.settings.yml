@@ -1,10 +1,10 @@
 privacy_cookie_name: cookie-agreed
 session_cookie_name: STYXKEY_visitor
 privacy_title: Welcome!
-privacy_message: "<p>This is an interactive Halloween experience! No personal information will be stored, but we do use cookies to track your progress and location while playing.</p>\r\n"
+privacy_message: "<p>This is an interactive Halloween experience! No personal information will be stored, but we do use cookies to track your progress and location while playing.</p>\r\n\r\n<p>In order to play, you must agree to wear a mask that covers your mouth and nose and&nbsp;to maintain social distance from others not in your group.</p>\r\n"
 privacy_accept_button: 'I Agree!'
 privacy_reject_button: 'No thanks.'
-privacy_auto_accept: 1
+privacy_auto_accept: 0
 privacy_policy_page: /privacy-policy
 privacy_reload_after_accept: 1
 privacy_disabled: 0

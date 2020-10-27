@@ -4,7 +4,7 @@ inventory_cookie: STYXKEY_inventory
 inventory_added_cookie: STYXKEY_inventory_added
 inventory_fixed_order: 1
 inventory_links_in_new_window: 0
-inventory_wiggle_duration: '120000'
+inventory_wiggle_duration: '60000'
 inventory_icon_width: '72'
 inventory_icon_height: '72'
 inventory_update_frequency: '0'
