@@ -74,13 +74,15 @@ class SpookyMap {
 	static getMapButton(openLinksInNewWindow, url) {
 		let button = document.createElement('DIV');
 		button.className = "SpookyMap_link";
-		button.addEventListener("click", () => {
+		button.addEventListener("click", (e) => {
 			if (openLinksInNewWindow) {
 				window.open(url);
 			}
 			else {
 				document.location = url;
 			}
+			e.cancelBubble = true;
+			e.preventDefault();
 		});
 		return button
 	}
