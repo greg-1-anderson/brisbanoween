@@ -137,11 +137,13 @@ function multiplex_schema() {
       ],
       'lat' => [
         'type' => 'float',
+        'size' => 'big',
         'default' => 0,
         'description' => 'Latitude',
       ],
       'lng' => [
         'type' => 'float',
+        'size' => 'big',
         'default' => 0,
         'description' => 'Longitude',
       ],
@@ -302,6 +304,27 @@ function multiplex_update_8005() {
     'description' => 'Timestamp when the record was provided as a hint.',
   ];
   $schema->addField('multiplex_map_markers', 'hinted', $spec);
+}
+
+/**
+ * Use double percision floats to store lat / lng values.
+ */
+function multiplex_update_8006() {
+  $schema = Database::getConnection()->schema();
+  $spec = [
+    'type' => 'float',
+    'size' => 'big',
+    'default' => 0,
+    'description' => 'Latitude',
+  ];
+  $schema->changeField('multiplex_map_markers', 'lat', 'lat', $spec);
+  $spec = [
+    'type' => 'float',
+    'size' => 'big',
+    'default' => 0,
+    'description' => 'Longitude',
+  ];
+  $schema->changeField('multiplex_map_markers', 'lng', 'lng', $spec);
 }
 
 /**

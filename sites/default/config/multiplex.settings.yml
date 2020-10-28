@@ -4,33 +4,31 @@ inventory_cookie: STYXKEY_inventory
 inventory_added_cookie: STYXKEY_inventory_added
 inventory_fixed_order: 1
 inventory_links_in_new_window: 0
-inventory_wiggle_duration: '120000'
+inventory_wiggle_duration: '60000'
 inventory_icon_width: '72'
 inventory_icon_height: '72'
-inventory_update_frequency: '10'
+inventory_update_frequency: '0'
 inventory_base_url: 'https://g1a.io/'
-map_link_prefix: 'https://inventory-brisbanoween.pantheonsite.io/to'
-map_center_lat: '37.681275'
-map_center_lng: '-122.401968'
-map_default_zoom: '15.3'
+map_link_prefix: 'https://g1a.io/'
+map_center_lat: '37.689846'
+map_center_lng: '-122.402881'
+map_default_zoom: '15.7'
 map_open_links_in_new_window: 0
-map_show_user_location: 1
+map_show_user_location: 0
 map_api_key: AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY
 map_allow_type_toggle: 0
 map_use_roadmap: 1
 map_allow_street_view: 0
-map_opacity: '0.85'
+map_opacity: '0.9'
 map_update_frequency: '10'
+game_start_time: 1603234800
 map_night_mode: 1
-game_start_time: 1603258838
 counter_open_in_new_window: 0
-privacy_title: Welcome
-privacy_message: 'Brisbanoween is an interactive Halloween experience!  No personal information will be stored, but we do use cookies to track you'
-privacy_accept_button: 'I Agree!'
-privacy_reject_button: 'No thanks.'
-privacy_cookie: cookie-agreed
-counter_target_url: /
+counter_target_url: /about-brisbanoween
 oracle_enabled: 0
-inventory_enabled: 1
+inventory_enabled: 0
 map_open_in_new_window: 0
 map_button_enabled: 1
+map_animate_hint_duration: '120000'
+game_end_time: 1635313060
+game_end_url: ''

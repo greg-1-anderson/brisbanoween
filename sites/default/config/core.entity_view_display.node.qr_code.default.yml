@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.qr_code.field_address
     - field.field.node.qr_code.field_geolocation
     - field.field.node.qr_code.field_qr_code
+    - field.field.node.qr_code.field_story_line
     - field.field.node.qr_code.field_story_page
     - node.type.qr_code
   module:
@@ -44,6 +45,14 @@ content:
         height: '100'
     third_party_settings: {  }
     type: qrfield_formatter
+    region: content
+  field_story_line:
+    weight: 4
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
     region: content
   links:
     weight: 0
