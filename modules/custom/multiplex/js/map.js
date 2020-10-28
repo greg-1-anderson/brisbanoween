@@ -165,8 +165,7 @@ class SpookyMap {
 				let useIcon = {
 					url: locations[x].icon ? this.i_config.iconBaseURL + locations[x].icon : (legendMap[locations[x].legendId] ? this.i_config.iconBaseURL + legendMap[locations[x].legendId].icon : null),
 					size: new google.maps.Size(48, 48),
-					origin: new google.maps.Point(24, 24),
-					scaledSize: new google.maps.Size(24, 24),
+					anchor: new google.maps.Point(48, 48),
 				};
 
 				// See if we have a marker to use for it from a previous update
