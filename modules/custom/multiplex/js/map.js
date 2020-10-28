@@ -229,7 +229,6 @@ class SpookyMap {
 					icon: {
 						url: this.i_config.iconBaseURL + "you_are_here.png",
 						size: new google.maps.Size(46, 72),
-						anchor: new google.maps.Point(23, 72),
 					}
 				});
 		}
