@@ -137,12 +137,12 @@ class MultiplexAPIController extends ControllerBase {
       [
         'id' => 'assigned',
         'name' => 'Assigned',
-        'icon' => 'code-green.png',
+        'icon' => 'code-green-16.png',
       ],
       [
         'id' => 'unassigned',
         'name' => 'Unassigned',
-        'icon' => 'code-red.png',
+        'icon' => 'code-red-16.png',
       ],
     ];
 
