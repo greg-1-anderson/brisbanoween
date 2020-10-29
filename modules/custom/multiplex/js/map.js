@@ -179,6 +179,13 @@ class SpookyMap {
 						icon: useIcon
 					});
 
+					this.i_marker_cache[x].infowindow = new google.maps.InfoWindow({
+						content: locations[x].text,
+					});
+					if (locations[x].text) {
+						this.i_marker_cache[x].infowindow.open(this.i_map, this.i_marker_cache[x].marker);
+					}
+
 					// Setup the click handler to redirect the browser (or open a window)
 					let locationIndex = x;
 					this.i_marker_cache[x].marker.addListener("click", (e) => {
@@ -198,6 +205,13 @@ class SpookyMap {
 					this.i_marker_cache[x].marker.setIcon(useIcon);
 					this.i_marker_cache[x].marker.setAnimation(shouldBounce ? google.maps.Animation.BOUNCE : null);
 					this.i_marker_cache[x].marker.setMap(this.i_map);
+					this.i_marker_cache[x].infowindow.setContent(locations[x].text);
+					if (locations[x].text) {
+						this.i_marker_cache[x].infowindow.open(this.i_map, this.i_marker_cache[x].marker);
+					}
+					else {
+						this.i_marker_cache[x].infowindow.close();
+					}
 				}
 			}
 
