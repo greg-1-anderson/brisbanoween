@@ -121,6 +121,7 @@ class MultiplexAPIController extends ControllerBase {
           $locations[] = [
             "id" => $node->id(),
             "code" => $node->getTitle(),
+            "text" => $node->getTitle(),
             "position" => [
               floatval($geo[0]['lat']),
               floatval($geo[0]['lng']),
