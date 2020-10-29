@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_story_hints
+    - node.type.multiplex_dest
     - node.type.story_page
 id: node.story_page.field_story_hints
 field_name: field_story_hints
@@ -19,9 +20,10 @@ settings:
   handler: 'default:node'
   handler_settings:
     target_bundles:
+      multiplex_dest: multiplex_dest
       story_page: story_page
     sort:
       field: _none
     auto_create: false
-    auto_create_bundle: ''
+    auto_create_bundle: multiplex_dest
 field_type: entity_reference
