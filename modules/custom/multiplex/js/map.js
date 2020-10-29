@@ -186,7 +186,7 @@ class SpookyMap {
 					// Setup the click handler to redirect the browser (or open a window)
 					let locationIndex = x;
 					this.i_marker_cache[x].marker.addListener("click", (e) => {
-						if (e.altKey == true) {
+						if (e.vb.altKey == true) {
 							if (location[locationIndex].text) {
 								this.i_marker_cache[locationIndex].infowindow.open(this.i_map, this.i_marker_cache[locationIndex].marker);
 							}
