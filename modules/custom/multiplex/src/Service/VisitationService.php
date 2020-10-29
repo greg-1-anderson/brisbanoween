@@ -89,7 +89,7 @@ class VisitationService {
   }
 
   /**
-   * Record a record of the specified path being visited.
+   * Make a record of the specified path being visited.
    *
    * @param string $who
    *   Representation of visiting user
@@ -267,6 +267,79 @@ class VisitationService {
       }
     }
     return $visited;
+  }
+
+  /**
+   * Remove any items from provided $targets list that the user has
+   * already visited.
+   *
+   * @param string $who
+   * @param Node[] $targets
+   * @return Node[]
+   */
+  public function filterVisitedTargets($who, $targets) {
+    $target_nids = array_map(
+      function ($node) {
+        return $node->id();
+      },
+      $targets
+    );
+
+    // Remove from consideration any target that already appears as a
+    // recorded visited location for the specified user.
+    $visited = $this->findVisitedTargets($who, $target_nids);
+    $targets = array_filter(
+      $targets,
+      function ($node) use($visited) {
+        return !in_array($node->Url(), $visited);
+      }
+    );
+
+    return $targets;
+  }
+
+  /**
+   * Remove any items from provided $qr_nodes list that already appear
+   * on the marked locations map.
+   *
+   * @param string $who
+   * @param Node[] $qr_nodes
+   * @return Node[]
+   */
+  public function filterMarkedLocations($who, $qr_nodes) {
+    $qr_codes = array_map(
+      function ($node) {
+        return $node->Url();
+      },
+      $qr_nodes
+    );
+
+    // Remove from consideration any target that already appears as a
+    // recorded visited location for the specified user.
+    $marked = $this->findMarked($who, $qr_codes);
+    $result = array_filter(
+      $qr_nodes,
+      function ($node) use($qr_codes) {
+        return !in_array($node->Url(), $qr_codes);
+      }
+    );
+
+    return $result;
+  }
+
+  protected function findMarked($who, array $codes) {
+    if (empty($codes) || empty($who)) {
+      return [];
+    }
+    $result = $this->connection->query("SELECT code FROM {multiplex_map_markers} WHERE who = :who AND code IN (:urls[])", [':who' => $who, ':urls[]' => $codes]);
+
+    $marked = [];
+    if ($result) {
+      while ($row = $result->fetchAssoc()) {
+        $marked[] = $row['code'];
+      }
+    }
+    return $marked;
   }
 
   public function getVisitedLocationData($who) {

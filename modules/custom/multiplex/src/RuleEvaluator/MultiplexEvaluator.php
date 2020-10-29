@@ -24,21 +24,13 @@ class MultiplexEvaluator extends EvaluatorBase {
     $targets = $this->loadTargetNodes($this->multiplex_data_node, 'field_multiplex_dest_targets');
 
     if (!empty($targets)) {
-      $target_nids = array_map(
+      $targets = $this->visitationService->filterVisitedTargets($this->who, $targets);
+
+      $qr_codes = array_map(
         function ($node) {
-          return $node->id();
+          return $node->Url();
         },
         $targets
-      );
-
-      // Remove from consideration any target that already appears as a
-      // recorded visited location for the specified user.
-      $visited = $this->visitationService->findVisitedTargets($this->who, $target_nids);
-      $targets = array_filter(
-        $targets,
-        function ($node) use($visited) {
-          return !in_array($node->Url(), $visited);
-        }
       );
 
       if ($this->isRandom($this->multiplex_data_node)) {
@@ -50,7 +42,7 @@ class MultiplexEvaluator extends EvaluatorBase {
       $targets = $this->fallbackLocation($this->multiplex_data_node);
     }
 
-    return array_pop($targets);
+    return array_shift($targets);
   }
 
   protected function loadTargetNodes($multiplex_data_node, $field) {
@@ -83,6 +75,7 @@ class MultiplexEvaluator extends EvaluatorBase {
       return false;
     }
     $field_data = $multiplex_data_node->get('field_multiplex_dest_random')->getValue();
+
     return $field_data[0]['value'];
   }
 

@@ -199,10 +199,14 @@ class MultiplexController extends ControllerBase {
       // we will continue with the ordinary logic; otherwise, we will use
       // it as our final destination and return here.
       if ($node->bundle() != 'qr_code') {
+        $recent = $this->visitationService->mostRecent($who);
+
         // Since we do not have reference to any QR code not associated
         // with $node, we will instead use the most recently scanned
         // QR code node for the purpose of placing hints.
-        $this->addMapHints($who, $node, $this->visitationService->mostRecent($who));
+        if ($recent) {
+          $this->addMapHints($who, $node, $recent);
+        }
         return $node;
       }
     }
@@ -251,13 +255,13 @@ class MultiplexController extends ControllerBase {
     return $target_node;
   }
 
-  protected function addMapHints($who, $target_node, $qr_node = null) {
+  protected function addMapHints($who, $target_node, $qr_node) {
     // Ignore the node if it has no hints
     if (!$target_node || !$target_node->hasField('field_story_hints')) {
       return ;
     }
 
-    $hints = $this->loadHints($target_node, 'field_story_hints', $qr_node);
+    $hints = $this->loadHints($who, $target_node, 'field_story_hints', $qr_node);
 
     $new_hint = false;
     foreach ($hints as $hint_node) {
@@ -269,7 +273,7 @@ class MultiplexController extends ControllerBase {
     }
   }
 
-  protected function loadHints($target_node, $field, $scanned_qr_node) {
+  protected function loadHints($who, $target_node, $field, $scanned_qr_node) {
     $field_data = $target_node->get($field)->getValue();
     if (empty($field_data)) {
       return [];
@@ -288,7 +292,7 @@ class MultiplexController extends ControllerBase {
         ->condition('field_story_page', $story_page_id);
       $results = $query->execute();
 
-      $hint_ids = array_merge($hint_ids, $this->selectHints($strategy, $results));
+      $hint_ids = array_merge($hint_ids, $this->selectHints($who, $strategy, $results, $scanned_qr_node));
     }
 
     return \Drupal\node\Entity\Node::loadMultiple($hint_ids);
@@ -305,6 +309,8 @@ class MultiplexController extends ControllerBase {
    * @return string
    */
   protected function getHintStrategy($story_node) {
+    return 'closest';
+/*
     if ($story_node->bundle() != 'multiplex_dest') {
       return 'closest';
     }
@@ -312,13 +318,79 @@ class MultiplexController extends ControllerBase {
     // For now, if someone hints a multiplex_dest, show
     // ALL of the QR codes that point at it.
     return 'all';
+*/
   }
 
-  protected function selectHints($strategy, $hint_ids) {
-    if ($strategy != 'all') {
-      return [array_pop($hint_ids)];
+  protected function selectHints($who, $strategy, $hint_ids, $scanned_qr_node) {
+    // If we're just going to mark everything we don't need to remove
+    // the marked locations, as they will be ignored at mark time.
+    if ($strategy == 'all') {
+      return $hint_ids;
     }
-    return $hint_ids;
+
+    // Load node data for all of the provided ids and then remove any that
+    // are already marked.
+    $hint_nodes = \Drupal\node\Entity\Node::loadMultiple($hint_ids);
+    $hint_nodes = $this->visitationService->filterMarkedLocations($who, $hint_nodes);
+
+    // Remove the scanned qr node from the hints list; we never want to hint
+    // the code that was just scanned.
+    $hint_nodes = array_filter(
+      $hint_nodes,
+      function ($node) use($scanned_qr_node) {
+        return $node->Url() != $scanned_qr_node->Url();
+      }
+    );
+
+    // If we want to hint only the closest location, then sort
+    // everything by distance.
+    if ($strategy == 'closest') {
+      usort(
+        $hint_nodes,
+        function ($a, $b) use ($scanned_qr_node) {
+          $distance_a = $this->distanceBetweenNodes($a, $scanned_qr_node);
+          $distance_b = $this->distanceBetweenNodes($b, $scanned_qr_node);
+          if ($distance_a == $distance_b) {
+            return 0;
+          }
+          return ($distance_a < $distance_b) ? -1 : 1;
+        }
+      );
+    }
+
+    return [array_pop($hint_ids)];
+  }
+
+  protected function distance($lat1, $lon1, $lat2, $lon2) {
+    if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+      return 0;
+    }
+    $theta = $lon1 - $lon2;
+    $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+    $dist = acos($dist);
+    $dist = rad2deg($dist);
+    $miles = $dist * 60 * 1.1515;
+
+    return $miles;
+  }
+
+  protected function distanceBetweenNodes($qr1, $qr2) {
+    list($lat1, $lon1) = $this->getLatLng($qr1);
+    list($lat2, $lon2) = $this->getLatLng($qr2);
+
+    return $this->distance($lat1, $lon1, $lat2, $lon2);
+  }
+
+  protected function getLatLng($qr_node) {
+    $geo = $qr_node->get('field_geolocation')->getValue();
+    if (empty($geo[0])) {
+      return [0, 0];
+    }
+
+    $lat = floatval($geo[0]['lat']);
+    $lng = floatval($geo[0]['lng']);
+
+    return [$lat, $lng];
   }
 
   protected function redirectUrl($who, $target_node) {
