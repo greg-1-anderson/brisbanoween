@@ -162,6 +162,12 @@ class SpookyMap {
 					lastBounceEnds = remBounceTime;
 				}
 
+				let useIcon = {
+					url: locations[x].icon ? this.i_config.iconBaseURL + locations[x].icon : (legendMap[locations[x].legendId] ? this.i_config.iconBaseURL + legendMap[locations[x].legendId].icon : null),
+					size: new google.maps.Size(48, 48),
+					anchor: new google.maps.Point(0, 0),
+				};
+
 				// See if we have a marker to use for it from a previous update
 				if (this.i_marker_cache[x] == null) {
 					// We do not, so create one now
@@ -170,18 +176,25 @@ class SpookyMap {
 						position: new google.maps.LatLng(parseFloat(locations[x].position[0]), parseFloat(locations[x].position[1])),
 						map: this.i_map,
 						animation: shouldBounce ? google.maps.Animation.BOUNCE : null,
-						icon: locations[x].icon ? this.i_config.iconBaseURL + locations[x].icon : (legendMap[locations[x].legendId] ? this.i_config.iconBaseURL + legendMap[locations[x].legendId].icon : null)
+						icon: useIcon
 					});
+
+					this.i_marker_cache[x].infowindow = new google.maps.InfoWindow({
+						content: locations[x].text,
+					});
+					if (locations[x].text) {
+						this.i_marker_cache[x].infowindow.open(this.i_map, this.i_marker_cache[x].marker);
+					}
 
 					// Setup the click handler to redirect the browser (or open a window)
 					let locationIndex = x;
-					this.i_marker_cache[x].marker.addListener("click", () => {
+					this.i_marker_cache[x].marker.addListener("click", (e) => {
 						if (locations[locationIndex].visited == true) {
 							if (this.i_config.openLinksInNewWindow) {
-								window.open(this.i_config.linkBaseURL + locations[locationIndex].code);
+								window.open(((e.vb.shiftKey && this.i_config.altBaseURL) ? this.i_config.altBaseURL : this.i_config.linkBaseURL) + locations[locationIndex].code);
 							}
 							else {
-								document.location = this.i_config.linkBaseURL + locations[locationIndex].code;
+								document.location = ((e.vb.shiftKey && this.i_config.altBaseURL) ? this.i_config.altBaseURL : this.i_config.linkBaseURL) + locations[locationIndex].code;
 							}
 						}
 					});
@@ -189,9 +202,16 @@ class SpookyMap {
 				else {
 					// We already had a marker, so move it to the new location
 					this.i_marker_cache[x].marker.setPosition(new google.maps.LatLng(parseFloat(locations[x].position[0]), parseFloat(locations[x].position[1])));
-					this.i_marker_cache[x].marker.setIcon(locations[x].icon ? this.i_config.iconBaseURL + locations[x].icon : (legendMap[locations[x].legendId] ? this.i_config.iconBaseURL + legendMap[locations[x].legendId].icon : null));
+					this.i_marker_cache[x].marker.setIcon(useIcon);
 					this.i_marker_cache[x].marker.setAnimation(shouldBounce ? google.maps.Animation.BOUNCE : null);
 					this.i_marker_cache[x].marker.setMap(this.i_map);
+					this.i_marker_cache[x].infowindow.setContent(locations[x].text);
+					if (locations[x].text) {
+						this.i_marker_cache[x].infowindow.open(this.i_map, this.i_marker_cache[x].marker);
+					}
+					else {
+						this.i_marker_cache[x].infowindow.close();
+					}
 				}
 			}
 
@@ -220,7 +240,10 @@ class SpookyMap {
 				this.i_my_marker = new google.maps.Marker({
 					position: this.i_config.centerMapPosition,
 					map: this.i_map,
-					icon: this.i_config.iconBaseURL + "you_are_here.png"
+					icon: {
+						url: this.i_config.iconBaseURL + "you_are_here.png",
+						size: new google.maps.Size(46, 72),
+					}
 				});
 		}
 		let usePos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);

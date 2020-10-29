@@ -83,6 +83,7 @@
 					nightMode: settings.multiplex.map.config.nightMode,
 					backgroundImage: settings.multiplex.map.config.backgroundImage,		// A repeating background image, or one that is the exact size of the map
 					linkBaseURL: settings.multiplex.map.config.linkPrefix,				// The URL to prefix codes with when creating links
+					altBaseURL: settings.multiplex.map.config.altLinkPrefix,		// The URL to prefix if shift is held down when clicking on a link
 					iconBaseURL: settings.multiplex.map.config.iconPrefix,		// The URL to prefix icon images with
 
 					centerMapPosition: settings.multiplex.map.config.centerPosition,		// Where to center the map
