@@ -187,7 +187,7 @@ class SpookyMap {
 					let locationIndex = x;
 					this.i_marker_cache[x].marker.addListener("click", (e) => {
 						if (e.vb.altKey == true) {
-							if (location[locationIndex].text) {
+							if (locations[locationIndex].text) {
 								this.i_marker_cache[locationIndex].infowindow.open(this.i_map, this.i_marker_cache[locationIndex].marker);
 							}
 						}
