@@ -288,10 +288,11 @@ class VisitationService {
     // Remove from consideration any target that already appears as a
     // recorded visited location for the specified user.
     $visited = $this->findVisitedTargets($who, $target_nids);
+
     $targets = array_filter(
       $targets,
       function ($node) use($visited) {
-        return !in_array($node->Url(), $visited);
+        return !in_array($node->id(), $visited);
       }
     );
 
