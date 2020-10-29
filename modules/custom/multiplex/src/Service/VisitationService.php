@@ -109,7 +109,7 @@ class VisitationService {
     // If there is already a record for this user and visited location,
     // then update its 'visited' time
     $visit_data = $this->findVisitedRecord($who, $node);
-    if ($visit_data->visited()) {
+    if ($visit_data->id()) {
       $num_updated = $this->connection->update('multiplex_visitors')
         ->fields([
           'visited' => $now,

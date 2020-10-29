@@ -1,7 +1,7 @@
 multiplex.to:
   path: '/to/{path}'
   defaults:
-    _title: 'Redirect To'
+    _title: '...'
     _controller: '\Drupal\multiplex\Controller\MultiplexController::build'
   requirements:
     _permission: 'access content'

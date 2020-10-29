@@ -213,6 +213,7 @@ class MultiplexController extends ControllerBase {
       throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
 
+    // Add a map marker for the QR node just scanned.
     $this->visitationService->recordMapMarker($who, $qr_node);
     $node = \Drupal\node\Entity\Node::load($qr_code_target[0]['target_id']);
 
@@ -241,7 +242,6 @@ class MultiplexController extends ControllerBase {
     return $target_node;
   }
 
-
   protected function addMapHints($who, $target_node, $qr_node = null) {
     // Ignore the node if it has no hints
     if (!$target_node || !$target_node->hasField('field_story_hints')) {
@@ -249,6 +249,7 @@ class MultiplexController extends ControllerBase {
     }
 
     $hints = $this->loadHints($target_node, 'field_story_hints', $qr_node);
+
     $new_hint = false;
     foreach ($hints as $hint_node) {
       $new_hint |= $this->visitationService->recordMapMarker($who, $hint_node, false);
@@ -265,40 +266,50 @@ class MultiplexController extends ControllerBase {
       return [];
     }
 
-    $targets = array_filter(
-      array_map(
-        function ($item) {
-          $story_page_id = $item['target_id'];
+    $hint_ids = [];
+    foreach ($field_data as $hint_item) {
+      $story_page_id = $hint_item['target_id'];
+      // This might be a story_page or a multiplex destinations page.
+      $story_node = \Drupal\node\Entity\Node::load($story_page_id);
+      $strategy = $this->getHintStrategy($story_node);
 
-          $query = \Drupal::entityQuery('node')
-            ->condition('type', 'qr_code')
-            ->condition('field_story_page', $story_page_id);
-          $results = $query->execute();
+      // Find a QR code (or codes) that points at the specified hint item
+      $query = \Drupal::entityQuery('node')
+        ->condition('type', 'qr_code')
+        ->condition('field_story_page', $story_page_id);
+      $results = $query->execute();
 
-          // TODO: If there is no qr_code pointing to the
-          // hinted story node, then look for a multiplex node
-          // and do some magic
-          if (empty($results)) {
-            return null;
-          }
+      $hint_ids = array_merge($hint_ids, $this->selectHints($strategy, $results));
+    }
 
-          // TODO: If there are multiple results, then
-          // return the one that is CLOSEST to $scanned_qr_node.
-          // Note that in some instances $scanned_qr_node
-          // might be null. This can happen on pages not reached
-          // via scan, e.g. the intro pages linked from the
-          // landing page. Maybe we can recover the scanned
-          // qr code node from the most recent scan. The nid
-          // of /recent will be the most recent qr code.
-          $hint_qr_code_id = array_pop($results);
+    return \Drupal\node\Entity\Node::loadMultiple($hint_ids);
+  }
 
-          return \Drupal\node\Entity\Node::load($hint_qr_code_id);
-        },
-        $field_data
-      )
-    );
+  /**
+   * Return the strategy used to select which QR code(s) from a set to hint.
+   *
+   *   - closest: Return the code closest to the last-scanned code
+   *   - all: Hint all the nodes
+   *   - pick: Pick an unvisited node by the usual method and mark it visited
+   *
+   * @param Node $story_node
+   * @return string
+   */
+  protected function getHintStrategy($story_node) {
+    if ($story_node->bundle() != 'multiplex_dest') {
+      return 'closest';
+    }
 
-    return $targets;
+    // For now, if someone hints a multiplex_dest, show
+    // ALL of the QR codes that point at it.
+    return 'all';
+  }
+
+  protected function selectHints($strategy, $hint_ids) {
+    if ($strategy != 'all') {
+      return [array_pop($hint_ids)];
+    }
+    return $hint_ids;
   }
 
   protected function redirectUrl($who, $target_node) {
