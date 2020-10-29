@@ -108,23 +108,16 @@ class VisitationService {
 
     // If there is already a record for this user and visited location,
     // then update its 'visited' time
-    $result = $this->connection->query("SELECT id,target_nid FROM {multiplex_visitors} WHERE path_nid = :nid AND who = :who", [
-      ':nid' => $node->id(),
-      ':who' => $who,
-    ]);
+    $visit_data = $this->findVisitedRecord($who, $node);
+    if ($visit_data->id()) {
+      $num_updated = $this->connection->update('multiplex_visitors')
+        ->fields([
+          'visited' => $now,
+        ])
+        ->condition('id', $visit_data->id(), '=')
+        ->execute();
 
-    if ($result) {
-      // There should only be one
-      while ($row = $result->fetchAssoc()) {
-        $num_updated = $this->connection->update('multiplex_visitors')
-          ->fields([
-            'visited' => $now,
-          ])
-          ->condition('id', $row['id'], '=')
-          ->execute();
-
-        return new VisitData($who, $row['id'], $row['target_nid']);
-      }
+      return $visit_data;
     }
 
     // If the record does not already exist, then create a new one.
@@ -140,6 +133,24 @@ class VisitationService {
       ->execute();
 
     return new VisitData($who, $last_insert_id, 0);
+  }
+
+  /**
+   * Return visitation data for the specified node.
+   */
+  protected function findVisitedRecord($who, $node) {
+    $result = $this->connection->query("SELECT id,target_nid FROM {multiplex_visitors} WHERE path_nid = :nid AND who = :who", [
+      ':nid' => $node->id(),
+      ':who' => $who,
+    ]);
+
+    if ($result) {
+      // There should only be one
+      while ($row = $result->fetchAssoc()) {
+        return new VisitData($who, $row['id'], $row['target_nid']);
+      }
+    }
+    return new VisitData($who, 0, 0);
   }
 
   /**
@@ -192,6 +203,21 @@ class VisitationService {
     $this->recordTarget($visit_data, $recent_node);
 
     return $first_time_scan;
+  }
+
+  /**
+   * Return the most recent scanned node (QR code node)
+   *
+   * @param string $who
+   * @return Node|null
+   */
+  public function mostRecent($who) {
+    $recent_pointer = $this->getPointerToRecent();
+    $visit_data = $this->findVisitedRecord($who, $recent_pointer);
+    if (!$visit_data->visited()) {
+      return null;
+    }
+    return \Drupal\node\Entity\Node::load($visit_data->target());
   }
 
   /**
