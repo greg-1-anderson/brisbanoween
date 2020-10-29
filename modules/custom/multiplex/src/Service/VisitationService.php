@@ -317,10 +317,11 @@ class VisitationService {
     // Remove from consideration any target that already appears as a
     // recorded visited location for the specified user.
     $marked = $this->findMarked($who, $qr_codes);
+
     $result = array_filter(
       $qr_nodes,
-      function ($node) use($qr_codes) {
-        return !in_array($node->Url(), $qr_codes);
+      function ($node) use($marked) {
+        return !in_array($node->Url(), $marked);
       }
     );
 

@@ -331,7 +331,24 @@ class MultiplexController extends ControllerBase {
     // Load node data for all of the provided ids and then remove any that
     // are already marked.
     $hint_nodes = \Drupal\node\Entity\Node::loadMultiple($hint_ids);
+
+    $hint_codes = array_map(
+      function ($node) {
+        return $node->Url();
+      },
+      $hint_nodes
+    );
+    \Drupal::messenger()->addStatus('All avaiable hints: ' . implode(', ', $hint_codes));
+
     $hint_nodes = $this->visitationService->filterMarkedLocations($who, $hint_nodes);
+
+    $hint_codes = array_map(
+      function ($node) {
+        return $node->Url();
+      },
+      $hint_nodes
+    );
+    \Drupal::messenger()->addStatus('All unmarked hints: ' . implode(', ', $hint_codes));
 
     // Remove the scanned qr node from the hints list; we never want to hint
     // the code that was just scanned.
@@ -341,6 +358,14 @@ class MultiplexController extends ControllerBase {
         return $node->Url() != $scanned_qr_node->Url();
       }
     );
+
+    $hint_codes = array_map(
+      function ($node) {
+        return $node->Url();
+      },
+      $hint_nodes
+    );
+    \Drupal::messenger()->addStatus('Unmarked hints minus scanned node: ' . implode(', ', $hint_codes));
 
     // If we want to hint only the closest location, then sort
     // everything by distance.
@@ -358,7 +383,14 @@ class MultiplexController extends ControllerBase {
       );
     }
 
-    return [array_pop($hint_ids)];
+    $sorted_ids = array_map(
+      function ($node) {
+        return $node->id();
+      },
+      $hint_nodes
+    );
+
+    return [array_pop($sorted_ids)];
   }
 
   protected function distance($lat1, $lon1, $lat2, $lon2) {
