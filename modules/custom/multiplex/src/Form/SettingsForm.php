@@ -276,7 +276,8 @@ class SettingsForm extends ConfigFormBase {
   		'inventory_wiggle_duration', 'inventory_icon_width', 'inventory_icon_height', 'inventory_update_frequency', 'inventory_base_url', 'map_link_prefix',
   		'map_center_lat', 'map_center_lng', 'map_default_zoom', 'map_open_links_in_new_window', 'map_show_user_location', 'map_api_key', "map_night_mode",
   		'map_allow_type_toggle', 'map_use_roadmap', 'map_allow_street_view', 'map_opacity', 'map_update_frequency', 'counter_open_in_new_window', 'counter_target_url',
-  		'oracle_enabled', 'inventory_enabled', 'map_open_in_new_window', 'map_button_enabled', 'map_animate_hint_duration', 'game_end_time', 'game_end_url'
+  		'oracle_enabled', 'inventory_enabled', 'map_open_in_new_window', 'map_button_enabled', 'map_animate_hint_duration', 'game_end_time', 'game_end_url',
+  		'map_alt_prefix'
   	);
 
   	foreach ($form_fields as $f) {
