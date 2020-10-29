@@ -85,6 +85,22 @@ class MultiplexController extends ControllerBase {
   }
 
   /**
+   * Shortcut link to edit a QR code
+   */
+  public function edit($path) {
+    $code = basename($path);
+
+    $node = $this->getNodeFromPath("/$code");
+    if (!$node) {
+      throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+    $nid = $node->id();
+
+    return new RedirectResponse("/node/$nid/edit", 302);
+  }
+
+
+  /**
    * Builds the response, which is usually a redirect.
    *
    * The route to this controller is `/to/{path}`. If there are

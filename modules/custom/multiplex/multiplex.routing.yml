@@ -11,6 +11,19 @@ multiplex.to:
       path:
         type: string
 
+multiplex.edit:
+  path: '/edit/{path}'
+  defaults:
+    _title: '...'
+    _controller: '\Drupal\multiplex\Controller\MultiplexController::edit'
+  requirements:
+    _permission: 'administer multiplex configuration'
+  options:
+    no_cache: 'TRUE'
+    parameters:
+      path:
+        type: string
+
 multiplex.wait:
   path: '/wait/{path}'
   defaults:
