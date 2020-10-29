@@ -182,19 +182,23 @@ class SpookyMap {
 					this.i_marker_cache[x].infowindow = new google.maps.InfoWindow({
 						content: locations[x].text,
 					});
-					if (locations[x].text) {
-						this.i_marker_cache[x].infowindow.open(this.i_map, this.i_marker_cache[x].marker);
-					}
 
 					// Setup the click handler to redirect the browser (or open a window)
 					let locationIndex = x;
 					this.i_marker_cache[x].marker.addListener("click", (e) => {
-						if (locations[locationIndex].visited == true) {
-							if (this.i_config.openLinksInNewWindow) {
-								window.open(((e.vb.shiftKey && this.i_config.altBaseURL) ? this.i_config.altBaseURL : this.i_config.linkBaseURL) + locations[locationIndex].code);
+						if (e.altKey == true) {
+							if (location[locationIndex].text) {
+								this.i_marker_cache[locationIndex].infowindow.open(this.i_map, this.i_marker_cache[locationIndex].marker);
 							}
-							else {
-								document.location = ((e.vb.shiftKey && this.i_config.altBaseURL) ? this.i_config.altBaseURL : this.i_config.linkBaseURL) + locations[locationIndex].code;
+						}
+						else {
+							if (locations[locationIndex].visited == true) {
+								if (this.i_config.openLinksInNewWindow) {
+									window.open(((e.vb.shiftKey && this.i_config.altBaseURL) ? this.i_config.altBaseURL : this.i_config.linkBaseURL) + locations[locationIndex].code);
+								}
+								else {
+									document.location = ((e.vb.shiftKey && this.i_config.altBaseURL) ? this.i_config.altBaseURL : this.i_config.linkBaseURL) + locations[locationIndex].code;
+								}
 							}
 						}
 					});
@@ -206,10 +210,7 @@ class SpookyMap {
 					this.i_marker_cache[x].marker.setAnimation(shouldBounce ? google.maps.Animation.BOUNCE : null);
 					this.i_marker_cache[x].marker.setMap(this.i_map);
 					this.i_marker_cache[x].infowindow.setContent(locations[x].text);
-					if (locations[x].text) {
-						this.i_marker_cache[x].infowindow.open(this.i_map, this.i_marker_cache[x].marker);
-					}
-					else {
+					if (!locations[x].text) {
 						this.i_marker_cache[x].infowindow.close();
 					}
 				}
