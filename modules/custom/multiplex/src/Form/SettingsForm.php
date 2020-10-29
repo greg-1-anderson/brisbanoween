@@ -81,6 +81,12 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t("The URL to open when the user clicks on a visited map icon.  The code for the icon will be appended"),
       '#default_value' => $this->config('multiplex.settings')->get('map_link_prefix') ? $this->config('multiplex.settings')->get('map_link_prefix') : 'https://g1a.io/'
     ];
+    $form['map_alt_prefix'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Map Alternative Link'),
+      '#description' => $this->t("The URL to open when the user clicks on a visited map icon (while holding the shift key).  The code for the icon will be appended"),
+      '#default_value' => $this->config('multiplex.settings')->get('map_alt_prefix') ? $this->config('multiplex.settings')->get('map_alt_prefix') : '/edit/'
+    ];
     $form['map_center_lat'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Map Center Latitude'),

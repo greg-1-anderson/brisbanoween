@@ -181,13 +181,13 @@ class SpookyMap {
 
 					// Setup the click handler to redirect the browser (or open a window)
 					let locationIndex = x;
-					this.i_marker_cache[x].marker.addListener("click", () => {
+					this.i_marker_cache[x].marker.addListener("click", (e) => {
 						if (locations[locationIndex].visited == true) {
 							if (this.i_config.openLinksInNewWindow) {
-								window.open(this.i_config.linkBaseURL + locations[locationIndex].code);
+								window.open(((e.shiftKey && this.i_config.altBaseURL) ? this.i_config.altBaseURL : this.i_config.linkBaseURL) + locations[locationIndex].code);
 							}
 							else {
-								document.location = this.i_config.linkBaseURL + locations[locationIndex].code;
+								document.location = ((e.shiftKey && this.i_config.altBaseURL) ? this.i_config.altBaseURL : this.i_config.linkBaseURL) + locations[locationIndex].code;
 							}
 						}
 					});
