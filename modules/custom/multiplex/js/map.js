@@ -87,6 +87,15 @@ class SpookyMap {
 		return button
 	}
 
+	center(lat, lng) {
+		if (this.i_map != null && this.i_center_set != true) {
+			this.i_center_set = true;
+
+			let newCenter = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+			this.i_map.setCenter(newCenter);
+		}
+	}
+
 	/**
 	 *	Update the legend
 	 *
