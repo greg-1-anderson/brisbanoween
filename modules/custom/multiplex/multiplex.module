@@ -152,7 +152,7 @@ function multiplex_getMapConfig() {
     'mapOpacity' => floatval($config->get('map_opacity')),
     'showUserLocation' => $config->get('map_show_user_location') ? true : false,
     'updateFrequency' => intval($config->get('map_update_frequency')),
-    'apiEndpoint' => '/multiplex/api/locations', // $base_path . "fake_api_response.json"
+    'apiEndpoint' => $base_path . "fake_api_response.json", //'/multiplex/api/locations', // $base_path . "fake_api_response.json"
     'sessionCookieName' => $priv_config->get("session_cookie_name"),
     'openMapInNewWindow' => $config->get('map_open_in_new_window'),
     'mapButtonEnabled' => ($map_button_enabled && $config->get("map_button_enabled")) ? true : false,
