@@ -91,11 +91,27 @@ class MultiplexAPIController extends ControllerBase {
       ],
     ];
 
-    return [
+    $result = [
       'legend' => $legend,
       'locations' => $this->visitationService->getVisitedLocationData($who),
     ];
+
+    $recent = $this->visitationService->mostRecent($who);
+    if ($recent) {
+      $geo = $recent->get('field_geolocation')->getValue();
+      if (!empty($geo[0])) {
+        $result['recent'] = [
+          'id' => $recent->id(),
+          'code' => trim($recent->Url(), '/'),
+          'lat' => floatval($geo[0]['lat']),
+          'lng' => floatval($geo[0]['lng']),
+        ];
+      }
+    }
+
+    return $result;
   }
+
 
   protected function getEditModeLocationData() {
     $user = \Drupal::currentUser();
