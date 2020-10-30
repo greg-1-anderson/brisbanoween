@@ -105,8 +105,12 @@
 							query = "?path=" + document.location.href.substring(document.location.href.indexOf("/map/") + 5);
 						}
 						fetch(settings.multiplex.map.config.apiEndpoint + query).then(response => response.text()).then(data => {
-							myMap.setLegend(JSON.parse(data).data.legend);
-							myMap.setLocations(JSON.parse(data).data.locations);
+							let responseData = JSON.parse(data);
+							if (responseData.data.recent != null && responseData.data.recent.lat != null && responseData.data.recent.lng != null) {
+								myMap.center(responseData.data.recent.lat, responseData.data.recent.lng);
+							}
+							myMap.setLegend(responseData.data.legend);
+							myMap.setLocations(responseData.data.locations);
 						});
 					};
 					// Give the map a moment to load

@@ -1,5 +1,11 @@
 {
 	"data": {
+		"recent": {
+			"code": "somecode",
+			"id": "someid",
+			"lat": "37.690197",
+			"lng": "-122.412717"
+		},
 		"legend": [
 			{
 				"id":"visited",
