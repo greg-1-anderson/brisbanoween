@@ -39,7 +39,13 @@ class MultiplexService {
 
     $multiplex_result_node = $this->resolveMultiplexRules($visit_data, $evaluators);
     if ($multiplex_result_node) {
-      $this->visitationService->recordTarget($visit_data, $multiplex_result_node);
+      // TODO: Add a checkbox to disable recording the target, or maybe
+      // resolveMultiplexRules should control this, and prevent saving
+      // targets with visited / unvisited rules (only save multiplex).
+      // For the first game, we only have one node that needs this service.
+      if (($node->id() != 221) && ($node->id() != 247)) {
+        $this->visitationService->recordTarget($visit_data, $multiplex_result_node);
+      }
       return $multiplex_result_node;
     }
 
@@ -64,15 +70,7 @@ class MultiplexService {
   }
 
   protected function getEvaluatorsForRulesField($who, $node) {
-    // TODO: Find the first multiplex rule field of any name.
-    // For now, assume it is named "field_rules".
-    if (!$node->hasField('field_rules')) {
-      return [];
-    }
-    $rule_data = $node->get('field_rules')->getValue();
-    if (empty($rule_data)) {
-      return [];
-    }
+    $rule_data = $this->getRuleData($node);
 
     $evaluators = [];
     foreach ($rule_data as $rule) {
@@ -80,5 +78,33 @@ class MultiplexService {
       $evaluators[] = $evaluator;
     }
     return $evaluators;
+  }
+
+  /**
+   * Determine whether '$node' has any rules that will cause its outcome
+   * to be modified by '$modifier_node'
+   *
+   * @param Node $node
+   * @param Node $modifier_node
+   * @return boolean
+   */
+  protected function hasConditionalOutcome($node, $modifier_node) {
+    $rule_data = $this->getRuleData($node);
+
+    foreach ($rule_data as $rule) {
+      if ($rule['visited_node'] == $modifier_node->id()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  protected function getRuleData($node) {
+    // TODO: Find the first multiplex rule field of any name.
+    // For now, assume it is named "field_rules".
+    if (!$node->hasField('field_rules')) {
+      return [];
+    }
+    return $node->get('field_rules')->getValue();
   }
 }

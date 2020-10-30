@@ -277,7 +277,9 @@ class MultiplexController extends ControllerBase {
       return ;
     }
 
-    $hints = $this->loadHints($who, $target_node, 'field_story_hints', $qr_node);
+    $hints = $this->gatherHints($who, $target_node, 'field_story_hints', $qr_node);
+    // TODO: Reset target when needed.
+    // $this->checkForAlteredOutcomes($who, $target_node, $hints);
 
     $new_hint = false;
     foreach ($hints as $hint_node) {
@@ -289,7 +291,29 @@ class MultiplexController extends ControllerBase {
     }
   }
 
-  protected function loadHints($who, $target_node, $field, $scanned_qr_node) {
+  protected function checkForAlteredOutcomes($who, $target_node, $hints) {
+    foreach ($hints as $hint_qr_node) {
+      $this->checkForAlteredOutcome($who, $target_node, $hint_qr_node);
+    }
+  }
+
+  protected function checkForAlteredOutcome($who, $target_node, $hint_qr_node) {
+    $qr_code_target = $hint_qr_node->get('field_story_page')->getValue();
+    // This shouldn't be possible; otherwise the hint would not have been selected
+    if (empty($qr_code_target[0]['target_id'])) {
+      return;
+    }
+    $story_node = \Drupal\node\Entity\Node::load($qr_code_target[0]['target_id']);
+    if ($story_node->bundle() != 'story_page') {
+      return;
+    }
+
+    if ($this->multiplexService->hasConditionalOutcome($story_node, $target_node)) {
+      $this->visitationService->resetTarget($who, $story_node);
+    }
+  }
+
+  protected function gatherHints($who, $target_node, $field, $scanned_qr_node) {
     $field_data = $target_node->get($field)->getValue();
     if (empty($field_data)) {
       return [];

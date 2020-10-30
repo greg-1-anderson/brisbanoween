@@ -182,6 +182,25 @@ class VisitationService {
   }
 
   /**
+   * If the user visits a node that alters the outcome of
+   * a previously-visited node, then we will reset the target
+   * in the visitors table so that the user can get the new
+   * outcome when they visit the node.
+   *
+   * IMPORTANT: In order for this to work, the node that alters
+   * the outcome must HINT the node whose outcome is altered.
+   */
+  public function resetTarget($who, $story_node) {
+    $this->connection->update('multiplex_visitors')
+      ->fields([
+        'target_nid' => 0,
+      ])
+      ->condition('who', $who, '=')
+      ->condition('path_nid', $story_node->id(), '=')
+      ->execute();
+  }
+
+  /**
    * Update the visitation data for the path '/to/recent' to
    * point to the most recently scanned node
    *
