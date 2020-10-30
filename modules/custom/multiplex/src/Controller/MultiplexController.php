@@ -381,7 +381,7 @@ class MultiplexController extends ControllerBase {
     );
 
     // Return the first id (which will be the closest one if using that strategy)
-    return [array_pop($hint_ids)];
+    return [array_shift($hint_ids)];
   }
 
   protected function distance($lat1, $lon1, $lat2, $lon2) {
