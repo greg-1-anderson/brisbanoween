@@ -10,9 +10,9 @@ inventory_icon_height: '72'
 inventory_update_frequency: '0'
 inventory_base_url: 'https://g1a.io/'
 map_link_prefix: 'https://g1a.io/'
-map_center_lat: '37.689846'
-map_center_lng: '-122.402881'
-map_default_zoom: '15.7'
+map_center_lat: '37.682794796187'
+map_center_lng: '-122.40230481779'
+map_default_zoom: '16.4'
 map_open_links_in_new_window: 0
 map_show_user_location: 0
 map_api_key: AIzaSyCOU50yHfSRfe0lVuuIaeNJVky6EvnG5EY
