@@ -134,8 +134,8 @@ class MultiplexController extends ControllerBase {
     if ($gameState == GAME_NOT_STARTED) {
     	return new RedirectResponse("/wait/$path", 302);
     }
-    else if ($gameState == GAME_OVER) {
-    	$end_url = \Drupal::config('multiplex.settings')->get('game_end_url');
+    $end_url = \Drupal::config('multiplex.settings')->get('game_end_url');
+    if (($gameState == GAME_OVER) && ($end_url)) {
     	return new RedirectResponse($end_url, 302);
     }
 
@@ -256,10 +256,16 @@ class MultiplexController extends ControllerBase {
       $target_node = $this->multiplexService->findMultiplexLocationFromRules($who, $node);
     }
 
+    // TODO: We should have a better way to indicate that we want to
+    // skip the landng page for some paths. For now, special-case
+    // all Spooky Time pages.
+    $story_line_value = $node->get('field_story_line')->getValue();
+    $is_spooky_time = !empty($story_line_value) && ($story_line_value[0]['target_id'] == 2);
+
     // Remember our most recent scan. If the user has never
     // scanned before, then go to the initial page instead.
     $is_first_scan = $this->visitationService->recordRecent($who, $qr_node);
-    if ($is_first_scan) {
+    if ($is_first_scan && !$is_spooky_time) {
       // TODO: Perhaps we should store the nid of the welcome page in
       // settings or something. For now we will use the well-known-path
       // '/landing' instead.
