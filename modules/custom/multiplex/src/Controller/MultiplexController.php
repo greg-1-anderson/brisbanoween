@@ -259,8 +259,11 @@ class MultiplexController extends ControllerBase {
     // TODO: We should have a better way to indicate that we want to
     // skip the landng page for some paths. For now, special-case
     // all Spooky Time pages.
-    $story_line_value = $node->get('field_story_line')->getValue();
-    $is_spooky_time = !empty($story_line_value) && ($story_line_value[0]['target_id'] == 2);
+    $is_spooky_time = false;
+    if ($node->hasField('field_story_line')) {
+      $story_line_value = $node->get('field_story_line')->getValue();
+      $is_spooky_time = !empty($story_line_value) && ($story_line_value[0]['target_id'] == 2);
+    }
 
     // Remember our most recent scan. If the user has never
     // scanned before, then go to the initial page instead.
